@@ -11,9 +11,6 @@ import java.util.concurrent.TimeUnit
 
 class App : Application() {
 
-
-    private val BASE_URL = "https://test.com"
-
     //  앱의 context 를 instance 변수에 저장
     init{
         instance =this
@@ -23,7 +20,6 @@ class App : Application() {
     companion object{
         private var instance : App? = null
         lateinit var sharedPreferences: SharedPreferences
-        lateinit var retrofit: Retrofit
 
         // 앱의 context 를 불러오는 함수
         fun context() : Context {
@@ -35,24 +31,5 @@ class App : Application() {
         super.onCreate()
         sharedPreferences =
             applicationContext.getSharedPreferences("SP", MODE_PRIVATE)
-
-        initRetrofitInstance()
-    }
-
-    private fun initRetrofitInstance() {
-
-        // Logcat 에 통신내역 띄우기
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .connectTimeout(5000, TimeUnit.MILLISECONDS)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .build()
-
-        // Retrofit 객체
-        retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 }

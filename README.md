@@ -31,12 +31,13 @@
     | 
     | 
     ├── util/
+    |   ├── Constants # 필요한 Key 나 String 값 저장
     |   ├── LoadingDialog # Activity / Fragment 모두에서 띄울수 있는 LoadingDialog
+    |   ├── RetrofitInstance  # Retrofit 객체 싱글톤 생성. Okhttp 이용 Retrofit2 통신시 Log로 모니터링 가능
     |   └── ToastMessageUtil # 토스트메세지 간편  실행 가능
     | 
-    └── App  # 앱 실행시, sharedPreferences / retrofit 객체 생성, 
-						 # 앱 전역에서 Context 반환 가능
-						 # Okhttp 이용 Retrofit2 통신시 Log로 모니터링 가능
+    └── App  # 앱 실행시, sharedPreferences 객체 생성,
+             # 앱 전역에서 Context 반환 가능
 ```
 
 <br/><br/>
