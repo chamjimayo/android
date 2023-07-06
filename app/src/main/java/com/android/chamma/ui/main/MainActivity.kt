@@ -1,6 +1,8 @@
 package com.android.chamma.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import com.android.chamma.R
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityMainBinding
@@ -10,12 +12,14 @@ import com.android.chamma.ui.mypage.MypageFragment
 import com.android.chamma.ui.toiletlist.ToiletlistFragment
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setFullScreen()
         setBottomNavigation()
-
     }
+
 
     private fun setBottomNavigation(){
         binding.bottomNV.run {
@@ -52,6 +56,15 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
                 true
             }
             selectedItemId = R.id.navigation_home
+        }
+    }
+
+    // 풀스크린 적용
+    private fun setFullScreen(){
+        window.apply {
+            statusBarColor = Color.TRANSPARENT
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
 }

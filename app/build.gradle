@@ -73,4 +73,10 @@ dependencies {
 
     // NaverLogin
     implementation 'com.navercorp.nid:oauth-jdk8:5.6.0'
+
+    // 네이버 지도 SDK
+    implementation 'com.naver.maps:map-sdk:3.16.0'
+
+    // 위치 SDK
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
