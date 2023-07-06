@@ -8,6 +8,5 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 }

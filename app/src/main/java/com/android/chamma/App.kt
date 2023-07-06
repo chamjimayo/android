@@ -3,18 +3,21 @@ package com.android.chamma
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import android.util.Log
+import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.kakaoAppKey
+import com.android.chamma.util.Constants.naverClientId
+import com.android.chamma.util.Constants.naverClientName
+import com.android.chamma.util.Constants.naverClientSecret
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
+import com.navercorp.nid.NaverIdLoginSDK
 
 class App : Application() {
 
     //  앱의 context 를 instance 변수에 저장
     init{
         instance =this
-
     }
 
     companion object{
@@ -31,5 +34,22 @@ class App : Application() {
         super.onCreate()
         sharedPreferences =
             applicationContext.getSharedPreferences("SP", MODE_PRIVATE)
+
+        getkakaoKeyhash()
+        startSocialLogin()
     }
+
+    private fun getkakaoKeyhash() {
+        Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
+    }
+
+    private fun startSocialLogin() {
+        KakaoSdk.init(this, kakaoAppKey)
+        NaverIdLoginSDK.initialize(this,
+            naverClientId,
+            naverClientSecret,
+            naverClientName
+        )
+    }
+
 }

@@ -29,9 +29,27 @@
 
         </activity>
         <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="oauth"
+                    android:scheme="kakao45577b70f3fba41db9f01f34abb9a9c2" />
+            </intent-filter>
         </activity>
     </application>
 
