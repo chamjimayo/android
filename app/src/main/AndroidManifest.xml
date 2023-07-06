@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="dkktefgrkn" />
+
         <activity android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"

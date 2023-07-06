@@ -1,8 +1,10 @@
 package com.android.chamma.ui.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
 import com.android.chamma.ui.main.MainActivity
@@ -23,6 +25,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setFullScreen()
 
         binding.btnKakaoLogin.setOnClickListener {
             kakaoLogin()
@@ -145,6 +148,16 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 val age = user.kakaoAccount?.ageRange.toString()
                 Log.d(TAG,id.toString() + "\n" + nickname + "\n" +birthday + "\n" + email + "\n" + age)
             }
+        }
+    }
+
+
+    // 풀스크린 적용
+    private fun setFullScreen(){
+        window.apply {
+            statusBarColor = Color.TRANSPARENT
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
 

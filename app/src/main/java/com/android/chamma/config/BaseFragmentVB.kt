@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.android.chamma.R
 
 
 abstract class BaseFragmentVB<B : ViewBinding>(
@@ -15,6 +16,7 @@ abstract class BaseFragmentVB<B : ViewBinding>(
 ) : Fragment(layoutResId) {
     private var _binding: B? = null
     protected val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
