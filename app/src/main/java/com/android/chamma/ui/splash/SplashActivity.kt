@@ -14,6 +14,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.chamma.R
+import com.android.chamma.ui.login.LoginActivity
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.util.LoadingDialog
 
@@ -52,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
                 // 네트워크 검사 끝났으면 LoadingDialog 내리기
                 dialog.dismiss()
 
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         }, 1500)

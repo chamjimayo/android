@@ -3,27 +3,26 @@ package com.android.chamma
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import android.util.Log
+import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.kakaoAppKey
+import com.android.chamma.util.Constants.naverClientId
+import com.android.chamma.util.Constants.naverClientName
+import com.android.chamma.util.Constants.naverClientSecret
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
+import com.navercorp.nid.NaverIdLoginSDK
 
 class App : Application() {
-
-
-    private val BASE_URL = "https://test.com"
 
     //  앱의 context 를 instance 변수에 저장
     init{
         instance =this
-
     }
 
     companion object{
         private var instance : App? = null
         lateinit var sharedPreferences: SharedPreferences
-        lateinit var retrofit: Retrofit
 
         // 앱의 context 를 불러오는 함수
         fun context() : Context {
@@ -36,23 +35,21 @@ class App : Application() {
         sharedPreferences =
             applicationContext.getSharedPreferences("SP", MODE_PRIVATE)
 
-        initRetrofitInstance()
+        getkakaoKeyhash()
+        startSocialLogin()
     }
 
-    private fun initRetrofitInstance() {
-
-        // Logcat 에 통신내역 띄우기
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .connectTimeout(5000, TimeUnit.MILLISECONDS)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .build()
-
-        // Retrofit 객체
-        retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private fun getkakaoKeyhash() {
+        Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
     }
+
+    private fun startSocialLogin() {
+        KakaoSdk.init(this, kakaoAppKey)
+        NaverIdLoginSDK.initialize(this,
+            naverClientId,
+            naverClientSecret,
+            naverClientName
+        )
+    }
+
 }

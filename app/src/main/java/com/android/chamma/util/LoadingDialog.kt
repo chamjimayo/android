@@ -28,4 +28,9 @@ class LoadingDialog : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
+    /* 아래와 같이 활용. parentFragmentManager OR supportFragmentManager 삽입 */
+//    private val dialog = LoadingDialog()
+//    dialog.show(parentFragmentManager,"asdf")
+//    dialog.dismiss()
+
 }
