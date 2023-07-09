@@ -10,12 +10,17 @@ import com.android.chamma.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
+import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.ToastMessageUtil.showToast
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 
 class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback {
@@ -54,6 +59,21 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             Log.d("NaverMap", "카메라 변경 - latitude : ${naverMap.cameraPosition.target.latitude}" +
                     "longitude : ${naverMap.cameraPosition.target.longitude}")
         }
+
+
+        // 서울시청역 부근 테스트 데이터
+        val d1 = MarkerData(37.5670135,126.9783740,"테스트공중화장실1")
+        val d2 = MarkerData(37.5400,126.9783740,"테스트유료화장실1")
+        val d3 = MarkerData(37.5500,126.9783740,"테스트공중화장실2")
+        val d4 = MarkerData(37.5300,126.9783740,"테스트유료화장실2")
+        val d5 = MarkerData(37.5500,126.9883740,"테스트공중화장실3")
+        val d6 = MarkerData(37.5300,126.9883740,"테스트유료화장실3")
+
+        val freedatas = arrayListOf(d1,d3,d5)
+        val paydatas = arrayListOf(d2,d4,d6)
+
+        setFreetoiletMarker(freedatas)
+        setPaytoiletMarker(paydatas)
     }
 
     private fun locationBtnListener(){
@@ -107,6 +127,45 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         }
 
 
+    }
+
+    private fun setFreetoiletMarker(datas : ArrayList<MarkerData>){
+
+        for(data in datas){
+            val marker = Marker()
+            marker.position = LatLng(data.latitude,data.longitude)
+            marker.icon = OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+            marker.map = naverMap
+
+            marker.setOnClickListener {
+
+                showToast(App.context(),"${data.name}")
+
+                true
+            }
+        }
+    }
+
+    private fun setPaytoiletMarker(datas : ArrayList<MarkerData>){
+
+        for(data in datas){
+            val marker = Marker()
+            marker.position = LatLng(data.latitude,data.longitude)
+            marker.icon = OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
+            marker.map = naverMap
+
+            marker.setOnClickListener {
+
+                showToast(App.context(),"${data.name}")
+
+                true
+            }
+        }
+    }
+
+    private fun removeMarker(){
+        val marker = Marker()
+        marker.map = null
     }
 
 
