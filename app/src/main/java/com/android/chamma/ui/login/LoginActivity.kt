@@ -8,6 +8,7 @@ import android.view.View
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
 import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
