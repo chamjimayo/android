@@ -116,6 +116,7 @@
                 android:layout_height="35dp"
                 android:text="중복확인"
                 android:textColor="@color/white"
+                android:visibility="invisible"
                 android:background="@drawable/shape_signup_duplicheck"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginEnd="18dp"/>

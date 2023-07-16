@@ -7,9 +7,13 @@ import android.util.Log
 import android.view.View
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
+import com.android.chamma.models.loginmodel.LoginPostData
+import com.android.chamma.models.loginmodel.LoginResponse
+import com.android.chamma.ui.login.network.LoginAPI
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.RetrofitInterface
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -19,20 +23,25 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
 
 
-
+    private var social = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullScreen()
 
         binding.btnKakaoLogin.setOnClickListener {
+            social = "KAKAO"
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
+            social = "NAVER"
             naverLogin()
         }
     }
@@ -41,10 +50,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     private fun naverLogin() {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-//                naverCallInfo()
+                // 로그인 성공시, 정보 불러오기
+                naverCallInfo()
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
@@ -82,9 +89,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 // 로그인 성공 부분
                 else if (token != null) {
                     Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-//                    kakaoCallInfo()
+                    // 로그인 성공시 정보 불러오기
+                    kakaoCallInfo()
                 }
             }
         } else {
@@ -102,9 +108,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             Log.e(TAG, "이메일 로그인 실패 $error")
         } else if (token != null) {
             Log.d(TAG, "이메일 로그인 성공 ${token.accessToken}")
-            val intent = Intent(this, MainActivity::class.java)
-                .putExtra("kakao", "kakao")
-            startActivity(intent)
+            // 로그인 성공시 정보 불러오기
+            kakaoCallInfo()
         }
     }
 
@@ -118,12 +123,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     private val profileCallback = object : NidProfileCallback<NidProfileResponse> {
         override fun onSuccess(response: NidProfileResponse) {
             val id = response.profile?.id
-            val name = response.profile?.name
-            val nick = response.profile?.nickname
-            val age = response.profile?.age
-            val email = response.profile?.email
-            val birthYear = response.profile?.birthYear
-            Log.d(TAG,"$id $name $nick")
+            // 식별아이디로 통신
+            senduuid(id.toString())
         }
         override fun onFailure(httpStatus: Int, message: String) {
             val errorCode = NaverIdLoginSDK.getLastErrorCode().code
@@ -142,15 +143,39 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 Log.e(TAG, "사용자 정보 요청 실패 $error")
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
-                val id = user.id
-                val nickname = user.kakaoAccount?.profile?.nickname
-                val birthday = user.kakaoAccount?.birthday
-                val email = user.kakaoAccount?.email
-                val age = user.kakaoAccount?.ageRange.toString()
-                Log.d(TAG,id.toString() + "\n" + nickname + "\n" +birthday + "\n" + email + "\n" + age)
+                // 식별아이디로 통신
+                senduuid(user.id.toString())
             }
         }
     }
+
+     private fun senduuid(uuid : String){
+         val data = LoginPostData(uuid)
+         RetrofitInterface.retrofit.create(LoginAPI::class.java)
+             .checkUuid(data).enqueue(object : Callback<LoginResponse>{
+                 override fun onResponse(
+                     call: Call<LoginResponse>,
+                     response: Response<LoginResponse>
+                 ) {
+                     Log.d(TAG,"${response.body()?.data}")
+                     if(response.code() == 0){
+                         // 존재하는 유저. 로그인
+                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                         startActivity(intent)
+                     }else {
+                         // 존재하지 않는 유저. 회원가입
+                         val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                             .putExtra("authType",social)
+                             .putExtra("authId",uuid)
+                         startActivity(intent)
+                     }
+
+                 }
+                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                     Log.d(TAG,"${t.message}")
+                 }
+             })
+     }
 
 
     // 풀스크린 적용
