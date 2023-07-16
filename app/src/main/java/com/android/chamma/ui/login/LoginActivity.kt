@@ -158,7 +158,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                      response: Response<LoginResponse>
                  ) {
                      Log.d(TAG,"${response.body()?.data}")
-                     if(response.code() == 0){
+                     if(response.code() == 200){
                          // 존재하는 유저. 로그인
                          val intent = Intent(this@LoginActivity, MainActivity::class.java)
                          startActivity(intent)

@@ -101,7 +101,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
             gender = "female"
             binding.btnFemale.setBackgroundResource(R.drawable.shape_signup_et_focus)
             binding.btnMale.setBackgroundResource(R.drawable.shape_signup_gender)
-            if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank()){
+            if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank() && nickState){
                 binding.btnSend.isEnabled = true
                 binding.btnSend.setBackgroundResource(R.drawable.shape_signup_duplicheck)
                 binding.btnSend.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.white))
@@ -125,7 +125,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
         binding.etName.addTextChangedListener(object :  TextWatcher{
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 name = binding.etName.text.toString()
-                if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank()){
+                if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank() && nickState){
                     binding.btnSend.isEnabled = true
                     binding.btnSend.setBackgroundResource(R.drawable.shape_signup_duplicheck)
                     binding.btnSend.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.white))
@@ -143,7 +143,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 nick = binding.etNick.text.toString()
                 nickState = false
-                if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank()){
+                if(name.isNotBlank() && nick.isNotBlank() && gender.isNotBlank() && nickState){
                     binding.btnSend.isEnabled = true
                     binding.btnSend.setBackgroundResource(R.drawable.shape_signup_duplicheck)
                     binding.btnSend.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.white))
@@ -165,15 +165,21 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
                     call: Call<NickcheckResponse>,
                     response: Response<NickcheckResponse>
                 ) {
-                    if(response.code() == 0){
+                    if(response.code() == 200){
                         if(response.body()?.data?.nicknameDuplicate == true){
-                            binding.tvAnnounce.visibility = View.VISIBLE
-                            nickState = true
+                            runOnUiThread {
+                                binding.tvAnnounce.text = "이미 사용중인 닉네임입니다."
+                                binding.tvAnnounce.visibility = View.VISIBLE
+                                nickState = false
+                            }
+
                         }else{
-
+                            runOnUiThread {
+                                binding.tvAnnounce.text = "사용 가능한 닉네임입니다."
+                                binding.tvAnnounce.visibility = View.VISIBLE
+                                nickState = true
+                            }
                         }
-                    }else{
-
                     }
                 }
 
@@ -191,13 +197,12 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
                     call: Call<SignupResponse>,
                     response: Response<SignupResponse>
                 ) {
-                    if(response.code() == 0){
+                    if(response.code() == 200) {
                         // 회원가입 성공
-                        val intent = Intent(this@SignupActivity,MainActivity::class.java)
+                        val intent = Intent(this@SignupActivity, MainActivity::class.java)
                         startActivity(intent)
-
                     }else{
-                        // 회원가입 실패
+
                     }
                 }
 
