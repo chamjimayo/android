@@ -1,16 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="mypage"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/tv_title_myPpage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:text="마이페이지"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_name_myypage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="읏차"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_nim_mypage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="님"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_backtoback_mypage" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/chamma_signup_linegray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="172dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:background="@drawable/shape_mypage_showpoint"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_showpoint_text_mypage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:text="마요포인트" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="6" />
+
+                <TextView
+                    android:id="@+id/tv_point_mypage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="3"
+                    android:gravity="right"
+                    android:text="10,000"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_p_mypage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="P"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_mypage_chargepoint"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/project_4thUMC_ic_point_mypage" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_weight="3"
+                    android:text="포인트를 충전해보세요" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_backtoback_mypage" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/chamma_signup_linegray" />
+
+        <LinearLayout
+            android:id="@+id/btn_usage_mypage"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_usage_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="이용 내역"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_backtoback_mypage" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/chamma_signup_linegray"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_review_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="리뷰 관리"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_backtoback_mypage" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_logout_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="로그 아웃"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_backtoback_mypage" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="wrap_content"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
