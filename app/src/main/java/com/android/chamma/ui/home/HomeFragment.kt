@@ -41,11 +41,13 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etSearch.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame,SearchFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+        binding.etSearch.setOnFocusChangeListener  { view, hasFocus ->
+            if(hasFocus){
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame,SearchFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
 
         mapView = mainActivity.findViewById(R.id.mapview)

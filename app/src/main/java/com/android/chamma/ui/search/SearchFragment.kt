@@ -23,7 +23,6 @@ import com.android.chamma.util.RetrofitInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search) {
 
@@ -35,9 +34,6 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
 
         binding.etSearch.requestFocus()
 
-        binding.etSearch.setOnClickListener {
-            binding.layoutRecentBar.visibility = View.GONE
-        }
         binding.btnErase.setOnClickListener {
             binding.etSearch.text.clear()
             keyword = ""
@@ -52,6 +48,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 keyword = binding.etSearch.text.toString()
                 if(keyword.isBlank()) binding.layoutRecentBar.visibility = View.VISIBLE
+                else binding.layoutRecentBar.visibility = View.GONE
                 getSearchData(keyword)
             }
 
@@ -87,7 +84,12 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
                     response: Response<RecentKeywordResponse>
                 ) {
                     if(response.body() != null){
-                        recyclerRecentKeyword(response.body()!!.data)
+                        if(response.body()!!.data.isEmpty()){
+                            binding.ivNorecentData.visibility = View.VISIBLE
+                        }else{
+                            binding.ivNorecentData.visibility = View.GONE
+                            recyclerRecentKeyword(response.body()!!.data)
+                        }
                     }
                 }
 
