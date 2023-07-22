@@ -12,6 +12,7 @@
     <color name="chamma_gray">#018786</color>
     <color name="chamma_teal">#00DEC9</color>
     <color name="chamma_black">#212529</color>
+    <color name="chamma_yellow">#FFDD8D</color>
 
     <color name="chamma_login_light">#D3D7DC</color>
 
@@ -19,5 +20,7 @@
     <color name="chamma_signup_strokegray">#ADB5BD</color>
     <color name="chamma_signup_lightgray">#E9ECEF</color>
     <color name="chamma_signup_linegray">#DEE2E6</color>
+
+
 
 </resources>
