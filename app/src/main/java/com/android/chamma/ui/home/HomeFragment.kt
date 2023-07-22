@@ -12,6 +12,7 @@ import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
 import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
 import com.android.chamma.util.ToastMessageUtil.showToast
 import com.naver.maps.geometry.LatLng
@@ -39,6 +40,15 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.etSearch.setOnFocusChangeListener  { view, hasFocus ->
+            if(hasFocus){
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame,SearchFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
+        }
 
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)
