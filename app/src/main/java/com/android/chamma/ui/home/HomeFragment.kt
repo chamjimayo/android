@@ -15,6 +15,7 @@ import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
 import com.android.chamma.util.ToastMessageUtil.showToast
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -72,12 +73,12 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
 
 
         // 서울시청역 부근 테스트 데이터
-        val d1 = MarkerData(37.5670135,126.9783740,"테스트공중화장실1")
-        val d2 = MarkerData(37.5400,126.9783740,"테스트유료화장실1")
-        val d3 = MarkerData(37.5500,126.9783740,"테스트공중화장실2")
-        val d4 = MarkerData(37.5300,126.9783740,"테스트유료화장실2")
-        val d5 = MarkerData(37.5500,126.9883740,"테스트공중화장실3")
-        val d6 = MarkerData(37.5300,126.9883740,"테스트유료화장실3")
+        val d1 = MarkerData("테스트공중화장실1",126.9783740,37.5670135,4.5F,100.0,"무료화장실")
+        val d2 = MarkerData("테스트유료화장실1",126.9783740,37.5400,4.0F,110.0,"유료화장실")
+        val d3 = MarkerData("테스트공중화장실2",126.9783740,37.5500,3.5F,150.0,"무료화장실")
+        val d4 = MarkerData("테스트유료화장실2",126.9783740,37.5300,3.5F,2000.0,"유료화장실")
+        val d5 = MarkerData("테스트공중화장실3",126.9883740,37.5500,4.98F,120.0,"무료화장실")
+        val d6 = MarkerData("테스트유료화장실3",126.9883740,37.5300,1.5F,170.0,"유료화장실")
 
         val freedatas = arrayListOf(d1,d3,d5)
         val paydatas = arrayListOf(d2,d4,d6)
@@ -152,7 +153,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
 
             marker.setOnClickListener {
 
-                showToast(App.context(),"${data.name}")
+                HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
 
                 true
             }
@@ -169,7 +170,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
 
             marker.setOnClickListener {
 
-                showToast(App.context(),"${data.name}")
+                HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
 
                 true
             }
