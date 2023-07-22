@@ -13,6 +13,7 @@ import com.android.chamma.ui.login.network.LoginAPI
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Jwt
 import com.android.chamma.util.RetrofitInterface
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -160,6 +161,10 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                      Log.d(TAG,"${response.body()?.data}")
                      if(response.code() == 200){
                          // 존재하는 유저. 로그인
+                         // accessToken 저장
+                         Jwt.setjwt(response.body()?.data!!.accessToken)
+                         
+                         // MainActivity로 이동
                          val intent = Intent(this@LoginActivity, MainActivity::class.java)
                          startActivity(intent)
                      }else {
