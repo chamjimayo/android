@@ -83,9 +83,11 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             if(locationState){
                 naverMap.locationTrackingMode = LocationTrackingMode.None
                 locationState = false
+                binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
                 naverMap.locationTrackingMode = LocationTrackingMode.Follow
                 locationState = true
+                binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
             }
 
         }
@@ -125,6 +127,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnAlltoilet.setBackgroundResource(R.drawable.shape_home_topbtn_white)
             binding.btnAlltoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
         }
+
 
 
     }

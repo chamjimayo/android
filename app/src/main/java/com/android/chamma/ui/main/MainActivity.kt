@@ -16,6 +16,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.bottomNV.itemIconTintList = null
         setFullScreen()
         setBottomNavigation()
     }
