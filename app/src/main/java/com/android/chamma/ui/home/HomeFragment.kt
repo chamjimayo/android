@@ -70,36 +70,39 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
-        naverMap.minZoom = 10.0
+        naverMap.minZoom = 15.0
         locationBtnListener()
         toiletBtnListener()
 
         // 화면 이동시 리스너
         naverMap.addOnCameraChangeListener{ reason, animated ->
             // 스와이프 시작하면, 시작위치 저장
-            if(!swiping){
+            if(!swiping && !locationState){
                 swiping = true
                 lastPosition = Pair(naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude)
             }
         }
 
         naverMap.addOnCameraIdleListener {
-            swiping = false
-            // 스와이프 멈추면, 해당 위치에서 마커찍기
-            // 300m 이상 스와이프 했을때만
-            if(getDistance(lastPosition.first,
-                    lastPosition.second,
-                    naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 300){
+            if(!locationState){
+                swiping = false
+                // 스와이프 멈추면, 해당 위치에서 마커찍기
+                // 300m 이상 스와이프 했을때만
+                if(getDistance(lastPosition.first,
+                        lastPosition.second,
+                        naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 300){
 
-                nearToiletList(toiletState,naverMap.cameraPosition.target.longitude,naverMap.cameraPosition.target.latitude,2000.0)
+                    nearToiletList(toiletState,naverMap.cameraPosition.target.longitude,naverMap.cameraPosition.target.latitude,2000.0)
+                }
             }
         }
 
         naverMap.addOnLocationChangeListener {
-            Log.d(TAG,"location change")
-            nearToiletList("entire"
-                ,it.longitude
-                ,it.latitude)
+            if(locationState){
+                nearToiletList(toiletState
+                    ,it.longitude
+                    ,it.latitude)
+            }
         }
 
     }
