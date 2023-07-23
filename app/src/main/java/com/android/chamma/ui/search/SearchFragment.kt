@@ -65,7 +65,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
                     call: Call<SearchResultResponse>,
                     response: Response<SearchResultResponse>
                 ) {
-                    if(response.body() != null){
+                    if(response.code() == 200){
                         recyclerSearchResult(response.body()!!.data, keyword)
                     }
                 }
@@ -83,7 +83,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
                     call: Call<RecentKeywordResponse>,
                     response: Response<RecentKeywordResponse>
                 ) {
-                    if(response.body() != null){
+                    if(response.code() == 200){
                         if(response.body()!!.data.isEmpty()){
                             binding.ivNorecentData.visibility = View.VISIBLE
                         }else{

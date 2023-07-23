@@ -34,9 +34,14 @@ class HomeBottomSheet(val data : MarkerData) : BottomSheetDialogFragment() {
 
         binding.tvName.text = data.restroomName
         binding.tvDistance.text = "내 위치로부터 ${data.distance.toInt()}m"
-        binding.tvRating.text = data.rating.toString()
-        binding.tvType.text = data.publicOrPaid
-        binding.ratingbar.rating = data.rating
+        binding.tvRating.text = data.reviewRating.toString()
+        if(data.publicOrPaid == "public") binding.tvType.text = "무료화장실"
+        else binding.tvType.text = "유료화장실"
+        binding.ratingbar.rating = data.reviewRating
+
+        binding.btnUse.setOnClickListener {
+
+        }
     }
 
 
