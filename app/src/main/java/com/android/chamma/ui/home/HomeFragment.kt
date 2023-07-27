@@ -12,6 +12,7 @@ import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
 import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.models.homemodel.NearToiletResponse
+import com.android.chamma.models.searchmodel.SearchResultData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
@@ -25,7 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.*
 
-class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
+class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -59,6 +60,10 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
+
+        if(searchData != null){
+            
+        }
     }
 
     override fun onMapReady(nM: NaverMap) {

@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemSearchResultBinding
 import com.android.chamma.models.searchmodel.SearchResultData
 
-class SearchResultAdapter(val datas : ArrayList<SearchResultData>, val keyword : String) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(
+    private val datas : ArrayList<SearchResultData>,
+    private val keyword : String,
+    private val onItemClickListener: (data : SearchResultData) -> Unit
+) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemSearchResultBinding) : RecyclerView.ViewHolder(binding.root){
 
@@ -19,7 +23,7 @@ class SearchResultAdapter(val datas : ArrayList<SearchResultData>, val keyword :
             binding.tvAddress.text = item.roadAddress
 
             binding.layout.setOnClickListener {
-
+                onItemClickListener(item)
             }
         }
 

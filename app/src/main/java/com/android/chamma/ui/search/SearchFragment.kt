@@ -13,6 +13,7 @@ import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
 import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.home.HomeFragment
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
 
@@ -64,15 +65,22 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     private fun recyclerRecentKeyword(data : ArrayList<SearchResultData>){
-        val adapter = RecentKeywordAdapter(data)
+        val adapter = RecentKeywordAdapter(data,::keywordClick)
         binding.recyclerData.adapter = adapter
         binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
 
     private fun recyclerSearchResult(data : ArrayList<SearchResultData>, keyword : String){
-        val adapter = SearchResultAdapter(data,keyword)
+        val adapter = SearchResultAdapter(data,keyword,::keywordClick)
         binding.recyclerData.adapter = adapter
         binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
+    }
+
+    private fun keywordClick(data : SearchResultData){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame, HomeFragment(data))
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 
     private val onEditKeyListener = View.OnKeyListener { view, i, keyEvent ->
