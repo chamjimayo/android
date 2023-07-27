@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -14,45 +13,48 @@ import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
 import com.android.chamma.models.searchmodel.SearchResultData
-import com.android.chamma.models.searchmodel.SearchResultResponse
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
-import com.android.chamma.ui.search.network.RecentKeywordAPI
-import com.android.chamma.ui.search.network.SearchAPI
-import com.android.chamma.util.Constants.TAG
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search) {
+class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search), SearchFragmentInterface {
 
 
     private var keyword = ""
+    private var isTyping = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getRecentKeywordData()
+        SearchService(this@SearchFragment).getRecentKeyword()
 
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)
-
         binding.btnErase.setOnClickListener {
             binding.etSearch.text.clear()
             keyword = ""
         }
 
         textListener()
-
     }
 
     private fun textListener(){
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 keyword = binding.etSearch.text.toString()
-                if(keyword.isBlank()) binding.layoutRecentBar.visibility = View.VISIBLE
-                else binding.layoutRecentBar.visibility = View.GONE
-                getSearchData(keyword)
+
+                if(keyword.isBlank()) {
+                    isTyping = false
+                    binding.recyclerData.adapter = null
+                    binding.layoutRecentBar.visibility = View.VISIBLE
+                    SearchService(this@SearchFragment).getRecentKeyword()
+                }
+                else {
+                    isTyping = true
+                    binding.recyclerData.adapter = null
+                    binding.ivNorecentData.visibility = View.GONE
+                    binding.layoutRecentBar.visibility = View.GONE
+                    SearchService(this@SearchFragment).getSearch(keyword)
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -61,56 +63,16 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         })
     }
 
-    private fun getSearchData(keyword : String){
-        App.getRetro().create(SearchAPI::class.java)
-            .getSearch(keyword).enqueue(object : Callback<SearchResultResponse> {
-                override fun onResponse(
-                    call: Call<SearchResultResponse>,
-                    response: Response<SearchResultResponse>
-                ) {
-                    if(response.code() == 200){
-                        recyclerSearchResult(response.body()!!.data, keyword)
-                    }
-                }
-
-                override fun onFailure(call: Call<SearchResultResponse>, t: Throwable) {
-                    Log.d(TAG, "${t.message}")
-                }
-            })
-    }
-
-    private fun getRecentKeywordData(){
-        App.getRetro().create(RecentKeywordAPI::class.java)
-            .getRecentKeyword().enqueue(object : Callback<SearchResultResponse>{
-                override fun onResponse(
-                    call: Call<SearchResultResponse>,
-                    response: Response<SearchResultResponse>
-                ) {
-                    if(response.code() == 200){
-                        if(response.body()!!.data.isEmpty()){
-                            binding.ivNorecentData.visibility = View.VISIBLE
-                        }else{
-                            binding.ivNorecentData.visibility = View.GONE
-                            recyclerRecentKeyword(response.body()!!.data)
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<SearchResultResponse>, t: Throwable) {
-                    Log.d(TAG, "${t.message}")
-                }
-            })
-    }
-
     private fun recyclerRecentKeyword(data : ArrayList<SearchResultData>){
         val adapter = RecentKeywordAdapter(data)
         binding.recyclerData.adapter = adapter
-        binding. recyclerData.layoutManager = LinearLayoutManager(App.context())
+        binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
 
     private fun recyclerSearchResult(data : ArrayList<SearchResultData>, keyword : String){
         val adapter = SearchResultAdapter(data,keyword)
         binding.recyclerData.adapter = adapter
-        binding. recyclerData.layoutManager = LinearLayoutManager(App.context())
+        binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
 
     private val onEditKeyListener = View.OnKeyListener { view, i, keyEvent ->
@@ -118,7 +80,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
             //검색했을때
             val word = binding.etSearch.text.toString()
             if(word.isBlank()) showCustomToast("검색어를 입력해주세요")
-            else getSearchData(word)
+            else SearchService(this@SearchFragment).getSearch(word)
 
             val manager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view.windowToken, 0)
@@ -128,6 +90,25 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         return@OnKeyListener false
     }
 
+    override fun onGetSearchSuccess(datas: ArrayList<SearchResultData>, keyword : String) {
+        if(isTyping) recyclerSearchResult(datas, keyword)
+    }
+
+    override fun onGetRecentKeywordSuccess(datas: ArrayList<SearchResultData>) {
+        if(datas.isEmpty()) binding.ivNorecentData.visibility = View.VISIBLE
+        else{
+            binding.ivNorecentData.visibility = View.GONE
+            recyclerRecentKeyword(datas)
+        }
+    }
+
+    override fun onGetSearchFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onGetRecentKeywordFailure(message: String) {
+        showCustomToast(message)
+    }
 
 
 }
