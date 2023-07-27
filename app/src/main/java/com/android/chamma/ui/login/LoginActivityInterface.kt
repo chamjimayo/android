@@ -1,9 +1,11 @@
 package com.android.chamma.ui.login
 
+import com.android.chamma.models.loginmodel.LoginResponseData
+
 interface LoginActivityInterface {
 
 
-    fun onPostLoginSuccess()
+    fun onPostLoginSuccess(result : LoginResponseData)
 
-    fun onPostLoginFailure()
+    fun onPostLoginFailure(message : String, uuid : String)
 }

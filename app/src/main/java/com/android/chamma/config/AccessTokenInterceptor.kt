@@ -19,6 +19,4 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor {
         }
         return chain.proceed(builder.build())
     }
-
-
 }
