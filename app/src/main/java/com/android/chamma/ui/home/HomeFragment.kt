@@ -223,7 +223,6 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
 
     private fun removeMarker(){
-        Log.d(TAG,"removeMarker")
         CoroutineScope(Dispatchers.Main).launch{
             markerList.forEach{it.map = null}
             markerList.clear()

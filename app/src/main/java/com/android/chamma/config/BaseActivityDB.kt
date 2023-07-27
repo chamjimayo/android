@@ -1,6 +1,7 @@
 package com.android.chamma.config
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,4 +18,11 @@ abstract class BaseActivityDB<B : ViewDataBinding>(
         binding = DataBindingUtil.setContentView(this, layoutRes)
         binding.lifecycleOwner = this
     }
+
+    fun showCustomToast(message: String) {
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+
 }
