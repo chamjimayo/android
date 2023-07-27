@@ -10,17 +10,13 @@ import androidx.core.content.ContextCompat
 import com.android.chamma.R
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivitySignupBinding
-import com.android.chamma.models.loginmodel.LoginResponse
 import com.android.chamma.models.signupmodel.NickcheckResponse
 import com.android.chamma.models.signupmodel.SignupPostData
 import com.android.chamma.models.signupmodel.SignupResponse
-import com.android.chamma.ui.login.network.LoginAPI
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.network.NickcheckAPI
 import com.android.chamma.ui.signup.network.SignupAPI
-import com.android.chamma.util.Constants
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.RetrofitInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

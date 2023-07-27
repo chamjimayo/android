@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.android.chamma.App
+import com.android.chamma.config.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
@@ -16,7 +16,6 @@ import com.android.chamma.ui.home.network.NearToiletAPI
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.RetrofitInterface
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker

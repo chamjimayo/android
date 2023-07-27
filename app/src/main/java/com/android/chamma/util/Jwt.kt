@@ -1,7 +1,6 @@
 package com.android.chamma.util
 
-import com.android.chamma.App
-import com.android.chamma.App.Companion.sharedPreferences
+import com.android.chamma.config.App.Companion.sharedPreferences
 
 object Jwt {
     var jwt = ""

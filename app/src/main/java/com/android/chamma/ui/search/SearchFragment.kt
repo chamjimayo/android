@@ -9,7 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.chamma.App
+import com.android.chamma.config.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
@@ -20,7 +20,6 @@ import com.android.chamma.ui.search.adapter.SearchResultAdapter
 import com.android.chamma.ui.search.network.RecentKeywordAPI
 import com.android.chamma.ui.search.network.SearchAPI
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.RetrofitInterface
 import com.android.chamma.util.ToastMessageUtil
 import retrofit2.Call
 import retrofit2.Callback
