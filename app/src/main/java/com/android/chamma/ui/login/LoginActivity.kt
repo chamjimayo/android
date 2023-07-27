@@ -5,16 +5,16 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
 import com.android.chamma.models.loginmodel.LoginPostData
-import com.android.chamma.models.loginmodel.LoginResponse
-import com.android.chamma.ui.login.network.LoginAPI
+import com.android.chamma.models.loginmodel.LoginResponseData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.Jwt
-import com.android.chamma.util.RetrofitInterface
+import com.android.chamma.util.Constants.X_ACCESS_TOKEN
+import com.android.chamma.util.Constants.X_REFRESH_TOKEN
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -24,11 +24,8 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
 
     private var social = ""
@@ -59,7 +56,6 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
             }
-
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
             }
@@ -122,10 +118,11 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
     // 네이버 유저정보 콜백
     private val profileCallback = object : NidProfileCallback<NidProfileResponse> {
-        override fun onSuccess(response: NidProfileResponse) {
-            val id = response.profile?.id
+        override fun onSuccess(result: NidProfileResponse) {
+            val id = result.profile?.id
+
             // 식별아이디로 통신
-            senduuid(id.toString())
+            LoginService(this@LoginActivity).postLogin(LoginPostData(id.toString()))
         }
         override fun onFailure(httpStatus: Int, message: String) {
             val errorCode = NaverIdLoginSDK.getLastErrorCode().code
@@ -145,45 +142,36 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
                 // 식별아이디로 통신
-                senduuid(user.id.toString())
+                LoginService(this@LoginActivity).postLogin(LoginPostData(user.id.toString()))
             }
         }
     }
+    private fun storeTokens(result : LoginResponseData){
+        sharedPreferences.edit()
+            .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
+            .putString(X_REFRESH_TOKEN, result.refreshToken).apply()
+    }
 
-     private fun senduuid(uuid : String){
-         val data = LoginPostData(uuid)
-         RetrofitInterface.retrofit.create(LoginAPI::class.java)
-             .checkUuid(data).enqueue(object : Callback<LoginResponse>{
-                 override fun onResponse(
-                     call: Call<LoginResponse>,
-                     response: Response<LoginResponse>
-                 ) {
-                     Log.d(TAG,"${response.body()?.data}")
-                     response.body()?.let{
-                         if(response.code() == 200){
-                             // 존재하는 유저. 로그인
-                             // accessToken 저장
-                             Jwt.setjwt(response.body()?.data!!.accessToken)
-                             Jwt.setRefreshToken(response.body()?.data!!.refreshToken)
+    override fun onPostLoginSuccess(result : LoginResponseData) {
+        // 존재하는 유저. 로그인
 
-                             // MainActivity로 이동
-                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                             startActivity(intent)
-                         }else {
-                             // 존재하지 않는 유저. 회원가입
-                             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-                                 .putExtra("authType",social)
-                                 .putExtra("authId",uuid)
-                             startActivity(intent)
-                         }
-                     }
+        // accessToken/refreshToken 저장
+        storeTokens(result)
 
-                 }
-                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                     Log.d(TAG,"${t.message}")
-                 }
-             })
-     }
+        // MainActivity로 이동
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onPostLoginFailure(message : String, uuid : String) {
+        if(uuid.isNotBlank()){
+            // 존재하지 않는 유저. 회원가입
+            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                .putExtra("authType",social)
+                .putExtra("authId",uuid)
+            startActivity(intent)
+        }
+    }
 
 
     // 풀스크린 적용

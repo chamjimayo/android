@@ -9,7 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.chamma.App
+import com.android.chamma.config.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
@@ -20,8 +20,6 @@ import com.android.chamma.ui.search.adapter.SearchResultAdapter
 import com.android.chamma.ui.search.network.RecentKeywordAPI
 import com.android.chamma.ui.search.network.SearchAPI
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.RetrofitInterface
-import com.android.chamma.util.ToastMessageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,7 +62,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     private fun getSearchData(keyword : String){
-        RetrofitInterface.retrofit.create(SearchAPI::class.java)
+        App.getRetro().create(SearchAPI::class.java)
             .getSearch(keyword).enqueue(object : Callback<SearchResultResponse> {
                 override fun onResponse(
                     call: Call<SearchResultResponse>,
@@ -82,7 +80,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     private fun getRecentKeywordData(){
-        RetrofitInterface.retrofit.create(RecentKeywordAPI::class.java)
+        App.getRetro().create(RecentKeywordAPI::class.java)
             .getRecentKeyword().enqueue(object : Callback<SearchResultResponse>{
                 override fun onResponse(
                     call: Call<SearchResultResponse>,
@@ -119,7 +117,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         if (i == KeyEvent.KEYCODE_ENTER) {
             //검색했을때
             val word = binding.etSearch.text.toString()
-            if(word.isBlank()) ToastMessageUtil.showToast(requireContext(),"검색어를 입력해주세요")
+            if(word.isBlank()) showCustomToast("검색어를 입력해주세요")
             else getSearchData(word)
 
             val manager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
