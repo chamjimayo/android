@@ -12,7 +12,7 @@ import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
 import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.models.homemodel.NearToiletResponse
-import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
@@ -62,7 +62,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
 
         if(searchData != null){
-            
+
         }
     }
 

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemSearchResultBinding
-import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.search.model.SearchResultData
 
 class SearchResultAdapter(
     private val datas : ArrayList<SearchResultData>,

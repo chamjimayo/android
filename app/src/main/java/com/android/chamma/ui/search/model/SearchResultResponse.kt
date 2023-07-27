@@ -1,12 +1,11 @@
-package com.android.chamma.models.searchmodel
+package com.android.chamma.ui.search.model
 
+import com.android.chamma.config.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 data class SearchResultResponse (
-    val code : String,
-    val msg : String,
     val data : ArrayList<SearchResultData>
-)
+) : BaseResponse()
 
 data class SearchResultData(
     @SerializedName("searchWord") val searchWord : String,

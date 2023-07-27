@@ -1,6 +1,6 @@
 package com.android.chamma.ui.search
 
-import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.search.model.SearchResultData
 
 interface SearchFragmentInterface {
 

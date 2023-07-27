@@ -12,7 +12,7 @@ import com.android.chamma.config.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
-import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.home.HomeFragment
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
@@ -76,7 +76,10 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
 
+    // 검색어 클릭이벤트 처리
     private fun keywordClick(data : SearchResultData){
+
+
         parentFragmentManager.beginTransaction()
             .replace(R.id.frame, HomeFragment(data))
             .addToBackStack(null)

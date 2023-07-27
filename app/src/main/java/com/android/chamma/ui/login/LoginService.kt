@@ -1,8 +1,8 @@
 package com.android.chamma.ui.login
 
 import com.android.chamma.config.App
-import com.android.chamma.models.loginmodel.LoginPostData
-import com.android.chamma.models.loginmodel.LoginResponse
+import com.android.chamma.ui.login.model.LoginPostData
+import com.android.chamma.ui.login.model.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

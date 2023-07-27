@@ -1,10 +1,10 @@
-package com.android.chamma.models.loginmodel
+package com.android.chamma.ui.login.model
+
+import com.android.chamma.config.BaseResponse
 
 data class LoginResponse(
-    val code : Int,
-    val msg : String,
     val data : LoginResponseData
-)
+) : BaseResponse()
 
 data class LoginResponseData(
     val accessToken : String,

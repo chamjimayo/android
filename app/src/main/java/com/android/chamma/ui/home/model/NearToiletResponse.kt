@@ -1,10 +1,10 @@
 package com.android.chamma.models.homemodel
 
+import com.android.chamma.config.BaseResponse
+
 data class NearToiletResponse (
-    val code : String,
-    val msg : String,
     val data : ArrayList<MarkerData>
-)
+) : BaseResponse()
 
 data class MarkerData(
     val restroomName : String,
