@@ -9,8 +9,5 @@ import retrofit2.http.Query
 
 interface SearchAPI {
     @GET("/api/address/search")
-    fun getSearch(
-        @Query("searchWord") searchWord : String,
-        @Header("x-api-key") api : String? = xapikey,
-    ) : Call<SearchResultResponse>
+    fun getSearch(@Query("searchWord") searchWord : String ) : Call<SearchResultResponse>
 }

@@ -9,7 +9,5 @@ import retrofit2.http.Header
 
 interface RecentKeywordAPI {
     @GET("/api/address/search/recent")
-    fun getRecentKeyword(
-        @Header("x-api-key") api : String? = Constants.xapikey,
-    ) : Call<SearchResultResponse>
+    fun getRecentKeyword() : Call<SearchResultResponse>
 }
