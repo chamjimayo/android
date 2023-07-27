@@ -148,7 +148,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     }
     private fun storeTokens(result : LoginResponseData){
         sharedPreferences.edit()
-            .putString(X_ACCESS_TOKEN, result.accessToken)
+            .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
             .putString(X_REFRESH_TOKEN, result.refreshToken).apply()
     }
 
