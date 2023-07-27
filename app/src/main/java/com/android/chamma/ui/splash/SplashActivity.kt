@@ -18,6 +18,7 @@ import com.android.chamma.R
 import com.android.chamma.ui.login.LoginActivity
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.X_ACCESS_TOKEN
 import com.android.chamma.util.LoadingDialog
 
 class SplashActivity : AppCompatActivity() {
@@ -46,12 +47,21 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun autoLogin(){
-        val jwt = sharedPreferences.getString("jwt","")
-        if (jwt != null) {
-            Log.d(TAG, "jwt : $jwt")
-            if(jwt.isBlank()) startActivity(Intent(this, LoginActivity::class.java))
-            else startActivity(Intent(this, MainActivity::class.java))
-        }else startActivity(Intent(this, LoginActivity::class.java))
+        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")
+
+
+        /* TODO
+            ACCESS_TOKEN 유효기간 확인 
+            -> 안지났을 경우 : MainActivity 로 이동
+            -> 지났을 경우 : REFRESH_TOKEN 유효기간 확인
+                -> 안지났을 경우 : /api/auth/token/access 로 ACCESSTOKEN 갱신
+                -> 지났을 경우 : LoginActivity 로 이동
+         */
+
+        // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 작성
+        if (!jwt.isNullOrBlank()) startActivity(Intent(this, MainActivity::class.java))
+        else startActivity(Intent(this, LoginActivity::class.java))
+
     }
 
     private fun showAlert(){

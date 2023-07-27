@@ -30,7 +30,6 @@ class App : Application() {
         lateinit var instance : App
         lateinit var sharedPreferences: SharedPreferences
         lateinit var retrofit : Retrofit
-        val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
         // 앱의 context 를 불러오는 함수
         fun context() : Context {

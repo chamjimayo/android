@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.android.chamma.config.App.Companion.X_ACCESS_TOKEN
 import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
@@ -14,6 +13,7 @@ import com.android.chamma.models.loginmodel.LoginResponseData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.X_ACCESS_TOKEN
 import com.android.chamma.util.Constants.X_REFRESH_TOKEN
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
