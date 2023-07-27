@@ -1,8 +1,11 @@
 package com.android.chamma.util
 
 object Constants {
+
     const val TAG = "debugging"
     const val BASE_URL = "https://dev.chamjimayo.site"
+    const val X_REFRESH_TOKEN = "X_REFRESH_TOKEN"
+
     const val naverClientId = "NDnl6NnzM6FuLQvLPxqO"
     const val naverClientSecret = "ZjnRFs4F5s"
     const val naverClientName = "chamma"

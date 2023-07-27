@@ -12,7 +12,6 @@ import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
 import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.models.homemodel.NearToiletResponse
-import com.android.chamma.ui.home.network.NearToiletAPI
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
@@ -21,12 +20,9 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import kotlin.math.*
 
-class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback {
+class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -47,7 +43,6 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         binding.etSearch.setOnFocusChangeListener  { view, hasFocus ->
             if(hasFocus){
@@ -90,15 +85,17 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
                 if(getDistance(lastPosition.first,
                         lastPosition.second,
                         naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 300){
-
-                    nearToiletList(toiletState,naverMap.cameraPosition.target.longitude,naverMap.cameraPosition.target.latitude,2000.0)
+                    HomeService(this).getNearToilet(toiletState
+                        ,naverMap.cameraPosition.target.longitude
+                        ,naverMap.cameraPosition.target.latitude
+                    ,2000.0)
                 }
             }
         }
 
         naverMap.addOnLocationChangeListener {
             if(locationState){
-                nearToiletList(toiletState
+                HomeService(this).getNearToilet(toiletState
                     ,it.longitude
                     ,it.latitude)
             }
@@ -138,7 +135,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnPaytoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "entire"
             removeMarker()
-            nearToiletList("entire"
+            HomeService(this).getNearToilet("paid"
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
@@ -154,7 +151,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnPaytoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "public"
             removeMarker()
-            nearToiletList("public"
+            HomeService(this).getNearToilet("paid"
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
@@ -170,35 +167,10 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnAlltoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "paid"
             removeMarker()
-            nearToiletList("paid"
+            HomeService(this).getNearToilet("paid"
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
-
-    }
-
-    private fun nearToiletList(type : String, longitude : Double, latitude : Double,distance : Double?=null){
-
-        removeMarker()
-        RetrofitInterface.retrofit.create(NearToiletAPI::class.java)
-            .getNearToilet(type,longitude = longitude, latitude = latitude, distance = distance).enqueue(object : Callback<NearToiletResponse>{
-                override fun onResponse(
-                    call: Call<NearToiletResponse>,
-                    response: Response<NearToiletResponse>
-                ) {
-                    if(response.code() == 200){
-
-                        response.body()?.data?.forEach{
-                            if(it.publicOrPaid == "public") setFreetoiletMarker(it)
-                            else setPaytoiletMarker(it)
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<NearToiletResponse>, t: Throwable) {
-                    Log.d(TAG,"${t.message}")
-                }
-            })
 
     }
 
@@ -210,9 +182,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         marker.map = naverMap
 
         marker.setOnClickListener {
-
             HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
-
             true
         }
 
@@ -227,13 +197,22 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         marker.map = naverMap
 
         marker.setOnClickListener {
-
             HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
-
             true
         }
 
         markerList.add(marker)
+    }
+
+    override fun onGetNearToiletSuccess(result : NearToiletResponse) {
+        result.data.forEach{
+            if(it.publicOrPaid == "public") setFreetoiletMarker(it)
+            else setPaytoiletMarker(it)
+        }
+    }
+
+    override fun onGetNearToiletFailure(message : String) {
+        // TODO 오류내용 Toast 메세지
     }
 
     private fun removeMarker(){

@@ -10,9 +10,9 @@ import retrofit2.Response
 class LoginService(val view : LoginActivityInterface) {
 
 
-    fun checkUuid(body : LoginPostData){
+    fun postLogin(body : LoginPostData){
         val loginRetro = App.getRetrofit().create(LoginRetrofitInterface::class.java)
-        loginRetro.checkUuid(body).enqueue(object : Callback<LoginResponse>{
+        loginRetro.postLogin(body).enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 response.body()?.let{
                     if(response.code() == 200) view.onPostLoginSuccess(it.data)

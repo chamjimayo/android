@@ -12,7 +12,7 @@ interface LoginRetrofitInterface {
 
 
     @POST("/api/auth/login")
-    fun checkUuid(
+    fun postLogin(
         @Body params : LoginPostData,
         @Header("x-api-key") api : String? = Constants.xapikey
     ) : Call<LoginResponse>

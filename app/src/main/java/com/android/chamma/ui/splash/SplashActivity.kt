@@ -18,7 +18,6 @@ import com.android.chamma.R
 import com.android.chamma.ui.login.LoginActivity
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.util.Constants.TAG
-import com.android.chamma.util.Jwt
 import com.android.chamma.util.LoadingDialog
 
 class SplashActivity : AppCompatActivity() {
