@@ -50,14 +50,8 @@ class SearchService(val view : SearchFragmentInterface) {
 
     fun postAddressClick(data : SearchResultData){
         searchRetro.postAddressClick(data).enqueue(object : Callback<BaseResponse>{
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {}
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {}
         })
-
     }
 }

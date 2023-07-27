@@ -16,6 +16,9 @@ import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.home.HomeFragment
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search), SearchFragmentInterface {
 
@@ -78,7 +81,9 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
 
     // 검색어 클릭이벤트 처리
     private fun keywordClick(data : SearchResultData){
-
+        CoroutineScope(Dispatchers.IO).launch{
+            SearchService(this@SearchFragment).postAddressClick(data)
+        }
 
         parentFragmentManager.beginTransaction()
             .replace(R.id.frame, HomeFragment(data))
@@ -119,6 +124,12 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
 
     override fun onGetRecentKeywordFailure(message: String) {
         showCustomToast(message)
+    }
+    override fun onPostAddressClickSuccess() {
+        super.onPostAddressClickSuccess()
+    }
+    override fun onPostAddressClickFailure() {
+        super.onPostAddressClickFailure()
     }
 
 
