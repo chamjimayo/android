@@ -11,6 +11,5 @@ interface RecentKeywordAPI {
     @GET("/api/address/search/recent")
     fun getRecentKeyword(
         @Header("x-api-key") api : String? = Constants.xapikey,
-        @Header("Bearer-Token") jwt : String? = Jwt.jwt
     ) : Call<SearchResultResponse>
 }

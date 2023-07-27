@@ -63,7 +63,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     private fun getSearchData(keyword : String){
-        RetrofitInterface.retrofit.create(SearchAPI::class.java)
+        App.getRetrofit().create(SearchAPI::class.java)
             .getSearch(keyword).enqueue(object : Callback<SearchResultResponse> {
                 override fun onResponse(
                     call: Call<SearchResultResponse>,
@@ -81,7 +81,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     private fun getRecentKeywordData(){
-        RetrofitInterface.retrofit.create(RecentKeywordAPI::class.java)
+        App.getRetrofit().create(RecentKeywordAPI::class.java)
             .getRecentKeyword().enqueue(object : Callback<SearchResultResponse>{
                 override fun onResponse(
                     call: Call<SearchResultResponse>,

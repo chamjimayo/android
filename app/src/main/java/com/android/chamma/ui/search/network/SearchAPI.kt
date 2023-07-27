@@ -12,6 +12,5 @@ interface SearchAPI {
     fun getSearch(
         @Query("searchWord") searchWord : String,
         @Header("x-api-key") api : String? = xapikey,
-        @Header("Bearer-Token") jwt : String? = "Bearer " + Jwt.jwt
     ) : Call<SearchResultResponse>
 }
