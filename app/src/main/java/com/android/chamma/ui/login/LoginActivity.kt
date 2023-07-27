@@ -159,20 +159,23 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                      response: Response<LoginResponse>
                  ) {
                      Log.d(TAG,"${response.body()?.data}")
-                     if(response.code() == 200){
-                         // 존재하는 유저. 로그인
-                         // accessToken 저장
-                         Jwt.setjwt(response.body()?.data!!.accessToken)
-                         
-                         // MainActivity로 이동
-                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                         startActivity(intent)
-                     }else {
-                         // 존재하지 않는 유저. 회원가입
-                         val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-                             .putExtra("authType",social)
-                             .putExtra("authId",uuid)
-                         startActivity(intent)
+                     response.body()?.let{
+                         if(response.code() == 200){
+                             // 존재하는 유저. 로그인
+                             // accessToken 저장
+                             Jwt.setjwt(response.body()?.data!!.accessToken)
+                             Jwt.setRefreshToken(response.body()?.data!!.refreshToken)
+
+                             // MainActivity로 이동
+                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                             startActivity(intent)
+                         }else {
+                             // 존재하지 않는 유저. 회원가입
+                             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                                 .putExtra("authType",social)
+                                 .putExtra("authId",uuid)
+                             startActivity(intent)
+                         }
                      }
 
                  }

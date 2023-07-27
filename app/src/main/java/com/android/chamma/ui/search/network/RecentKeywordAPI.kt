@@ -1,6 +1,7 @@
 package com.android.chamma.ui.search.network
 
-import com.android.chamma.models.searchmodel.RecentKeywordResponse
+
+import com.android.chamma.models.searchmodel.SearchResultResponse
 import com.android.chamma.util.Constants
 import com.android.chamma.util.Jwt
 import retrofit2.Call
@@ -12,5 +13,5 @@ interface RecentKeywordAPI {
     fun getRecentKeyword(
         @Header("x-api-key") api : String? = Constants.xapikey,
         @Header("Bearer-Token") jwt : String? = Jwt.jwt
-    ) : Call<RecentKeywordResponse>
+    ) : Call<SearchResultResponse>
 }

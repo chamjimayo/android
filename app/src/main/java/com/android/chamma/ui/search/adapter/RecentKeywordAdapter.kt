@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemSearchRecentsearchBinding
-import com.android.chamma.models.searchmodel.RecentKeywordData
+import com.android.chamma.models.searchmodel.SearchResultData
 
-class RecentKeywordAdapter(val datas : ArrayList<RecentKeywordData>) : RecyclerView.Adapter<RecentKeywordAdapter.ViewHolder>(){
+class RecentKeywordAdapter(val datas : ArrayList<SearchResultData>) : RecyclerView.Adapter<RecentKeywordAdapter.ViewHolder>(){
 
     inner class ViewHolder(private val binding : ItemSearchRecentsearchBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item : RecentKeywordData){
+        fun bind(item : SearchResultData){
             binding.tvSearchData.text = item.name
 
         }
