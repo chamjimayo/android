@@ -27,11 +27,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        Log.d(TAG, Jwt.jwt)
         
         setFullScreen()
-
         Handler(Looper.getMainLooper()).postDelayed({
 
             // 스플래시 끝난뒤 LoadingDialog 띄우기

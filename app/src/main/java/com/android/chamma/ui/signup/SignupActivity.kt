@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.android.chamma.R
+import com.android.chamma.config.App
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivitySignupBinding
 import com.android.chamma.models.signupmodel.NickcheckResponse
@@ -155,7 +156,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
     }
 
     private fun nickCheck(){
-        RetrofitInterface.retrofit.create(NickcheckAPI::class.java)
+        App.getRetro().create(NickcheckAPI::class.java)
             .checkNick(nick).enqueue(object : Callback<NickcheckResponse>{
                 override fun onResponse(
                     call: Call<NickcheckResponse>,
@@ -187,7 +188,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
     private fun sendSignup(){
         val data = SignupPostData(authType,authId,name,nick,gender)
         Log.d(TAG,"$data")
-        RetrofitInterface.retrofit.create(SignupAPI::class.java)
+        App.getRetro().create(SignupAPI::class.java)
             .signup(data).enqueue(object : Callback<SignupResponse> {
                 override fun onResponse(
                     call: Call<SignupResponse>,

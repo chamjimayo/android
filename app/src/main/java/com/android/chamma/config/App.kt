@@ -37,7 +37,7 @@ class App : Application() {
             return instance.applicationContext
         }
 
-        fun getRetrofit() : Retrofit{
+        fun getRetro() : Retrofit{
             return retrofit.newBuilder()
                 .baseUrl(Constants.BASE_URL)
                 .build()

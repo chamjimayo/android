@@ -20,6 +20,9 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.*
 
 class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
@@ -33,7 +36,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     private val LOCATION_PERMISSTION_REQUEST_CODE = 1000
     private var locationState = true
     private var toiletState = "entire"
-    private val markerList = arrayListOf<Marker>()
+    val markerList = arrayListOf<Marker>()
 
     private var swiping = false
 
@@ -77,6 +80,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             }
         }
 
+        // 화면이동 끝났을때 리스너
         naverMap.addOnCameraIdleListener {
             if(!locationState){
                 swiping = false
@@ -85,6 +89,8 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
                 if(getDistance(lastPosition.first,
                         lastPosition.second,
                         naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 300){
+                    removeMarker()
+
                     HomeService(this).getNearToilet(toiletState
                         ,naverMap.cameraPosition.target.longitude
                         ,naverMap.cameraPosition.target.latitude
@@ -93,6 +99,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             }
         }
 
+        // GPS 기반 위치변화 리스너
         naverMap.addOnLocationChangeListener {
             if(locationState){
                 HomeService(this).getNearToilet(toiletState
@@ -216,7 +223,8 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
 
     private fun removeMarker(){
-        (context as MainActivity).runOnUiThread {
+        Log.d(TAG,"removeMarker")
+        CoroutineScope(Dispatchers.Main).launch{
             markerList.forEach{it.map = null}
             markerList.clear()
         }

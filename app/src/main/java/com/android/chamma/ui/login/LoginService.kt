@@ -11,7 +11,7 @@ class LoginService(val view : LoginActivityInterface) {
 
 
     fun postLogin(body : LoginPostData){
-        val loginRetro = App.getRetrofit().create(LoginRetrofitInterface::class.java)
+        val loginRetro = App.getRetro().create(LoginRetrofitInterface::class.java)
         loginRetro.postLogin(body).enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 response.body()?.let{

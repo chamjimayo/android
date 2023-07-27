@@ -2,6 +2,7 @@ package com.android.chamma.ui.home
 
 import com.android.chamma.config.App
 import com.android.chamma.models.homemodel.NearToiletResponse
+import com.android.chamma.ui.main.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,7 +11,8 @@ class HomeService(val view : HomeFragmentInterface) {
 
 
     fun getNearToilet(type : String, longitude : Double, latitude : Double,distance : Double?=null){
-        val homeRetro = App.getRetrofit().create(HomeRetrofitInterface::class.java)
+
+        val homeRetro = App.getRetro().create(HomeRetrofitInterface::class.java)
         homeRetro.getNearToilet(type,longitude = longitude, latitude = latitude, distance = distance)
             .enqueue(object : Callback<NearToiletResponse>{
             override fun onResponse(
