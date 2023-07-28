@@ -1,10 +1,12 @@
 package com.android.chamma.ui.search.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemSearchResultBinding
 import com.android.chamma.ui.search.model.SearchResultData
+import com.android.chamma.util.Constants.TAG
 
 class SearchResultAdapter(
     private val datas : ArrayList<SearchResultData>,
@@ -32,7 +34,7 @@ class SearchResultAdapter(
     private fun parseText(text : String) : ArrayList<String>{
         val result = arrayListOf<String>()
         val start = text.indexOf(keyword)
-        val end = text.lastIndexOf(keyword)
+        val end = start + keyword.length - 1
         if(keyword in text){
             result.add(text.substring(0,start))
             result.add(keyword)

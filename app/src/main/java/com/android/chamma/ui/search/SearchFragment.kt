@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -16,6 +17,7 @@ import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.home.HomeFragment
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
+import com.android.chamma.util.Constants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +56,6 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
                 }
                 else {
                     isTyping = true
-                    binding.recyclerData.adapter = null
                     binding.ivNorecentData.visibility = View.GONE
                     binding.layoutRecentBar.visibility = View.GONE
                     SearchService(this@SearchFragment).getSearch(keyword)
@@ -107,7 +108,10 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     }
 
     override fun onGetSearchSuccess(datas: ArrayList<SearchResultData>, keyword : String) {
-        if(isTyping) recyclerSearchResult(datas, keyword)
+        if(isTyping && datas.isNotEmpty()) {
+            binding.recyclerData.adapter = null
+            recyclerSearchResult(datas, keyword)
+        }
     }
 
     override fun onGetRecentKeywordSuccess(datas: ArrayList<SearchResultData>) {
