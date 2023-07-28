@@ -11,7 +11,7 @@ import com.android.chamma.ui.search.model.SearchResultData
 class RecentKeywordAdapter(
     private val datas : ArrayList<SearchResultData>,
     private val onItemClickListener: (data : SearchResultData) -> Unit,
-    private val onDeleteClickListener : (searchId : Int) -> Unit
+    private val onDeleteClickListener : (keyword : String) -> Unit
 ) : RecyclerView.Adapter<RecentKeywordAdapter.ViewHolder>(){
 
     inner class ViewHolder(private val binding : ItemSearchRecentsearchBinding) : RecyclerView.ViewHolder(binding.root){
@@ -23,7 +23,7 @@ class RecentKeywordAdapter(
             }
             binding.btnRemoveData.setOnClickListener {
                 //TODO searchId 뭔지 알아내서 변경하기
-                onDeleteClickListener(0)
+                onDeleteClickListener(item.searchWord)
             }
         }
 

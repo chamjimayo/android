@@ -55,8 +55,8 @@ class SearchService(val view : SearchFragmentInterface) {
         })
     }
 
-    fun deleteRecentKeyword(searchId : Int){
-        searchRetro.deleteRecentKeyword(searchId).enqueue(object : Callback<BaseResponse>{
+    fun deleteRecentKeyword(keyword : String){
+        searchRetro.deleteRecentKeyword(keyword).enqueue(object : Callback<BaseResponse>{
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
                 if(response.code() == 200) view.onDeleteRecentSuccess()
                 else view.onDeleteRecentFailure()
