@@ -17,8 +17,8 @@ interface SearchRetrofitInterface {
     @POST("/api/address/search/click")
     fun postAddressClick(@Body params : SearchResultData) : Call<BaseResponse>
 
-    @DELETE("/api/address/search/{searchId}")
-    fun deleteRecentKeyword(@Path("searchId") searchId : Int) : Call<BaseResponse>
+    @DELETE("/api/address/search/{keyword}")
+    fun deleteRecentKeyword(@Path("keyword") keyword : String) : Call<BaseResponse>
 
     @DELETE("/api/address/search/all")
     fun deleteAllRecentKeyword() : Call<BaseResponse>

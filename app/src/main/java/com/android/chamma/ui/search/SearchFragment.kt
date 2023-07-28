@@ -110,8 +110,8 @@ class SearchFragment(
     }
 
     // 최근검색어 삭제 이벤트 처리
-    private fun recentKeywordDelete(searchId : Int){
-        SearchService(this@SearchFragment).deleteRecentKeyword(searchId)
+    private fun recentKeywordDelete(keyword : String){
+        SearchService(this@SearchFragment).deleteRecentKeyword(keyword)
     }
 
     private val onEditKeyListener = View.OnKeyListener { view, i, keyEvent ->
