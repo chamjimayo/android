@@ -54,4 +54,30 @@ class SearchService(val view : SearchFragmentInterface) {
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {}
         })
     }
+
+    fun deleteRecentKeyword(searchId : Int){
+        searchRetro.deleteRecentKeyword(searchId).enqueue(object : Callback<BaseResponse>{
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if(response.code() == 200) view.onDeleteRecentSuccess()
+                else view.onDeleteRecentFailure()
+            }
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                view.onDeleteRecentFailure()
+            }
+        })
+    }
+
+
+    fun deleteAllRecentKeyword(){
+        searchRetro.deleteAllRecentKeyword().enqueue(object : Callback<BaseResponse>{
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if(response.code() == 200) view.onDeleteAllRecentSuccess()
+                else view.onDeleteAllRecentFailure()
+            }
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                view.onDeleteAllRecentFailure()
+            }
+        })
+
+    }
 }

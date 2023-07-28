@@ -35,6 +35,15 @@ class SearchFragment(
 
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)
+
+        setBtnListener()
+        setTextListener()
+
+        if(fromHomeKeyword != null) binding.etSearch.setText(fromHomeKeyword)
+        else SearchService(this@SearchFragment).getRecentKeyword()
+    }
+
+    private fun setBtnListener(){
         binding.btnErase.setOnClickListener {
             binding.etSearch.text.clear()
             keyword = ""
@@ -45,14 +54,12 @@ class SearchFragment(
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
-
-        textListener()
-
-        if(fromHomeKeyword != null) binding.etSearch.setText(fromHomeKeyword)
-        else SearchService(this@SearchFragment).getRecentKeyword()
+        binding.btnEraseAll.setOnClickListener {
+            SearchService(this).deleteAllRecentKeyword()
+        }
     }
 
-    private fun textListener(){
+    private fun setTextListener(){
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 keyword = binding.etSearch.text.toString()
@@ -78,7 +85,7 @@ class SearchFragment(
     }
 
     private fun recyclerRecentKeyword(data : ArrayList<SearchResultData>){
-        val adapter = RecentKeywordAdapter(data,::keywordClick)
+        val adapter = RecentKeywordAdapter(data,::keywordClick,::recentKeywordDelete)
         binding.recyclerData.adapter = adapter
         binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
@@ -100,6 +107,11 @@ class SearchFragment(
             .replace(R.id.frame, HomeFragment(data))
             .addToBackStack(null)
             .commitAllowingStateLoss()
+    }
+
+    // 최근검색어 삭제 이벤트 처리
+    private fun recentKeywordDelete(searchId : Int){
+        SearchService(this@SearchFragment).deleteRecentKeyword(searchId)
     }
 
     private val onEditKeyListener = View.OnKeyListener { view, i, keyEvent ->
@@ -139,11 +151,28 @@ class SearchFragment(
     override fun onGetRecentKeywordFailure(message: String) {
         showCustomToast(message)
     }
-    override fun onPostAddressClickSuccess() {
-        super.onPostAddressClickSuccess()
+
+    override fun onDeleteRecentSuccess() {
+        // TODO API 통신 없이 RecyclerView 반영하기
+        binding.recyclerData.adapter = null
+        SearchService(this).getRecentKeyword()
     }
+    
+    override fun onDeleteAllRecentSuccess() {
+        // TODO API 통신 없이 RecyclerView 반영하기
+        binding.recyclerData.adapter = null
+        SearchService(this).getRecentKeyword()
+    }
+
+
     override fun onPostAddressClickFailure() {
-        super.onPostAddressClickFailure()
+        showCustomToast("검색기록 저장 실패")
+    }
+    override fun onDeleteRecentFailure() {
+        showCustomToast("검색기록 삭제 실패")
+    }
+    override fun onDeleteAllRecentFailure() {
+        showCustomToast("검색기록 삭제 실패")
     }
 
 

@@ -9,7 +9,10 @@ interface SearchFragmentInterface {
     fun onGetSearchFailure(message : String){}
     fun onGetRecentKeywordSuccess(datas : ArrayList<SearchResultData>){}
     fun onGetRecentKeywordFailure(message : String){}
-
     fun onPostAddressClickSuccess(){}
     fun onPostAddressClickFailure(){}
+    fun onDeleteRecentSuccess(){}
+    fun onDeleteRecentFailure(){}
+    fun onDeleteAllRecentSuccess(){}
+    fun onDeleteAllRecentFailure(){}
 }

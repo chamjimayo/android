@@ -4,10 +4,7 @@ import com.android.chamma.config.BaseResponse
 import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.search.model.SearchResultResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SearchRetrofitInterface {
 
@@ -19,4 +16,11 @@ interface SearchRetrofitInterface {
 
     @POST("/api/address/search/click")
     fun postAddressClick(@Body params : SearchResultData) : Call<BaseResponse>
+
+    @DELETE("/api/address/search/{searchId}")
+    fun deleteRecentKeyword(@Path("searchId") searchId : Int) : Call<BaseResponse>
+
+    @DELETE("/api/address/search/all")
+    fun deleteAllRecentKeyword() : Call<BaseResponse>
+
 }
