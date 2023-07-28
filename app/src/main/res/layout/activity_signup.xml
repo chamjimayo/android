@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:text="회원가입"
+            android:textStyle="bold"
+            app:layout_goneMarginTop="20dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참지마요 이용을 위해 정보를 입력해주세요"
+            android:textColor="@color/chamma_signup_textgray"
+            android:layout_marginTop="10dp"/>
+
+
+        <View
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_signup_et"
+            android:padding="18dp"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/chamma_signup_textgray"
+            android:textColor="@color/black"
+            android:hint="이름을 입력해주세요"/>
+
+        <LinearLayout
+            android:id="@+id/layout_nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_announce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용 가능한 닉네임입니다."
+                android:textColor="@color/chamma_main"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/et_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_signup_et"
+                android:padding="18dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:hint="닉네임을 입력해주세요"
+                android:textColorHint="@color/chamma_signup_textgray"/>
+
+            <Button
+                android:id="@+id/btn_duplicheck"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:text="중복확인"
+                android:textColor="@color/white"
+                android:visibility="invisible"
+                android:background="@drawable/shape_signup_duplicheck"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginEnd="18dp"/>
+
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성별"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/shape_signup_gender"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_male"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_signup_gender"
+                android:layout_weight="1"
+                android:textColor="@color/chamma_signup_textgray"
+                android:outlineProvider="none"
+                android:text="남성"/>
+
+            <Button
+                android:id="@+id/btn_female"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_signup_gender"
+                android:layout_weight="1"
+                android:textColor="@color/chamma_signup_textgray"
+                android:outlineProvider="none"
+                android:text="여성"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_signup_gender"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="bottom"
+        android:textColor="@color/chamma_signup_textgray"
+        android:outlineProvider="none"
+        android:text="확인"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    
+    
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
