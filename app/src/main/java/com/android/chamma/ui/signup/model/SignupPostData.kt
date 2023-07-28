@@ -1,4 +1,4 @@
-package com.android.chamma.models.signupmodel
+package com.android.chamma.ui.signup.model
 
 data class SignupPostData(
     val authType : String,

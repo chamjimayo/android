@@ -11,9 +11,9 @@ import com.android.chamma.R
 import com.android.chamma.config.App
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivitySignupBinding
-import com.android.chamma.models.signupmodel.NickcheckResponse
-import com.android.chamma.models.signupmodel.SignupPostData
-import com.android.chamma.models.signupmodel.SignupResponse
+import com.android.chamma.ui.signup.model.NickcheckResponse
+import com.android.chamma.ui.signup.model.SignupPostData
+import com.android.chamma.ui.signup.model.SignupResponse
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.network.NickcheckAPI
 import com.android.chamma.ui.signup.network.SignupAPI

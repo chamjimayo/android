@@ -9,7 +9,6 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.R
 import com.android.chamma.ui.login.LoginActivity
 import com.android.chamma.ui.main.MainActivity
-import com.android.chamma.util.Constants.TAG
 import com.android.chamma.util.Constants.X_ACCESS_TOKEN
 import com.android.chamma.util.LoadingDialog
 

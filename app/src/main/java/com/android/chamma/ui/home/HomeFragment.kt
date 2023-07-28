@@ -12,6 +12,7 @@ import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentHomeBinding
 import com.android.chamma.models.homemodel.MarkerData
 import com.android.chamma.models.homemodel.NearToiletResponse
+import com.android.chamma.ui.search.model.SearchResultData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.search.SearchFragment
 import com.android.chamma.util.Constants.TAG
@@ -25,7 +26,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.*
 
-class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
+enum class markerType(val i : Int){
+    PAID(0),
+    FREE(1),
+    SEARCH(2)
+}
+
+class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -34,7 +41,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     private lateinit var lastPosition  : Pair<Double,Double>
 
     private val LOCATION_PERMISSTION_REQUEST_CODE = 1000
-    private var locationState = true
+    private var locationState = false
     private var toiletState = "entire"
     val markerList = arrayListOf<Marker>()
 
@@ -59,6 +66,31 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
+
+        if(searchData != null) searchResultonHome()
+    }
+
+    // 검색 결과값 가지고 Home 왔을경우
+    private fun searchResultonHome(){
+        binding.etSearch.visibility = View.GONE
+        binding.layoutSearchResultAppbar.visibility = View.VISIBLE
+        binding.searchResultEtSearch.setText(searchData!!.searchWord)
+
+        binding.searchResultEtSearch.setOnFocusChangeListener  { view, hasFocus ->
+            if(hasFocus){
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame,SearchFragment(searchData.searchWord))
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
+        }
+
+        binding.searchResultBtnBack.setOnClickListener {
+            binding.etSearch.visibility = View.VISIBLE
+            binding.layoutSearchResultAppbar.visibility = View.GONE
+        }
+
+
     }
 
     override fun onMapReady(nM: NaverMap) {
@@ -66,7 +98,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         naverMap = nM
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.locationTrackingMode = LocationTrackingMode.None
         naverMap.minZoom = 15.0
         locationBtnListener()
         toiletBtnListener()
@@ -108,6 +140,21 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             }
         }
 
+        // 검색결과 가지고 왔을때 카메라 이동
+        if(searchData != null) moveCamera(searchData.latitude, searchData.longitude)
+    }
+
+    private fun moveCamera(latitude : Double, longitude : Double){
+        val locate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
+        naverMap.moveCamera(locate)
+
+        val markData = MarkerData(latitude = searchData!!.latitude, longitude = searchData!!.longitude)
+        setMarker(markData,markerType.SEARCH)
+
+        HomeService(this).getNearToilet(toiletState
+            ,naverMap.cameraPosition.target.longitude
+            ,naverMap.cameraPosition.target.latitude
+            ,2000.0)
     }
 
     private fun locationBtnListener(){
@@ -142,7 +189,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnPaytoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "entire"
             removeMarker()
-            HomeService(this).getNearToilet("paid"
+            HomeService(this).getNearToilet(toiletState
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
@@ -158,7 +205,7 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnPaytoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "public"
             removeMarker()
-            HomeService(this).getNearToilet("paid"
+            HomeService(this).getNearToilet(toiletState
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
@@ -174,18 +221,23 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
             binding.btnAlltoilet.setTextColor(ContextCompat.getColor(App.context(),R.color.chamma_gray))
             toiletState = "paid"
             removeMarker()
-            HomeService(this).getNearToilet("paid"
+            HomeService(this).getNearToilet(toiletState
                 ,naverMap.cameraPosition.target.longitude
                 ,naverMap.cameraPosition.target.latitude)
         }
 
     }
-
-    private fun setFreetoiletMarker(data : MarkerData){
+    
+    // marker 찍는 메소드
+    private fun setMarker(data : MarkerData, type : markerType){
 
         val marker = Marker()
         marker.position = LatLng(data.latitude,data.longitude)
-        marker.icon = OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+
+        marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+        else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
+        else OverlayImage.fromResource(R.drawable.home_marker_searchloc)
+
         marker.map = naverMap
 
         marker.setOnClickListener {
@@ -196,25 +248,11 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
         markerList.add(marker)
     }
 
-    private fun setPaytoiletMarker(data : MarkerData){
-
-        val marker = Marker()
-        marker.position = LatLng(data.latitude,data.longitude)
-        marker.icon = OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
-        marker.map = naverMap
-
-        marker.setOnClickListener {
-            HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
-            true
-        }
-
-        markerList.add(marker)
-    }
 
     override fun onGetNearToiletSuccess(result : NearToiletResponse) {
         result.data.forEach{
-            if(it.publicOrPaid == "public") setFreetoiletMarker(it)
-            else setPaytoiletMarker(it)
+            if(it.publicOrPaid == "public") setMarker(it,markerType.FREE)
+            else setMarker(it,markerType.PAID)
         }
     }
 
@@ -223,10 +261,8 @@ class HomeFragment : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
 
     private fun removeMarker(){
-        CoroutineScope(Dispatchers.Main).launch{
-            markerList.forEach{it.map = null}
-            markerList.clear()
-        }
+        markerList.forEach{it.map = null}
+        markerList.clear()
     }
 
     private fun getDistance(lat1 : Double, lon1 : Double, lat2 : Double, lon2 : Double) : Int{

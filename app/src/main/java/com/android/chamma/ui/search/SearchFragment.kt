@@ -13,46 +13,69 @@ import com.android.chamma.config.App
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentSearchBinding
-import com.android.chamma.models.searchmodel.SearchResultData
-import com.android.chamma.models.searchmodel.SearchResultResponse
+import com.android.chamma.ui.search.model.SearchResultData
+import com.android.chamma.ui.home.HomeFragment
 import com.android.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.android.chamma.ui.search.adapter.SearchResultAdapter
-import com.android.chamma.ui.search.network.RecentKeywordAPI
-import com.android.chamma.ui.search.network.SearchAPI
 import com.android.chamma.util.Constants.TAG
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search) {
+class SearchFragment(
+    private val fromHomeKeyword : String?=null
+) : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search), SearchFragmentInterface {
 
 
     private var keyword = ""
+    private var isTyping = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getRecentKeywordData()
-
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)
 
+        setBtnListener()
+        setTextListener()
+
+        if(fromHomeKeyword != null) binding.etSearch.setText(fromHomeKeyword)
+        else SearchService(this@SearchFragment).getRecentKeyword()
+    }
+
+    private fun setBtnListener(){
         binding.btnErase.setOnClickListener {
             binding.etSearch.text.clear()
             keyword = ""
         }
-
-        textListener()
-
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame,HomeFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+        binding.btnEraseAll.setOnClickListener {
+            SearchService(this).deleteAllRecentKeyword()
+        }
     }
 
-    private fun textListener(){
+    private fun setTextListener(){
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 keyword = binding.etSearch.text.toString()
-                if(keyword.isBlank()) binding.layoutRecentBar.visibility = View.VISIBLE
-                else binding.layoutRecentBar.visibility = View.GONE
-                getSearchData(keyword)
+
+                if(keyword.isBlank()) {
+                    isTyping = false
+                    binding.recyclerData.adapter = null
+                    binding.layoutRecentBar.visibility = View.VISIBLE
+                    SearchService(this@SearchFragment).getRecentKeyword()
+                }
+                else {
+                    isTyping = true
+                    binding.ivNorecentData.visibility = View.GONE
+                    binding.layoutRecentBar.visibility = View.GONE
+                    SearchService(this@SearchFragment).getSearch(keyword)
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -61,56 +84,34 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         })
     }
 
-    private fun getSearchData(keyword : String){
-        App.getRetro().create(SearchAPI::class.java)
-            .getSearch(keyword).enqueue(object : Callback<SearchResultResponse> {
-                override fun onResponse(
-                    call: Call<SearchResultResponse>,
-                    response: Response<SearchResultResponse>
-                ) {
-                    if(response.code() == 200){
-                        recyclerSearchResult(response.body()!!.data, keyword)
-                    }
-                }
-
-                override fun onFailure(call: Call<SearchResultResponse>, t: Throwable) {
-                    Log.d(TAG, "${t.message}")
-                }
-            })
-    }
-
-    private fun getRecentKeywordData(){
-        App.getRetro().create(RecentKeywordAPI::class.java)
-            .getRecentKeyword().enqueue(object : Callback<SearchResultResponse>{
-                override fun onResponse(
-                    call: Call<SearchResultResponse>,
-                    response: Response<SearchResultResponse>
-                ) {
-                    if(response.code() == 200){
-                        if(response.body()!!.data.isEmpty()){
-                            binding.ivNorecentData.visibility = View.VISIBLE
-                        }else{
-                            binding.ivNorecentData.visibility = View.GONE
-                            recyclerRecentKeyword(response.body()!!.data)
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<SearchResultResponse>, t: Throwable) {
-                    Log.d(TAG, "${t.message}")
-                }
-            })
-    }
-
     private fun recyclerRecentKeyword(data : ArrayList<SearchResultData>){
-        val adapter = RecentKeywordAdapter(data)
+        val adapter = RecentKeywordAdapter(data,::keywordClick,::recentKeywordDelete)
         binding.recyclerData.adapter = adapter
-        binding. recyclerData.layoutManager = LinearLayoutManager(App.context())
+        binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
     }
 
     private fun recyclerSearchResult(data : ArrayList<SearchResultData>, keyword : String){
-        val adapter = SearchResultAdapter(data,keyword)
+        val adapter = SearchResultAdapter(data,keyword,::keywordClick)
         binding.recyclerData.adapter = adapter
-        binding. recyclerData.layoutManager = LinearLayoutManager(App.context())
+        binding.recyclerData.layoutManager = LinearLayoutManager(App.context())
+    }
+
+    // 검색어 클릭이벤트 처리
+    private fun keywordClick(data : SearchResultData){
+        isTyping = false
+        CoroutineScope(Dispatchers.IO).launch{
+            SearchService(this@SearchFragment).postAddressClick(data)
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame, HomeFragment(data))
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
+    // 최근검색어 삭제 이벤트 처리
+    private fun recentKeywordDelete(searchId : Int){
+        SearchService(this@SearchFragment).deleteRecentKeyword(searchId)
     }
 
     private val onEditKeyListener = View.OnKeyListener { view, i, keyEvent ->
@@ -118,7 +119,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
             //검색했을때
             val word = binding.etSearch.text.toString()
             if(word.isBlank()) showCustomToast("검색어를 입력해주세요")
-            else getSearchData(word)
+            else SearchService(this@SearchFragment).getSearch(word)
 
             val manager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view.windowToken, 0)
@@ -128,6 +129,51 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
         return@OnKeyListener false
     }
 
+    override fun onGetSearchSuccess(datas: ArrayList<SearchResultData>, keyword : String) {
+        if(isTyping && datas.isNotEmpty()) {
+            binding.recyclerData.adapter = null
+            recyclerSearchResult(datas, keyword)
+        }
+    }
+
+    override fun onGetRecentKeywordSuccess(datas: ArrayList<SearchResultData>) {
+        if(datas.isEmpty()) binding.ivNorecentData.visibility = View.VISIBLE
+        else{
+            binding.ivNorecentData.visibility = View.GONE
+            recyclerRecentKeyword(datas)
+        }
+    }
+
+    override fun onGetSearchFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onGetRecentKeywordFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onDeleteRecentSuccess() {
+        // TODO API 통신 없이 RecyclerView 반영하기
+        binding.recyclerData.adapter = null
+        SearchService(this).getRecentKeyword()
+    }
+    
+    override fun onDeleteAllRecentSuccess() {
+        // TODO API 통신 없이 RecyclerView 반영하기
+        binding.recyclerData.adapter = null
+        SearchService(this).getRecentKeyword()
+    }
+
+
+    override fun onPostAddressClickFailure() {
+        showCustomToast("검색기록 저장 실패")
+    }
+    override fun onDeleteRecentFailure() {
+        showCustomToast("검색기록 삭제 실패")
+    }
+    override fun onDeleteAllRecentFailure() {
+        showCustomToast("검색기록 삭제 실패")
+    }
 
 
 }

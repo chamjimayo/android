@@ -8,8 +8,8 @@ import android.view.View
 import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
-import com.android.chamma.models.loginmodel.LoginPostData
-import com.android.chamma.models.loginmodel.LoginResponseData
+import com.android.chamma.ui.login.model.LoginPostData
+import com.android.chamma.ui.login.model.LoginResponseData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG

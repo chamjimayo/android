@@ -1,6 +1,6 @@
 package com.android.chamma.ui.signup.network
 
-import com.android.chamma.models.signupmodel.NickcheckResponse
+import com.android.chamma.ui.signup.model.NickcheckResponse
 import com.android.chamma.util.Constants.xapikey
 import retrofit2.Call
 import retrofit2.http.GET

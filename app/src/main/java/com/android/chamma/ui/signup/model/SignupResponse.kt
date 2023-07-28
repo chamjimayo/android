@@ -1,12 +1,10 @@
-package com.android.chamma.models.signupmodel
+package com.android.chamma.ui.signup.model
 
-import com.android.chamma.models.loginmodel.LoginResponseData
+import com.android.chamma.config.BaseResponse
 
 data class SignupResponse(
-    val code : Int,
-    val msg : String,
     val data : SignupResponseData
-)
+): BaseResponse()
 
 data class SignupResponseData(
     val accessToken : String,

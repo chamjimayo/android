@@ -1,12 +1,18 @@
 package com.android.chamma.ui.search.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemSearchResultBinding
-import com.android.chamma.models.searchmodel.SearchResultData
+import com.android.chamma.ui.search.model.SearchResultData
+import com.android.chamma.util.Constants.TAG
 
-class SearchResultAdapter(val datas : ArrayList<SearchResultData>, val keyword : String) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(
+    private val datas : ArrayList<SearchResultData>,
+    private val keyword : String,
+    private val onItemClickListener: (data : SearchResultData) -> Unit
+) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemSearchResultBinding) : RecyclerView.ViewHolder(binding.root){
 
@@ -19,7 +25,7 @@ class SearchResultAdapter(val datas : ArrayList<SearchResultData>, val keyword :
             binding.tvAddress.text = item.roadAddress
 
             binding.layout.setOnClickListener {
-
+                onItemClickListener(item)
             }
         }
 
@@ -28,7 +34,7 @@ class SearchResultAdapter(val datas : ArrayList<SearchResultData>, val keyword :
     private fun parseText(text : String) : ArrayList<String>{
         val result = arrayListOf<String>()
         val start = text.indexOf(keyword)
-        val end = text.lastIndexOf(keyword)
+        val end = start + keyword.length - 1
         if(keyword in text){
             result.add(text.substring(0,start))
             result.add(keyword)

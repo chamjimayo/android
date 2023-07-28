@@ -1,6 +1,6 @@
 package com.android.chamma.ui.login
 
-import com.android.chamma.models.loginmodel.LoginResponseData
+import com.android.chamma.ui.login.model.LoginResponseData
 
 interface LoginActivityInterface {
 

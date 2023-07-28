@@ -1,8 +1,7 @@
 package com.android.chamma.ui.signup.network
 
-import com.android.chamma.models.signupmodel.SignupPostData
-import com.android.chamma.models.signupmodel.SignupResponse
-import com.android.chamma.util.Constants
+import com.android.chamma.ui.signup.model.SignupPostData
+import com.android.chamma.ui.signup.model.SignupResponse
 import com.android.chamma.util.Constants.xapikey
 import retrofit2.Call
 import retrofit2.http.Body
