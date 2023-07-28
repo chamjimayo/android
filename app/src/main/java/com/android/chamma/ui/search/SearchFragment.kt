@@ -22,7 +22,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search), SearchFragmentInterface {
+class SearchFragment(
+    private val fromHomeKeyword : String?=null
+) : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBinding::bind, R.layout.fragment_search), SearchFragmentInterface {
 
 
     private var keyword = ""
@@ -31,16 +33,23 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        SearchService(this@SearchFragment).getRecentKeyword()
-
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)
         binding.btnErase.setOnClickListener {
             binding.etSearch.text.clear()
             keyword = ""
         }
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame,HomeFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
 
         textListener()
+
+        if(fromHomeKeyword != null) binding.etSearch.setText(fromHomeKeyword)
+        else SearchService(this@SearchFragment).getRecentKeyword()
     }
 
     private fun textListener(){
@@ -82,6 +91,7 @@ class SearchFragment : BaseFragmentVB<FragmentSearchBinding>(FragmentSearchBindi
 
     // 검색어 클릭이벤트 처리
     private fun keywordClick(data : SearchResultData){
+        isTyping = false
         CoroutineScope(Dispatchers.IO).launch{
             SearchService(this@SearchFragment).postAddressClick(data)
         }

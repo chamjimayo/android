@@ -10,7 +10,7 @@ data class SearchResultResponse (
 data class SearchResultData(
     @SerializedName("searchWord") val searchWord : String,
     @SerializedName("roadAddress") val roadAddress : String,
-    @SerializedName("lotNumberAddress ") val lotNumberAddress : String,
+    @SerializedName("lotNumberAddress") val lotNumberAddress : String,
     @SerializedName("name") val name : String,
     @SerializedName("latitude") val latitude : Double,
     @SerializedName("longitude") val longitude : Double
