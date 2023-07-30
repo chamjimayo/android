@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".ReviewActivity"
+            android:name=".ui.toiletlist.ReviewActivity"
             android:exported="false" />
 
         <meta-data
@@ -36,28 +37,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
             android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".ui.signup.SignupActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
-
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -73,6 +68,7 @@
                     android:scheme="kakao45577b70f3fba41db9f01f34abb9a9c2" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
