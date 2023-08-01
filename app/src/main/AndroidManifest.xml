@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".App"
+        android:name=".config.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,11 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.toiletlist.ReviewActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="dkktefgrkn" />
 
-        <activity android:name=".ui.splash.SplashActivity"
+        <activity
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -30,10 +36,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
         <activity
             android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
@@ -43,23 +55,20 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao45577b70f3fba41db9f01f34abb9a9c2" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

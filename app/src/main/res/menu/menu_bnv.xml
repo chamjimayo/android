@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/bnv_background"
-        android:title="홈(지도)" />
+        android:icon="@drawable/selector_home"
+        android:title="홈" />
 
     <item
         android:id="@+id/navigation_toilets"
-        android:icon="@drawable/bnv_background"
+        android:icon="@drawable/selector_toilet"
         android:title="화장실리스트" />
 
     <item
         android:id="@+id/navigation_community"
-        android:icon="@drawable/bnv_background"
+        android:icon="@drawable/selector_community"
         android:title="커뮤니티" />
 
     <item
         android:id="@+id/navigation_mypage"
-        android:icon="@drawable/bnv_background"
+        android:icon="@drawable/selector_mypage"
         android:title="마이페이지" />
 </menu>

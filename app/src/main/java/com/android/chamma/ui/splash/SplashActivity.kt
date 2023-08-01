@@ -6,16 +6,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.R
 import com.android.chamma.ui.login.LoginActivity
 import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.util.Constants.X_ACCESS_TOKEN
 import com.android.chamma.util.LoadingDialog
 
 class SplashActivity : AppCompatActivity() {
@@ -27,36 +28,53 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         
         setFullScreen()
-
         Handler(Looper.getMainLooper()).postDelayed({
 
             // 스플래시 끝난뒤 LoadingDialog 띄우기
             dialog.show(supportFragmentManager,"dialog")
 
             if (!isNetworkConnected(this)) {
-                // 네트워크 검사 끝났으면 LoadingDialog 내리기
                 dialog.dismiss()
-
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("")
-                    .setMessage("네트워크에 연결되지 않았습니다.")
-                    .setPositiveButton("다시 시도하기",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            // 앱 처음부터 다시시작
-                            val intent = Intent(applicationContext, SplashActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            finish()
-                        })
-                builder.show()
+                showAlert()
             } else {
-                // 네트워크 검사 끝났으면 LoadingDialog 내리기
                 dialog.dismiss()
-
-                startActivity(Intent(this, LoginActivity::class.java))
+                autoLogin()
                 finish()
             }
         }, 1500)
+    }
+
+    private fun autoLogin(){
+        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")
+
+
+        /* TODO
+            ACCESS_TOKEN 유효기간 확인 
+            -> 안지났을 경우 : MainActivity 로 이동
+            -> 지났을 경우 : REFRESH_TOKEN 유효기간 확인
+                -> 안지났을 경우 : /api/auth/token/access 로 ACCESSTOKEN 갱신
+                -> 지났을 경우 : LoginActivity 로 이동
+         */
+
+        // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 작성
+        if (!jwt.isNullOrBlank()) startActivity(Intent(this, MainActivity::class.java))
+        else startActivity(Intent(this, LoginActivity::class.java))
+
+    }
+
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("")
+            .setMessage("네트워크에 연결되지 않았습니다.")
+            .setPositiveButton("다시 시도하기",
+                DialogInterface.OnClickListener { dialog, id ->
+                    // 앱 처음부터 다시시작
+                    val intent = Intent(applicationContext, SplashActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                })
+        builder.show()
     }
 
     // 네트워크 연결되었는지 검사코드
