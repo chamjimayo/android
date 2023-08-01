@@ -164,7 +164,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                          startActivity(intent)
                      }else {
                          // 존재하지 않는 유저. 회원가입
-                         val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                              .putExtra("authType",social)
                              .putExtra("authId",uuid)
                          startActivity(intent)

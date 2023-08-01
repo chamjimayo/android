@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="45dp"
+    tools:context=".ui.mypage.ChargePointFragment">
+
+
+    <LinearLayout
+        android:id="@+id/layout_title_charge"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back_charge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:paddingStart="20dp"
+            android:scaleType="fitStart"
+
+
+            android:src="@drawable/ic_back_usage" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="포인트 충전"
+            android:textColor="@color/black"
+
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_underTitle_usage2"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/chamma_signup_linegray"
+        app:layout_constraintTop_toBottomOf="@id/layout_title_charge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_underTitle_usage2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_signup_et"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingStart="20dp"
+                android:layout_weight="1"
+                android:text="보유포인트" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:gravity="right"
+                android:paddingEnd="24dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="3,200" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/btn_1000_charge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_ic_point1_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingStart="16dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_chargepoing_chargepoint" />
+
+
+            <TextView
+                android:id="@+id/tv_1000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="1,000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/im_ic_1000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_1000_chargepoint" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/btn_3000_charge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_ic_point3_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingStart="16dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_chargepoing_chargepoint" />
+
+            <TextView
+                android:id="@+id/tv_3000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="3,000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/im_ic_3000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_3000_chargepoint" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view12"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/btn_5000_charge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_ic_point5_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingStart="16dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_chargepoing_chargepoint" />
+
+            <TextView
+                android:id="@+id/tv_5000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="5,000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/im_ic_5000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_5000_chargepoint" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view13"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/btn_8000_charge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_ic_point8_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingStart="16dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_chargepoing_chargepoint" />
+
+            <TextView
+                android:id="@+id/tv_8000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="8,000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/im_ic_8000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_8000_chargepoint" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view14"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/btn_10000_charge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_ic_point10_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingStart="16dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_chargepoing_chargepoint" />
+
+            <TextView
+                android:id="@+id/tv_10000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="10,000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/im_ic_10000_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="16dp"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_10000_chargepoint" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view15"
+            android:layout_width="match_parent"
+            android:background="@color/chamma_signup_linegray"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,4 +79,6 @@ dependencies {
 
     // 위치 SDK
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+
 }
