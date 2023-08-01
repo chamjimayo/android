@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ReviewActivity"
+            android:name=".ui.toiletlist.ReviewActivity"
             android:exported="false" />
 
         <meta-data
