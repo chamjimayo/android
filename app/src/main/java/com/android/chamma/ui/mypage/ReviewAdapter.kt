@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android.chamma.databinding.ItemReviewBinding
+import com.android.chamma.databinding.ItemReviewMypageBinding
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewAdapter: ListAdapter<ListReview, ReviewAdapter.ViewHolder>(diffUtil) {
 
-    inner class ViewHolder (private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder (private val binding: ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(listReview: ListReview) {
             val format = SimpleDateFormat("MM월dd일")
@@ -30,7 +30,7 @@ class ReviewAdapter: ListAdapter<ListReview, ReviewAdapter.ViewHolder>(diffUtil)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemReviewBinding.inflate(LayoutInflater.from(parent.context),parent, false))
+        return ViewHolder(ItemReviewMypageBinding.inflate(LayoutInflater.from(parent.context),parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
