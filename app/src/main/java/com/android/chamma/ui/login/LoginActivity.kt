@@ -158,6 +158,35 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
         // accessToken/refreshToken 저장
         storeTokens(result)
 
+
+     private fun senduuid(uuid : String){
+         val data = LoginPostData(uuid)
+         RetrofitInterface.retrofit.create(LoginAPI::class.java)
+             .checkUuid(data).enqueue(object : Callback<LoginResponse>{
+                 override fun onResponse(
+                     call: Call<LoginResponse>,
+                     response: Response<LoginResponse>
+                 ) {
+                     Log.d(TAG,"${response.body()?.data}")
+                     if(response.code() == 200){
+                         // 존재하는 유저. 로그인
+                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                         startActivity(intent)
+                     }else {
+                         // 존재하지 않는 유저. 회원가입
+                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                             .putExtra("authType",social)
+                             .putExtra("authId",uuid)
+                         startActivity(intent)
+                     }
+
+                 }
+                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                     Log.d(TAG,"${t.message}")
+                 }
+             })
+     }
+=======
         // MainActivity로 이동
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
@@ -172,6 +201,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             startActivity(intent)
         }
     }
+
 
 
     // 풀스크린 적용

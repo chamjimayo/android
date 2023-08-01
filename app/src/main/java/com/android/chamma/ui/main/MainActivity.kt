@@ -8,7 +8,7 @@ import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityMainBinding
 import com.android.chamma.ui.community.CommunityFragment
 import com.android.chamma.ui.home.HomeFragment
-import com.android.chamma.ui.mypage.MypageFragment
+import com.android.chamma.ui.mypage.*
 import com.android.chamma.ui.toiletlist.ToiletlistFragment
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -68,4 +68,53 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
+
+
+
+
+
+
+    //mypage에서 다른 화면으로 이동
+    fun mypageToUsage() {
+        val usageFragment = UsageFragment()
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame,usageFragment )
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun mypageToCharge() {
+        val chargePointFragment = ChargePointFragment()
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame,chargePointFragment )
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun mypageToUpdate() {
+        val updatdeFragment = UpdateUserData()
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame,updatdeFragment )
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun mypageToReview() {
+        val reviewFragment = ReviewFragment()
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame,reviewFragment )
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun goBackMypage() {
+        onBackPressed()
+    }
+
+
+
 }
