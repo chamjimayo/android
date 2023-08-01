@@ -156,10 +156,6 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
     }
 
     private fun nickCheck(){
-
-        App.getRetro().create()
-
-
         App.getRetro().create(NickcheckAPI::class.java)
             .checkNick(nick).enqueue(object : Callback<NickcheckResponse>{
                 override fun onResponse(
