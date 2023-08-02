@@ -17,38 +17,53 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:layout_marginVertical="11dp"/>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <Button
+    <RadioButton
         android:id="@+id/newestTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@null"
+
         android:text="최신순"
         android:textSize="14sp"
         android:textColor = "@color/selector_text_btmsht_click"
         android:layout_marginStart="9dp"
+        android:layout_marginVertical="15dp"
         android:background="#00ff0000"
         android:gravity="start|center"/>
 
-    <Button
+    <RadioButton
         android:id="@+id/highestTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@null"
+
         android:text="별점 높은 순"
         android:textSize="14sp"
         android:textColor = "@color/selector_text_btmsht_click"
         android:layout_marginStart="9dp"
+        android:layout_marginVertical="15dp"
         android:background="#00ff0000"
         android:gravity="start|center"/>
-    <Button
+    <RadioButton
         android:id="@+id/lowTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@null"
+
         android:text="별점 낮은 순"
         android:textSize="14sp"
         android:textColor = "@color/selector_text_btmsht_click"
         android:layout_marginStart="9dp"
+        android:layout_marginVertical="15dp"
         android:background="#00ff0000"
         android:gravity="start|center"/>
+    </RadioGroup>
 
     <Button
         android:id="@+id/btmshtBtnClose"
