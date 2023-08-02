@@ -5,10 +5,16 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.android.chamma.config.App.Companion.sharedPreferences
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityLoginBinding
+import com.android.chamma.ui.login.model.LoginPostData
+import com.android.chamma.ui.login.model.LoginResponseData
 import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.X_ACCESS_TOKEN
+import com.android.chamma.util.Constants.X_REFRESH_TOKEN
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -19,19 +25,21 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 
-class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
 
-
+    private var social = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullScreen()
 
         binding.btnKakaoLogin.setOnClickListener {
+            social = "KAKAO"
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
+            social = "NAVER"
             naverLogin()
         }
     }
@@ -40,17 +48,14 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     private fun naverLogin() {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-//                naverCallInfo()
+                // 로그인 성공시, 정보 불러오기
+                naverCallInfo()
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
             }
-
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
             }
@@ -81,9 +86,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 // 로그인 성공 부분
                 else if (token != null) {
                     Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-//                    kakaoCallInfo()
+                    // 로그인 성공시 정보 불러오기
+                    kakaoCallInfo()
                 }
             }
         } else {
@@ -101,9 +105,8 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             Log.e(TAG, "이메일 로그인 실패 $error")
         } else if (token != null) {
             Log.d(TAG, "이메일 로그인 성공 ${token.accessToken}")
-            val intent = Intent(this, MainActivity::class.java)
-                .putExtra("kakao", "kakao")
-            startActivity(intent)
+            // 로그인 성공시 정보 불러오기
+            kakaoCallInfo()
         }
     }
 
@@ -115,14 +118,11 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
     // 네이버 유저정보 콜백
     private val profileCallback = object : NidProfileCallback<NidProfileResponse> {
-        override fun onSuccess(response: NidProfileResponse) {
-            val id = response.profile?.id
-            val name = response.profile?.name
-            val nick = response.profile?.nickname
-            val age = response.profile?.age
-            val email = response.profile?.email
-            val birthYear = response.profile?.birthYear
-            Log.d(TAG,"$id $name $nick")
+        override fun onSuccess(result: NidProfileResponse) {
+            val id = result.profile?.id
+
+            // 식별아이디로 통신
+            LoginService(this@LoginActivity).postLogin(LoginPostData(id.toString()))
         }
         override fun onFailure(httpStatus: Int, message: String) {
             val errorCode = NaverIdLoginSDK.getLastErrorCode().code
@@ -141,15 +141,38 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 Log.e(TAG, "사용자 정보 요청 실패 $error")
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
-                val id = user.id
-                val nickname = user.kakaoAccount?.profile?.nickname
-                val birthday = user.kakaoAccount?.birthday
-                val email = user.kakaoAccount?.email
-                val age = user.kakaoAccount?.ageRange.toString()
-                Log.d(TAG,id.toString() + "\n" + nickname + "\n" +birthday + "\n" + email + "\n" + age)
+                // 식별아이디로 통신
+                LoginService(this@LoginActivity).postLogin(LoginPostData(user.id.toString()))
             }
         }
     }
+    private fun storeTokens(result : LoginResponseData){
+        sharedPreferences.edit()
+            .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
+            .putString(X_REFRESH_TOKEN, result.refreshToken).apply()
+    }
+
+    override fun onPostLoginSuccess(result : LoginResponseData) {
+        // 존재하는 유저. 로그인
+
+        // accessToken/refreshToken 저장
+        storeTokens(result)
+
+        // MainActivity로 이동
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onPostLoginFailure(message : String, uuid : String) {
+        if(uuid.isNotBlank()){
+            // 존재하지 않는 유저. 회원가입
+            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                .putExtra("authType",social)
+                .putExtra("authId",uuid)
+            startActivity(intent)
+        }
+    }
+
 
 
     // 풀스크린 적용

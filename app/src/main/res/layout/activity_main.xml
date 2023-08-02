@@ -20,6 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/white"
         app:labelVisibilityMode="labeled"
+        app:itemTextColor="#212529"
         app:menu="@menu/menu_bnv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
