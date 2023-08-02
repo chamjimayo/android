@@ -2,10 +2,10 @@ package com.android.chamma.models.toiletlistmodel
 
 data class ReviewData (
     val Nickname:String,
-    val year:Int,
-    val month:Int,
+    val url:Int,
+    val year:String,
+    val month:String,
     val day:Int,
-    val starNum:Int,
+    val starNum:Float,
     val content:String
-
     )
