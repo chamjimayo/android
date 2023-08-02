@@ -14,10 +14,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/rectangle_198"
-        app:subtitle="이용후기"
         app:subtitleTextColor="@color/black"
         >
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용후기"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
     </androidx.appcompat.widget.Toolbar>
     <View
         android:id="@+id/gray_line"
@@ -50,7 +56,6 @@
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="@+id/reviewSuvTv"
         app:layout_constraintStart_toEndOf="@id/reviewSuvTv"
-
         android:layout_marginStart="6dp"
         />
     <TextView
@@ -63,7 +68,32 @@
         app:layout_constraintTop_toTopOf="@+id/reviewSuvTv"
         app:layout_constraintStart_toEndOf="@id/reviewNumTv"
         />
-
+    <Button
+        android:id="@+id/optionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/polygon_11"
+        android:drawablePadding="4dp"
+        android:text="최신순"
+        android:textSize="12dp"
+        android:gravity="right|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gray_line"
+        android:layout_marginEnd="16dp"
+        android:background="#00ff0000"
+        />
+<!--
+    <TextView
+        android:id="@+id/optionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최신순"
+        app:layout_constraintTop_toTopOf="@+id/gray_line"
+        app:layout_constraintEnd_toStartOf="@id/optionBtn"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:textSize="12dp"
+        />
     <ImageView
         android:id="@+id/optionBtn"
         android:layout_width="wrap_content"
@@ -72,10 +102,19 @@
         app:layout_constraintTop_toTopOf="@+id/reviewSuvTv"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
-
+        android:layout_marginTop="6dp"
         />
-
+        -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reviewNumTv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,5 +123,5 @@
         tools:listitem="@layout/item_review"
         />
 
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
