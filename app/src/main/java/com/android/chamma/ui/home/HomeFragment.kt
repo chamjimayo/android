@@ -51,6 +51,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         super.onAttach(context)
         mainActivity = context as MainActivity
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
