@@ -13,6 +13,7 @@ import com.android.chamma.ui.login.model.LoginResponseData
 import com.android.chamma.ui.main.MainActivity
 import com.android.chamma.ui.signup.SignupActivity
 import com.android.chamma.util.Constants.TAG
+import com.android.chamma.util.Constants.X_ACCESS_EXPIRE
 import com.android.chamma.util.Constants.X_ACCESS_TOKEN
 import com.android.chamma.util.Constants.X_REFRESH_TOKEN
 import com.kakao.sdk.auth.model.OAuthToken
@@ -149,7 +150,10 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     private fun storeTokens(result : LoginResponseData){
         sharedPreferences.edit()
             .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
-            .putString(X_REFRESH_TOKEN, result.refreshToken).apply()
+            .putString(X_REFRESH_TOKEN, result.refreshToken)
+            .putString(X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
+            .putString(X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .apply()
     }
 
     override fun onPostLoginSuccess(result : LoginResponseData) {
