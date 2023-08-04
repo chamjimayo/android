@@ -168,6 +168,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     }
 
     override fun onPostLoginFailure(message : String, uuid : String) {
+        Log.d(TAG,"$uuid")
         if(uuid.isNotBlank()){
             // 존재하지 않는 유저. 회원가입
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
