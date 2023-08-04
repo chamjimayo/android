@@ -11,12 +11,15 @@ import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivitySignupBinding
+import com.umc.chamma.ui.login.model.LoginResponseData
 import com.umc.chamma.ui.signup.model.NickcheckResponse
 import com.umc.chamma.ui.signup.model.SignupPostData
 import com.umc.chamma.ui.signup.model.SignupResponse
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.signup.model.SignupResponseData
 import com.umc.chamma.ui.signup.network.NickcheckAPI
 import com.umc.chamma.ui.signup.network.SignupAPI
+import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.TAG
 import retrofit2.Call
 import retrofit2.Callback
@@ -194,7 +197,9 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
                     call: Call<SignupResponse>,
                     response: Response<SignupResponse>
                 ) {
+
                     if(response.code() == 200) {
+                        storeTokens(response.body()!!.data)
                         // 회원가입 성공
                         val intent = Intent(this@SignupActivity, MainActivity::class.java)
                         startActivity(intent)
@@ -207,6 +212,15 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
                     Log.d(TAG,"${t.message}")
                 }
             })
+    }
+
+    private fun storeTokens(result : SignupResponseData){
+        App.sharedPreferences.edit()
+            .putString(Constants.X_ACCESS_TOKEN, "Bearer " + result.accessToken)
+            .putString(Constants.X_REFRESH_TOKEN, result.refreshToken)
+            .putString(Constants.X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
+            .putString(Constants.X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .apply()
     }
 
 }

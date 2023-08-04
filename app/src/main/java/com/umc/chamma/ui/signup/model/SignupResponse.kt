@@ -4,9 +4,11 @@ import com.umc.chamma.config.BaseResponse
 
 data class SignupResponse(
     val data : SignupResponseData
-): com.umc.chamma.config.BaseResponse()
+): BaseResponse()
 
 data class SignupResponseData(
     val accessToken : String,
-    val refreshToken : String
+    val refreshToken : String,
+    val accessTokenValidityMs : Long,
+    val refreshTokenValidityMs : Long
 )
