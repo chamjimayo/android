@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.android.chamma.util.LoadingDialog
 import com.android.chamma.util.TitleImageTwoButtonDialog
 import com.android.chamma.util.TitleTwoButtonDialog
 
@@ -18,12 +19,22 @@ abstract class BaseActivityDB<B : ViewDataBinding>(
     protected lateinit var binding: B
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog: TitleImageTwoButtonDialog
+    private var loadingDialog = LoadingDialog()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutRes)
         binding.lifecycleOwner = this
+    }
+
+
+    fun showLoading(){
+        loadingDialog.show(supportFragmentManager,"")
+    }
+
+    fun dismissLoading(){
+        loadingDialog.dismiss()
     }
 
     fun showCustomToast(message: String) {

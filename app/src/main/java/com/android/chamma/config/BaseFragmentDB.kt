@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.android.chamma.util.LoadingDialog
 import com.android.chamma.util.TitleImageTwoButtonDialog
 import com.android.chamma.util.TitleTwoButtonDialog
 
@@ -21,6 +22,7 @@ abstract class BaseFragmentDB<B : ViewDataBinding>(
 
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog : TitleImageTwoButtonDialog
+    private var loadingDialog = LoadingDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +32,15 @@ abstract class BaseFragmentDB<B : ViewDataBinding>(
         _binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
+    }
+
+
+    fun showLoading(){
+        loadingDialog.show(parentFragmentManager,"")
+    }
+
+    fun dismissLoading(){
+        loadingDialog.dismiss()
     }
 
     fun showCustomToast(message: String) {

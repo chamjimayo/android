@@ -1,6 +1,7 @@
 package com.android.chamma.ui.home
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.view.Window
 import com.android.chamma.databinding.FragmentHomeBottomsheetBinding
 import com.android.chamma.models.homemodel.MarkerData
+import com.android.chamma.ui.qr.QRActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class HomeBottomSheet(val data : MarkerData) : BottomSheetDialogFragment() {
@@ -40,7 +42,7 @@ class HomeBottomSheet(val data : MarkerData) : BottomSheetDialogFragment() {
         binding.ratingbar.rating = data.reviewRating!!
 
         binding.btnUse.setOnClickListener {
-
+            startActivity(Intent(requireContext(),QRActivity::class.java))
         }
     }
 
