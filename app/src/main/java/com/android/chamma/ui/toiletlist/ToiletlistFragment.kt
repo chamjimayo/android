@@ -45,7 +45,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
            //Log.e("왜",error.toString())
 
            RestroomVPAdapter = RestroomVPAdapter(pageItemList)
-           Log.d("왜", "안돼")
+           Log.d("왜", "안돼3")
 
            binding.restroomVp.apply {
                adapter = RestroomVPAdapter
