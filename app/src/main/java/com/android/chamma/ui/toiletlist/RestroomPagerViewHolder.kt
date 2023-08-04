@@ -1,4 +1,4 @@
-package com.example.weeks6
+package com.android.chamma.ui.toiletlist
 
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.LayoutRestroomViewpagerItemBinding

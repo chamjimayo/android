@@ -1,17 +1,19 @@
 package com.android.chamma.ui.toiletlist
 
 import android.content.Intent
+import android.graphics.Paint
+import com.android.chamma.R
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentToiletListBinding
-import com.example.weeks6.RestroomVPAdapter
 import me.relex.circleindicator.CircleIndicator3
+
 
 class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToiletListBinding::bind, R.layout.fragment_toilet_list){
     private var pageItemList = ArrayList<Int>()
@@ -49,6 +51,8 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
             val intent= Intent(requireContext(), ReviewActivity::class.java)
             startActivity(intent)
         }
+
+        binding.reviewTv.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     }
 
 }
