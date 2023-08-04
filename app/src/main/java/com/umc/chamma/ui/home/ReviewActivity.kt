@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.chamma.R
-import com.android.chamma.databinding.ActivityReviewBinding
+//import com.android.chamma.R
 import com.umc.chamma.ui.home.model.ReviewData
-//import com.umc.chamma.R
+import com.umc.chamma.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.umc.chamma.databinding.ActivityReviewBinding
 
 class ReviewActivity : com.umc.chamma.config.BaseActivityVB<ActivityReviewBinding>(ActivityReviewBinding::inflate) {
     private lateinit var bottomSheet: View
@@ -21,7 +21,7 @@ class ReviewActivity : com.umc.chamma.config.BaseActivityVB<ActivityReviewBindin
 
         dataList.apply{
             add(
-                ReviewData("나는참지않쥐",R.drawable.review_profile,"23.","07.",11,5f,
+                ReviewData("나는참지않쥐", R.drawable.review_profile,"23.","07.",11,5f,
                 "화장실 너무 깨끗해요\n휴지도 넉넉하게 있어서 좋았어요!")
             )
             add(

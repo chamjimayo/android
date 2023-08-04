@@ -5,11 +5,12 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.android.chamma.R
-//import com.umc.chamma.R
+//import com.android.chamma.R
+//import com.android.chamma.R
+import com.umc.chamma.R
 import com.umc.chamma.config.BaseActivityVB
-import com.android.chamma.databinding.ActivityRestroomInfoBinding
-import com.android.chamma.databinding.ActivityReviewBinding
+import com.umc.chamma.databinding.ActivityReviewBinding
+import com.umc.chamma.databinding.ActivityRestroomInfoBinding
 import com.umc.chamma.ui.qr.QRActivity
 import me.relex.circleindicator.CircleIndicator3
 

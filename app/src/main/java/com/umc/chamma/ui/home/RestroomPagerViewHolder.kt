@@ -1,7 +1,8 @@
 package com.umc.chamma.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
-import com.android.chamma.databinding.LayoutRestroomViewpagerItemBinding
+import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding
+
 
 class RestroomPagerViewHolder (private val Binding : LayoutRestroomViewpagerItemBinding) : RecyclerView.ViewHolder(Binding.root) {
 

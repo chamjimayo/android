@@ -3,7 +3,7 @@ package com.umc.chamma.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.chamma.databinding.LayoutRestroomViewpagerItemBinding
+import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding
 
 class RestroomVPAdapter (private var pageList: ArrayList<Int>) : RecyclerView.Adapter<RestroomPagerViewHolder>(){
 

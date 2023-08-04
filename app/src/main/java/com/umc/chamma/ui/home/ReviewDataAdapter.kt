@@ -4,7 +4,7 @@ package com.umc.chamma.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.chamma.databinding.ItemReviewBinding
+import com.umc.chamma.databinding.ItemReviewBinding
 import com.bumptech.glide.Glide
 import com.umc.chamma.ui.home.model.ReviewData
 
