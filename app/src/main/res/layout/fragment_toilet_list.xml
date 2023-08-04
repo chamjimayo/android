@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,358 +19,356 @@
             >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/restroomVp"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    />
-
-                <me.relex.circleindicator.CircleIndicator3
-                    android:id="@+id/indicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    app:ci_drawable="@drawable/shape_black_indecator" />
-
-
-                <TextView
-                    android:id="@+id/restroomTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="양남어린이 공원 화장실"
-                    android:textSize="22dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    />
-
-                <LinearLayout
-                    android:id="@+id/subRatingbarLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    >
-                        <RatingBar
-                            android:id="@+id/ratingBar"
-                            android:layout_width="80dp"
-                            android:layout_height="17dp"
-                            style="@style/Widget.AppCompat.RatingBar.Small"
-                            android:isIndicator="false"
-                            android:numStars="5"
-                            android:rating="0"
-                            android:stepSize="0.25"
-                            android:layout_marginTop="3dp"
-                            tools:ignore="SpeakableTextPresentCheck"
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/restroomVp"
+                            android:layout_width="match_parent"
+                            android:layout_height="280dp"
                             />
 
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            app:ci_drawable="@drawable/shape_black_indecator" />
                         <TextView
-                            android:id="@+id/starNumTv"
+                            android:id="@+id/restroomTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="4.98"
-                            android:textSize="14sp"
+                            android:text="양남어린이 공원 화장실"
+                            android:textSize="22dp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
                             />
-                        <TextView
-                            android:id="@+id/reviewTv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="후기보기"
-                            style="@style/Hyperlink"
-                            android:textSize="14sp"
-                            android:layout_marginStart="8dp"/>
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/restroomSubTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="공원 내 화장실"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#DEE2E6"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="16dp"
-                    />
-                <TextView
-                    android:id="@+id/infoTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="시설정보"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="24dp"
-                    />
-                <LinearLayout
-                    android:id="@+id/subManFacilityLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="16dp"
-                    >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="남"
-                            android:textColor="#6C757D"
-                            android:textSize="12sp"
-                            />
+
                         <LinearLayout
-                            android:id="@+id/facilityM_1"
+                            android:id="@+id/subRatingbarLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             >
-                                <ImageButton
-                                    android:id="@+id/toiletImg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_toilet"
+                                <RatingBar
+                                    android:id="@+id/ratingBar"
+                                    android:layout_width="80dp"
+                                    android:layout_height="17dp"
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:isIndicator="false"
+                                    android:numStars="5"
+                                    android:rating="0"
+                                    android:stepSize="0.25"
+                                    android:layout_marginTop="3dp"
                                     tools:ignore="SpeakableTextPresentCheck"
                                     />
+
                                 <TextView
-                                        android:id="@+id/toiletNumTv"
+                                    android:id="@+id/starNumTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.98"
+                                    android:textSize="14sp"
+                                    />
+                                <TextView
+                                    android:id="@+id/reviewTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="후기보기"
+                                    style="@style/Hyperlink"
+                                    android:textSize="14sp"
+                                    android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/restroomSubTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="공원 내 화장실"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#DEE2E6"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="16dp"
+                            />
+                        <TextView
+                            android:id="@+id/infoTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="시설정보"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="24dp"
+                            />
+                        <LinearLayout
+                            android:id="@+id/subManFacilityLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="16dp"
+                            >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="남"
+                                    android:textColor="#6C757D"
+                                    android:textSize="12sp"
+                                    />
+                                <LinearLayout
+                                    android:id="@+id/facilityM_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/toiletImg"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_toilet"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                                android:id="@+id/toiletNumTv"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="4개"
+                                                android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityM_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/toilet2Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_toilet2"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/toilet2NumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityM_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/toilet3Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_toilet3"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                        android:id="@+id/toilet3NumTv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="4개"
                                         android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityM_4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/washstandImg"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_washstand"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/washstandNumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityM_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/mirrorImg"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_mirror"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/mirrorNumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
-                            android:id="@+id/facilityM_2"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/subManFacilityTVLayout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="16dp"
                             >
-                                <ImageButton
-                                    android:id="@+id/toilet2Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_toilet2"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/toilet2NumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
                         </LinearLayout>
                         <LinearLayout
-                            android:id="@+id/facilityM_3"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/subWomanFacilityLayout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="14dp"
                             >
-                                <ImageButton
-                                    android:id="@+id/toilet3Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_toilet3"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
                                 <TextView
-                                android:id="@+id/toilet3NumTv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="4개"
-                                android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/facilityM_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/washstandImg"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_washstand"
-                                    tools:ignore="SpeakableTextPresentCheck"
+                                    android:text="여"
+                                    android:textColor="#6C757D"
+                                    android:textSize="12sp"
                                     />
-                                <TextView
-                                    android:id="@+id/washstandNumTv"
+                                <LinearLayout
+                                    android:id="@+id/facilityW_1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/toiletW_Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_toilet"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/toiletW_NumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityW_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/toilet2W_Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_toilet3"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/toilet2W_NumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityW_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/washstandW_Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_washstand"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/washstandW_NumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/facilityW_4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp"
+                                    >
+                                        <ImageButton
+                                            android:id="@+id/mirrorW_Img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/restroom_facility_btn2"
+                                            android:src="@drawable/facility_mirror"
+                                            tools:ignore="SpeakableTextPresentCheck"
+                                            />
+                                        <TextView
+                                            android:id="@+id/mirrorW_NumTv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="4개"
+                                            android:layout_gravity="center|bottom"/>
+                                </LinearLayout>
                         </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/facilityM_5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/mirrorImg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_mirror"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/mirrorNumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/subManFacilityTVLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="16dp"
-                    >
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/subWomanFacilityLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="14dp"
-                    >
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="여"
-                            android:textColor="#6C757D"
-                            android:textSize="12sp"
+                            android:text="비품이 있을 확룰 91%"
+                            android:gravity="center|left"
+                            android:paddingLeft="13dp"
+                            android:background="@drawable/equipment_rectangle"
                             />
-                        <LinearLayout
-                            android:id="@+id/facilityW_1"
-                            android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/toiletW_Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_toilet"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/toiletW_NumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/facilityW_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/toilet2W_Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_toilet3"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/toilet2W_NumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/facilityW_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/washstandW_Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_washstand"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/washstandW_NumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/facilityW_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="8dp"
-                            >
-                                <ImageButton
-                                    android:id="@+id/mirrorW_Img"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/restroom_facility_btn2"
-                                    android:src="@drawable/facility_mirror"
-                                    tools:ignore="SpeakableTextPresentCheck"
-                                    />
-                                <TextView
-                                    android:id="@+id/mirrorW_NumTv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="4개"
-                                    android:layout_gravity="center|bottom"/>
-                        </LinearLayout>
+                            android:text="해당 내용은 사용자들의 데이터를 기반으로 한 것으로,\n실제 이용상황과 다를 수 있습니다."
+                            android:textSize="10sp"
+                            android:textColor="#ADB5BD"
+                            android:gravity="center|left"
+                            />
+
                 </LinearLayout>
-
-                <TextView
-                    android:layout_marginTop="14dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="비품이 있을 확룰 91%"
-                    android:gravity="center|left"
-                    android:paddingLeft="13dp"
-                    android:background="@drawable/equipment_rectangle"
-                    />
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="해당 내용은 사용자들의 데이터를 기반으로 한 것으로,\n실제 이용상황과 다를 수 있습니다."
-                    android:textSize="10sp"
-                    android:textColor="#ADB5BD"
-                    android:gravity="center|left"
-                    />
-
-        </LinearLayout>
         </ScrollView>
 
         <Button
