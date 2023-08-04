@@ -20,6 +20,9 @@ class LoginService(val view : LoginActivityInterface) {
                     if(response.code() == 200) view.onPostLoginSuccess(it.data)
                     else view.onPostLoginFailure("최초가입 사용자",body.authId)
                 }
+                if(response.body()==null){
+                    view.onPostLoginFailure("최초가입 사용자",body.authId)
+                }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
