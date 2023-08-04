@@ -1,4 +1,4 @@
-package com.android.chamma.ui.toiletlist
+package com.android.chamma.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.LayoutRestroomViewpagerItemBinding

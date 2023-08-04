@@ -1,10 +1,10 @@
-package com.android.chamma.ui.toiletlist
+package com.android.chamma.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemReviewBinding
-import com.android.chamma.models.toiletlistmodel.ReviewData
+import com.android.chamma.ui.home.model.ReviewData
 import com.bumptech.glide.Glide
 
 
@@ -34,7 +34,7 @@ class ReviewDataAdapter (private val dataList:ArrayList<ReviewData>?):
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewDataAdapter.DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
     }

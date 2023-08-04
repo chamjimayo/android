@@ -1,18 +1,13 @@
-package com.android.chamma.ui.toiletlist
+package com.android.chamma.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.CalendarView
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.chamma.R
 import com.android.chamma.config.BaseActivityVB
 import com.android.chamma.databinding.ActivityReviewBinding
-import com.android.chamma.models.toiletlistmodel.ReviewData
+import com.android.chamma.ui.home.model.ReviewData
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ReviewActivity : BaseActivityVB<ActivityReviewBinding>(ActivityReviewBinding::inflate) {
@@ -24,16 +19,26 @@ class ReviewActivity : BaseActivityVB<ActivityReviewBinding>(ActivityReviewBindi
         val dataList:ArrayList<ReviewData> = arrayListOf()
 
         dataList.apply{
-            add(ReviewData("나는참지않쥐",R.drawable.review_profile,"23.","07.",11,5f,
-                "화장실 너무 깨끗해요\n휴지도 넉넉하게 있어서 좋았어요!"))
-            add(ReviewData("읏차",R.drawable.review_profile2,"23.","06.",30,5f,
-                "관리가 잘 되어 있어요~"))
-            add(ReviewData("minjji7",R.drawable.review_profile3,"23.","06.",30,4f,
-                "냄새 탈취제 있으면 더 좋을거 같음"))
-            add(ReviewData("dkwe32",R.drawable.review_profile4,"23.","06.",28,5f,
-                "깔끔해요 화장실 급할 때 이 근처면 여기만 갈 것 같아요"))
-            add(ReviewData("급해",R.drawable.review_profile5,"23.","06.",21,5f,
-                "화장실 너무 깨끗해요\n휴지도 넉넉하게 있어서 좋았어요!"))
+            add(
+                ReviewData("나는참지않쥐",R.drawable.review_profile,"23.","07.",11,5f,
+                "화장실 너무 깨끗해요\n휴지도 넉넉하게 있어서 좋았어요!")
+            )
+            add(
+                ReviewData("읏차",R.drawable.review_profile2,"23.","06.",30,5f,
+                "관리가 잘 되어 있어요~")
+            )
+            add(
+                ReviewData("minjji7",R.drawable.review_profile3,"23.","06.",30,4f,
+                "냄새 탈취제 있으면 더 좋을거 같음")
+            )
+            add(
+                ReviewData("dkwe32",R.drawable.review_profile4,"23.","06.",28,5f,
+                "깔끔해요 화장실 급할 때 이 근처면 여기만 갈 것 같아요")
+            )
+            add(
+                ReviewData("급해",R.drawable.review_profile5,"23.","06.",21,5f,
+                "화장실 너무 깨끗해요\n휴지도 넉넉하게 있어서 좋았어요!")
+            )
         }
         val dataRVAdapter = ReviewDataAdapter(dataList)
 
@@ -68,7 +73,7 @@ class ReviewActivity : BaseActivityVB<ActivityReviewBinding>(ActivityReviewBindi
             }
 
             binding.toolBar.setNavigationOnClickListener {
-                finish()
+                finish()//왜안되냐!
             }
         }
     }

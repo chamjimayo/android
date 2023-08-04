@@ -1,4 +1,4 @@
-package com.android.chamma.models.toiletlistmodel
+package com.android.chamma.ui.home.model
 
 data class ReviewData (
     val Nickname:String,

@@ -44,6 +44,11 @@ class HomeBottomSheet(val data : MarkerData) : BottomSheetDialogFragment() {
         binding.btnUse.setOnClickListener {
             startActivity(Intent(requireContext(),QRActivity::class.java))
         }
+
+        binding.tvName.setOnClickListener {
+            val intent = Intent(requireContext(), RestroomInfoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     //    binding.tvName.text = data.restroomName
