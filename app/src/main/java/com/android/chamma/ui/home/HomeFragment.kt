@@ -100,9 +100,13 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.None
-        naverMap.minZoom = 15.0
+        naverMap.minZoom = 10.0
         locationBtnListener()
         toiletBtnListener()
+        HomeService(this).getNearToilet(toiletState
+            ,naverMap.cameraPosition.target.longitude
+            ,naverMap.cameraPosition.target.latitude
+            ,2000.0)
 
         // 화면 이동시 리스너
         naverMap.addOnCameraChangeListener{ reason, animated ->
@@ -168,7 +172,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
                 locationState = false
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
-                naverMap.minZoom = 15.0
+                naverMap.minZoom = 17.0
                 naverMap.locationTrackingMode = LocationTrackingMode.Follow
                 locationState = true
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)

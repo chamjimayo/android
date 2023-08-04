@@ -36,11 +36,13 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
         binding.btnKakaoLogin.setOnClickListener {
             social = "KAKAO"
+            showLoading()
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
             social = "NAVER"
+            showLoading()
             naverLogin()
         }
     }
@@ -56,9 +58,11 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                dismissLoading()
             }
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
+                dismissLoading()
             }
         }
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
@@ -72,6 +76,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 // 로그인 실패 부분
                 if (error != null) {
                     Log.e(TAG, "앱 로그인 실패 $error")
+                    dismissLoading()
                     // 사용자가 취소
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
@@ -92,6 +97,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
                 }
             }
         } else {
+            dismissLoading()
             UserApiClient.instance.loginWithKakaoAccount(
                 this,
                 callback = kakaoEmailCb
@@ -104,6 +110,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
     private val kakaoEmailCb: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Log.e(TAG, "이메일 로그인 실패 $error")
+            dismissLoading()
         } else if (token != null) {
             Log.d(TAG, "이메일 로그인 성공 ${token.accessToken}")
             // 로그인 성공시 정보 불러오기
@@ -126,10 +133,12 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
             LoginService(this@LoginActivity).postLogin(LoginPostData(id.toString()))
         }
         override fun onFailure(httpStatus: Int, message: String) {
+            dismissLoading()
             val errorCode = NaverIdLoginSDK.getLastErrorCode().code
             val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
         }
         override fun onError(errorCode: Int, message: String) {
+            dismissLoading()
             onFailure(errorCode, message)
         }
     }
@@ -140,6 +149,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Log.e(TAG, "사용자 정보 요청 실패 $error")
+                dismissLoading()
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
                 // 식별아이디로 통신
@@ -158,6 +168,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
     override fun onPostLoginSuccess(result : LoginResponseData) {
         // 존재하는 유저. 로그인
+        dismissLoading()
 
         // accessToken/refreshToken 저장
         storeTokens(result)
@@ -169,6 +180,7 @@ class LoginActivity : BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding:
 
     override fun onPostLoginFailure(message : String, uuid : String) {
         Log.d(TAG,"$uuid")
+        dismissLoading()
         if(uuid.isNotBlank()){
             // 존재하지 않는 유저. 회원가입
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)

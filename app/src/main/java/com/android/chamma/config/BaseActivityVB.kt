@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.android.chamma.util.LoadingDialog
 import com.android.chamma.util.TitleImageTwoButtonDialog
 import com.android.chamma.util.TitleTwoButtonDialog
 
@@ -16,6 +17,7 @@ abstract class BaseActivityVB<B : ViewBinding>(private val inflate: (LayoutInfla
     protected lateinit var binding: B
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog : TitleImageTwoButtonDialog
+    private var loadingDialog = LoadingDialog()
 
 
 
@@ -23,6 +25,15 @@ abstract class BaseActivityVB<B : ViewBinding>(private val inflate: (LayoutInfla
         super.onCreate(savedInstanceState)
         binding = inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+
+    fun showLoading(){
+        loadingDialog.show(supportFragmentManager,"")
+    }
+
+    fun dismissLoading(){
+        loadingDialog.dismiss()
     }
 
     fun showCustomToast(message: String) {

@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.android.chamma.R
+import com.android.chamma.util.LoadingDialog
 import com.android.chamma.util.TitleImageTwoButtonDialog
 import com.android.chamma.util.TitleTwoButtonDialog
 
@@ -23,6 +24,7 @@ abstract class BaseFragmentVB<B : ViewBinding>(
 
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog: TitleImageTwoButtonDialog
+    private var loadingDialog = LoadingDialog()
 
 
     override fun onCreateView(
@@ -32,6 +34,15 @@ abstract class BaseFragmentVB<B : ViewBinding>(
     ): View? {
         _binding = bind(super.onCreateView(inflater, container, savedInstanceState)!!)
         return binding.root
+    }
+
+
+    fun showLoading(){
+        loadingDialog.show(parentFragmentManager,"")
+    }
+
+    fun dismissLoading(){
+        loadingDialog.dismiss()
     }
 
     fun showCustomToast(message: String) {
