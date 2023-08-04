@@ -86,7 +86,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
             if (error != null) Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
             else {
                 App.sharedPreferences.edit().clear().apply()
-                val intent = Intent(requireContext(), LoginActivity::class.java)
+                val intent = Intent(App.context(), LoginActivity::class.java)
                 intent.apply{
                     this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     (activity as MainActivity).finishAffinity()
@@ -99,5 +99,12 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
     // 네이버 로그아웃
     private fun naverLogout(){
         NaverIdLoginSDK.logout()
+        App.sharedPreferences.edit().clear().apply()
+        val intent = Intent(App.context(), LoginActivity::class.java)
+        intent.apply{
+            this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            (activity as MainActivity).finishAffinity()
+            startActivity(intent)
+        }
     }
 }
