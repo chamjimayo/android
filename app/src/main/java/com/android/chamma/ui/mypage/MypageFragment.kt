@@ -99,5 +99,12 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
     // 네이버 로그아웃
     private fun naverLogout(){
         NaverIdLoginSDK.logout()
+        App.sharedPreferences.edit().clear().apply()
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.apply{
+            this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            (activity as MainActivity).finishAffinity()
+            startActivity(intent)
+        }
     }
 }
