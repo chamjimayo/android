@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.android.chamma'
+    namespace 'com.umc.chamma'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.android.chamma"
+        applicationId "com.umc.chamma"
         minSdk 27
         targetSdk 33
         versionCode 1
