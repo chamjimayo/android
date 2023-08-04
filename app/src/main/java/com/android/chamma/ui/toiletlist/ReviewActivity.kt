@@ -67,7 +67,9 @@ class ReviewActivity : BaseActivityVB<ActivityReviewBinding>(ActivityReviewBindi
                 bottomSheetDialog.dismiss()
             }
 
-
+            binding.toolBar.setNavigationOnClickListener {
+                finish()
+            }
         }
     }
 }
