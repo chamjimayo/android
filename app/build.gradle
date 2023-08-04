@@ -80,10 +80,13 @@ dependencies {
     // 위치 SDK
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
-    //CircleImageView
+    // CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //ZXING QR
+    // ZXING QR
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'com.google.zxing:core:3.3.0'
+
+    // Inapp 결제
+    implementation("com.android.billingclient:billing:5.0.0")
 }
