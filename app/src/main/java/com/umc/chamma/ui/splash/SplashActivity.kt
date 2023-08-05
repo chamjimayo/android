@@ -12,6 +12,8 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.R
 import com.umc.chamma.ui.login.LoginActivity
@@ -28,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         
         setFullScreen()
-        Handler(Looper.getMainLooper()).postDelayed({
+        //Handler(Looper.getMainLooper()).postDelayed({
 
             // 스플래시 끝난뒤 LoadingDialog 띄우기
             dialog.show(supportFragmentManager,"dialog")
@@ -37,11 +39,11 @@ class SplashActivity : AppCompatActivity() {
                 dialog.dismiss()
                 showAlert()
             } else {
-                dialog.dismiss()
+           //     dialog.dismiss()
                 autoLogin()
-                finish()
+           //     finish()
             }
-        }, 1500)
+      //  }, 1500)
     }
 
     private fun autoLogin(){
@@ -59,7 +61,9 @@ class SplashActivity : AppCompatActivity() {
         // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 작성
         if (!jwt.isNullOrBlank()) startActivity(Intent(this, MainActivity::class.java))
         else startActivity(Intent(this, LoginActivity::class.java))
-
+        //추가
+        dialog.dismiss()
+        finish()
     }
 
     private fun showAlert(){

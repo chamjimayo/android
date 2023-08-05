@@ -1,19 +1,20 @@
-package com.umc.chamma.ui.toiletlist
+package com.umc.chamma.ui.home
+
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.umc.chamma.databinding.ItemReviewBinding
-import com.umc.chamma.models.toiletlistmodel.ReviewData
 import com.bumptech.glide.Glide
+import com.umc.chamma.ui.home.model.ReviewData
 
 
-class ReviewDataAdapter (private val dataList:ArrayList<com.umc.chamma.models.toiletlistmodel.ReviewData>?):
+class ReviewDataAdapter (private val dataList:ArrayList<ReviewData>?):
     RecyclerView.Adapter<ReviewDataAdapter.DataViewHolder>() {
     inner class DataViewHolder(private val viewBinding: ItemReviewBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         private val context = viewBinding.root.context
 
-        fun bind(data: com.umc.chamma.models.toiletlistmodel.ReviewData) {
+        fun bind(data: ReviewData) {
 
 
             viewBinding.yearTv.text = data.year.toString()
@@ -34,7 +35,7 @@ class ReviewDataAdapter (private val dataList:ArrayList<com.umc.chamma.models.to
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewDataAdapter.DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
     }

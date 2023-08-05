@@ -1,4 +1,4 @@
-package com.umc.chamma.models.toiletlistmodel
+package com.umc.chamma.ui.home.model
 
 data class ReviewData (
     val Nickname:String,
