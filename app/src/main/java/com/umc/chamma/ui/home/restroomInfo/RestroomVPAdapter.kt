@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.restroomInfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

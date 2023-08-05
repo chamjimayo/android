@@ -1,20 +1,15 @@
 package com.umc.chamma.ui.home
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
 import com.umc.chamma.models.homemodel.MarkerData
 import com.umc.chamma.ui.qr.QRActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
 
 class HomeBottomSheet(val data : MarkerData) : BottomSheetDialogFragment() {
 

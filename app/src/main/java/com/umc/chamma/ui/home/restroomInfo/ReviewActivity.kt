@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.restroomInfo
 
 
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 //import com.android.chamma.R
-import com.umc.chamma.ui.home.model.ReviewData
+import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 import com.umc.chamma.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.umc.chamma.databinding.ActivityReviewBinding
