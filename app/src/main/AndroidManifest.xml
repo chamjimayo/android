@@ -19,14 +19,14 @@
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.home.RestroomInfoActivity"
+            android:name=".ui.home.restroomInfo.RestroomInfoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.qr.QRActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.ReviewActivity"
+            android:name=".ui.home.restroomInfo.ReviewActivity"
             android:exported="false" />
 
         <meta-data
