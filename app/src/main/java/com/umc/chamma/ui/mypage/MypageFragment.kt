@@ -18,8 +18,9 @@ import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.util.Constants.TAG
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
+import com.umc.chamma.util.LoginInfo
 
-class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
+class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
 
     var mainActivity: MainActivity? = null
 
@@ -65,8 +66,9 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
             .setPositiveButton("넵", object: DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     //로그아웃 코드
-                    naverLogout()
-                    kakaoLogout()
+                    if(LoginInfo.social == "KAKAO") kakaoLogout()
+                    else if(LoginInfo.social == "NAVER") naverLogout()
+
                 }
             })
             .setNegativeButton("아니요",object : DialogInterface.OnClickListener{
@@ -85,8 +87,8 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
         UserApiClient.instance.logout { error ->
             if (error != null) Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
             else {
-                com.umc.chamma.config.App.sharedPreferences.edit().clear().apply()
-                val intent = Intent(com.umc.chamma.config.App.context(), LoginActivity::class.java)
+                App.sharedPreferences.edit().clear().apply()
+                val intent = Intent(App.context(), LoginActivity::class.java)
                 intent.apply{
                     this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     (activity as MainActivity).finishAffinity()
@@ -99,8 +101,8 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
     // 네이버 로그아웃
     private fun naverLogout(){
         NaverIdLoginSDK.logout()
-        com.umc.chamma.config.App.sharedPreferences.edit().clear().apply()
-        val intent = Intent(com.umc.chamma.config.App.context(), LoginActivity::class.java)
+        App.sharedPreferences.edit().clear().apply()
+        val intent = Intent(App.context(), LoginActivity::class.java)
         intent.apply{
             this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             (activity as MainActivity).finishAffinity()

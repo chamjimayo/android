@@ -25,23 +25,23 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import com.umc.chamma.util.LoginInfo
 
 class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
 
-    private var social = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullScreen()
 
         binding.btnKakaoLogin.setOnClickListener {
-            social = "KAKAO"
+            LoginInfo.social = "KAKAO"
             showLoading()
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
-            social = "NAVER"
+            LoginInfo.social = "NAVER"
             showLoading()
             naverLogin()
         }
@@ -184,7 +184,7 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
         if(uuid.isNotBlank()){
             // 존재하지 않는 유저. 회원가입
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-                .putExtra("authType",social)
+                .putExtra("authType",LoginInfo.social)
                 .putExtra("authId",uuid)
             startActivity(intent)
         }
