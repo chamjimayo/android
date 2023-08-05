@@ -18,14 +18,16 @@ import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.util.Constants.TAG
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
+import com.umc.chamma.config.App.Companion.sharedPreferences
+import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
-class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
+class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
 
     var mainActivity: MainActivity? = null
+    private val social by lazy{ sharedPreferences.getString(X_LOGIN_TYPE,"") }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -33,7 +35,6 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
         binding.btnUsageMypage.setOnClickListener{mainActivity?.mypageToUsage()}
         binding.btnChargeMypage.setOnClickListener { mainActivity?.mypageToCharge() }
@@ -62,18 +63,12 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
         AlertDialog.Builder(mainActivity)
             .setTitle("알림")
             .setMessage("로그아웃 하시겠습니까?")
-            .setPositiveButton("넵", object: DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    //로그아웃 코드
-                    naverLogout()
-                    kakaoLogout()
-                }
-            })
-            .setNegativeButton("아니요",object : DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Log.d("logOut", "suspend logOut")
-                }
-            })
+            .setPositiveButton("넵") { dialog, which -> //로그아웃 코드
+                if (social == "KAKAO") kakaoLogout()
+                else if (social == "NAVER") naverLogout()
+            }
+            .setNegativeButton("아니요"
+            ) { dialog, which -> Log.d("logOut", "suspend logOut") }
             .create()
             .show()
     }
@@ -85,8 +80,8 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
         UserApiClient.instance.logout { error ->
             if (error != null) Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
             else {
-                com.umc.chamma.config.App.sharedPreferences.edit().clear().apply()
-                val intent = Intent(com.umc.chamma.config.App.context(), LoginActivity::class.java)
+                App.sharedPreferences.edit().clear().apply()
+                val intent = Intent(App.context(), LoginActivity::class.java)
                 intent.apply{
                     this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     (activity as MainActivity).finishAffinity()
@@ -99,8 +94,8 @@ class MypageFragment : com.umc.chamma.config.BaseFragmentVB<FragmentMypageBindin
     // 네이버 로그아웃
     private fun naverLogout(){
         NaverIdLoginSDK.logout()
-        com.umc.chamma.config.App.sharedPreferences.edit().clear().apply()
-        val intent = Intent(com.umc.chamma.config.App.context(), LoginActivity::class.java)
+        App.sharedPreferences.edit().clear().apply()
+        val intent = Intent(App.context(), LoginActivity::class.java)
         intent.apply{
             this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             (activity as MainActivity).finishAffinity()

@@ -3,8 +3,6 @@ package com.umc.chamma.ui.home.restroomInfo
 import com.kakao.sdk.common.KakaoSdk.type
 import com.umc.chamma.config.App
 import com.umc.chamma.models.homemodel.NearToiletResponse
-import com.umc.chamma.ui.home.HomeFragmentInterface
-import com.umc.chamma.ui.home.HomeRetrofitInterface
 import com.umc.chamma.ui.home.model.RestroomDetailResponse
 import com.umc.chamma.ui.main.MainActivity
 import retrofit2.Call

@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         
         setFullScreen()
-        //Handler(Looper.getMainLooper()).postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
 
             // 스플래시 끝난뒤 LoadingDialog 띄우기
             dialog.show(supportFragmentManager,"dialog")
@@ -39,11 +39,11 @@ class SplashActivity : AppCompatActivity() {
                 dialog.dismiss()
                 showAlert()
             } else {
-           //     dialog.dismiss()
+                dialog.dismiss()
                 autoLogin()
-           //     finish()
+                finish()
             }
-      //  }, 1500)
+        }, 1500)
     }
 
     private fun autoLogin(){

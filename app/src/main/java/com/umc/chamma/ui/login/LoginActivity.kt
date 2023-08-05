@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.umc.chamma.config.App.Companion.sharedPreferences
-import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityLoginBinding
 import com.umc.chamma.ui.login.model.LoginPostData
 import com.umc.chamma.ui.login.model.LoginResponseData
@@ -25,11 +24,12 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
 class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
-
     private var social = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullScreen()
@@ -163,6 +163,7 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
             .putString(X_REFRESH_TOKEN, result.refreshToken)
             .putString(X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
             .putString(X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .putString(X_LOGIN_TYPE, social)
             .apply()
     }
 

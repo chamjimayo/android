@@ -4,20 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.umc.chamma.config.App
 import com.umc.chamma.R
-import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentSearchBinding
 import com.umc.chamma.ui.search.model.SearchResultData
-import com.umc.chamma.ui.home.HomeFragment
+import com.umc.chamma.ui.home.main.HomeFragment
 import com.umc.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.umc.chamma.ui.search.adapter.SearchResultAdapter
-import com.umc.chamma.util.Constants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,7 +46,7 @@ class SearchFragment(
         }
         binding.btnBack.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frame,HomeFragment())
+                .replace(R.id.frame, HomeFragment())
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }

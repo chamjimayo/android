@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.main
 
 import android.content.Intent
 import android.os.Bundle
