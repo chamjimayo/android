@@ -1,8 +1,6 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.main
 
-import com.umc.chamma.config.App
 import com.umc.chamma.models.homemodel.NearToiletResponse
-import com.umc.chamma.ui.main.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

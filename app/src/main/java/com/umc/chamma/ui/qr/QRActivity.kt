@@ -7,7 +7,7 @@ import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 
-class QRActivity : com.umc.chamma.config.BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate) {
+class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate) {
 
     private lateinit var capture : CaptureManager
 

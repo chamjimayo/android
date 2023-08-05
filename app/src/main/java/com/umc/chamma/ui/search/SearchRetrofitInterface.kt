@@ -15,12 +15,12 @@ interface SearchRetrofitInterface {
     fun getRecentKeyword() : Call<SearchResultResponse>
 
     @POST("/api/address/search/click")
-    fun postAddressClick(@Body params : SearchResultData) : Call<com.umc.chamma.config.BaseResponse>
+    fun postAddressClick(@Body params : SearchResultData) : Call<BaseResponse>
 
-    @DELETE("/api/address/search/{keyword}")
-    fun deleteRecentKeyword(@Path("keyword") keyword : String) : Call<com.umc.chamma.config.BaseResponse>
+    @DELETE("/api/address/search")
+    fun deleteRecentKeyword(@Query("name") name : String) : Call<BaseResponse>
 
     @DELETE("/api/address/search/all")
-    fun deleteAllRecentKeyword() : Call<com.umc.chamma.config.BaseResponse>
+    fun deleteAllRecentKeyword() : Call<BaseResponse>
 
 }

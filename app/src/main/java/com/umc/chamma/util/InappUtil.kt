@@ -9,7 +9,6 @@ object InappUtil : PurchasesUpdatedListener {
     private val tempList =
         listOf("point_1000", "point_3000", "point_5000", "point_8000", "point_10000")
 
-//    private lateinit var func: MainActivity.RoomToWebview
 
     interface GooglepayUtilDelegate {
         fun onProgress()
@@ -141,10 +140,8 @@ object InappUtil : PurchasesUpdatedListener {
                 Log.d(TAG, "구매 성공")
 
                 // 서버로 구매성공 데이터 보내기
-                val data = PurchaseData("com.flarez.android", productId, purchase.purchaseToken)
+                val data = PurchaseData("", productId, purchase.purchaseToken)
                 Log.d(TAG, "$data")
-
-//                func.postPurchase(data)
 
                 val consumeParams = ConsumeParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)

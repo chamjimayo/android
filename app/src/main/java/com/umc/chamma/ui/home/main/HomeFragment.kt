@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.main
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.umc.chamma.config.App
 import com.umc.chamma.R
-import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.models.homemodel.MarkerData
 import com.umc.chamma.models.homemodel.NearToiletResponse
@@ -21,9 +19,6 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.math.*
 
 enum class markerType(val i : Int){
@@ -32,7 +27,8 @@ enum class markerType(val i : Int){
     SEARCH(2)
 }
 
-class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.chamma.config.BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback, HomeFragmentInterface {
+class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.chamma.config.BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
+    HomeFragmentInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -154,7 +150,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         naverMap.moveCamera(locate)
 
         val markData = MarkerData(latitude = searchData!!.latitude, longitude = searchData!!.longitude)
-        setMarker(markData,markerType.SEARCH)
+        setMarker(markData, markerType.SEARCH)
 
         HomeService(this).getNearToilet(toiletState
             ,naverMap.cameraPosition.target.longitude
@@ -246,7 +242,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         marker.map = naverMap
 
         marker.setOnClickListener {
-            com.umc.chamma.ui.home.HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
+            HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
             true
         }
 
@@ -256,8 +252,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
 
     override fun onGetNearToiletSuccess(result : NearToiletResponse) {
         result.data.forEach{
-            if(it.publicOrPaid == "public") setMarker(it,markerType.FREE)
-            else setMarker(it,markerType.PAID)
+            if(it.publicOrPaid == "public") setMarker(it, markerType.FREE)
+            else setMarker(it, markerType.PAID)
         }
     }
 

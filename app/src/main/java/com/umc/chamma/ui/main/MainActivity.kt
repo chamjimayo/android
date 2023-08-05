@@ -4,10 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.umc.chamma.R
-import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
-import com.umc.chamma.ui.community.CommunityFragment
-import com.umc.chamma.ui.home.HomeFragment
+import com.umc.chamma.ui.home.main.HomeFragment
 import com.umc.chamma.ui.mypage.*
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import com.umc.chamma.util.InappUtil
