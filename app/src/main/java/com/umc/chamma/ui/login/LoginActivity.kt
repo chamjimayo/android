@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.umc.chamma.config.App.Companion.sharedPreferences
-import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityLoginBinding
 import com.umc.chamma.ui.login.model.LoginPostData
 import com.umc.chamma.ui.login.model.LoginResponseData
@@ -25,23 +24,24 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
-import com.umc.chamma.util.LoginInfo
+import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
 class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
+    private var social = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullScreen()
 
         binding.btnKakaoLogin.setOnClickListener {
-            LoginInfo.social = "KAKAO"
+            social = "KAKAO"
             showLoading()
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
-            LoginInfo.social = "NAVER"
+            social = "NAVER"
             showLoading()
             naverLogin()
         }
@@ -163,6 +163,7 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
             .putString(X_REFRESH_TOKEN, result.refreshToken)
             .putString(X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
             .putString(X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .putString(X_LOGIN_TYPE, social)
             .apply()
     }
 
@@ -184,7 +185,7 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
         if(uuid.isNotBlank()){
             // 존재하지 않는 유저. 회원가입
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-                .putExtra("authType",LoginInfo.social)
+                .putExtra("authType",social)
                 .putExtra("authId",uuid)
             startActivity(intent)
         }

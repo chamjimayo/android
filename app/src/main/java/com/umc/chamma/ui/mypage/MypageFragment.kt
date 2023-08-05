@@ -18,15 +18,16 @@ import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.util.Constants.TAG
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
-import com.umc.chamma.util.LoginInfo
+import com.umc.chamma.config.App.Companion.sharedPreferences
+import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
 class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
 
     var mainActivity: MainActivity? = null
+    private val social by lazy{ sharedPreferences.getString(X_LOGIN_TYPE,"") }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -34,7 +35,6 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
         binding.btnUsageMypage.setOnClickListener{mainActivity?.mypageToUsage()}
         binding.btnChargeMypage.setOnClickListener { mainActivity?.mypageToCharge() }
@@ -63,19 +63,12 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         AlertDialog.Builder(mainActivity)
             .setTitle("알림")
             .setMessage("로그아웃 하시겠습니까?")
-            .setPositiveButton("넵", object: DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    //로그아웃 코드
-                    if(LoginInfo.social == "KAKAO") kakaoLogout()
-                    else if(LoginInfo.social == "NAVER") naverLogout()
-
-                }
-            })
-            .setNegativeButton("아니요",object : DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Log.d("logOut", "suspend logOut")
-                }
-            })
+            .setPositiveButton("넵") { dialog, which -> //로그아웃 코드
+                if (social == "KAKAO") kakaoLogout()
+                else if (social == "NAVER") naverLogout()
+            }
+            .setNegativeButton("아니요"
+            ) { dialog, which -> Log.d("logOut", "suspend logOut") }
             .create()
             .show()
     }

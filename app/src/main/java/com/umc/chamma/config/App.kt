@@ -23,21 +23,21 @@ class App : Application() {
 
     //  앱의 context 를 instance 변수에 저장
     init{
-        com.umc.chamma.config.App.Companion.instance =this
+        instance =this
     }
 
     companion object{
-        lateinit var instance : com.umc.chamma.config.App
+        lateinit var instance : App
         lateinit var sharedPreferences: SharedPreferences
         lateinit var retrofit : Retrofit
 
         // 앱의 context 를 불러오는 함수
         fun context() : Context {
-            return com.umc.chamma.config.App.Companion.instance.applicationContext
+            return instance.applicationContext
         }
 
         fun getRetro() : Retrofit{
-            return com.umc.chamma.config.App.Companion.retrofit.newBuilder()
+            return retrofit.newBuilder()
                 .baseUrl(Constants.BASE_URL)
                 .build()
         }
@@ -45,7 +45,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        com.umc.chamma.config.App.Companion.sharedPreferences =
+        sharedPreferences =
             applicationContext.getSharedPreferences("CHAMMA_APP", MODE_PRIVATE)
         initRetrofitInstance()
         getkakaoKeyhash()
@@ -57,10 +57,10 @@ class App : Application() {
             .readTimeout(30000, TimeUnit.MILLISECONDS)
             .connectTimeout(30000, TimeUnit.MILLISECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addNetworkInterceptor(com.umc.chamma.config.AccessTokenInterceptor(applicationContext)) // JWT 자동 헤더 전송
+            .addNetworkInterceptor(AccessTokenInterceptor(applicationContext)) // JWT 자동 헤더 전송
             .build()
 
-        com.umc.chamma.config.App.Companion.retrofit = Retrofit.Builder()
+        retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
