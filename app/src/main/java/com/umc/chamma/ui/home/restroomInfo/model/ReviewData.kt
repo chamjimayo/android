@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home.model
+package com.umc.chamma.ui.home.restroomInfo.model
 
 data class ReviewData (
     val Nickname:String,

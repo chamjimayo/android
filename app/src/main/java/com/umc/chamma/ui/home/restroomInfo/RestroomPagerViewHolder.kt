@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.restroomInfo
 
 import androidx.recyclerview.widget.RecyclerView
 import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding

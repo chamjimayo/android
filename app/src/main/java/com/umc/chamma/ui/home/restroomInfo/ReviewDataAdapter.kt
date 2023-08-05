@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home
+package com.umc.chamma.ui.home.restroomInfo
 
 
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.umc.chamma.databinding.ItemReviewBinding
 import com.bumptech.glide.Glide
-import com.umc.chamma.ui.home.model.ReviewData
+import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 
 
 class ReviewDataAdapter (private val dataList:ArrayList<ReviewData>?):
