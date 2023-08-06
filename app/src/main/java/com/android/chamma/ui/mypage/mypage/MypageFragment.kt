@@ -1,4 +1,4 @@
-package com.android.chamma.ui.mypage
+package com.android.chamma.ui.mypage.mypage
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,7 +11,13 @@ import android.view.ViewGroup
 import com.android.chamma.R
 import com.android.chamma.config.BaseFragmentVB
 import com.android.chamma.databinding.FragmentMypageBinding
+import com.android.chamma.models.signupmodel.NickcheckResponse
 import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.ui.signup.network.NickcheckAPI
+import com.android.chamma.util.RetrofitInterface
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
 
@@ -69,4 +75,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
             .create()
             .show()
     }
+
+
+
 }

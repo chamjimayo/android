@@ -1,4 +1,4 @@
-package com.android.chamma.ui.mypage
+package com.android.chamma.ui.mypage.review
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemReviewMypageBinding
+import com.android.chamma.ui.mypage.model.ListReview
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*

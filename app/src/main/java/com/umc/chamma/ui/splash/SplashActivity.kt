@@ -13,13 +13,17 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import com.android.chamma.App.Companion.sharedPreferences
 import com.android.chamma.R
-import com.navercorp.nid.NaverIdLoginSDK.applicationContext
-import com.umc.chamma.config.App.Companion.sharedPreferences
-import com.umc.chamma.ui.login.LoginActivity
-import com.umc.chamma.ui.main.MainActivity
-import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
-import com.umc.chamma.util.LoadingDialog
+import com.android.chamma.ui.login.LoginActivity
+import com.android.chamma.ui.main.MainActivity
+import com.android.chamma.util.LoadingDialog
+//import com.navercorp.nid.NaverIdLoginSDK.applicationContext
+//import com.umc.chamma.config.App.Companion.sharedPreferences
+//import com.umc.chamma.ui.login.LoginActivity
+//import com.umc.chamma.ui.main.MainActivity
+//import com.umc.chamma.util.LoadingDialog
+//import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
 
 class SplashActivity : AppCompatActivity() {
 
@@ -47,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun autoLogin(){
-        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")
+        val jwt = sharedPreferences.getString(" ","")
 
 
         /* TODO
@@ -84,7 +88,7 @@ class SplashActivity : AppCompatActivity() {
     // 네트워크 연결되었는지 검사코드
     private fun isNetworkConnected(context: Context): Boolean {
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false

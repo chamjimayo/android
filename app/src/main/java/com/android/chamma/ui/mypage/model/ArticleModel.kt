@@ -1,4 +1,4 @@
-package com.android.chamma.ui.mypage
+package com.android.chamma.ui.mypage.model
 
 data class ArticleModel(
     val title: String,

@@ -1,13 +1,13 @@
-package com.android.chamma.ui.mypage
+package com.android.chamma.ui.mypage.usage
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chamma.databinding.ItemUsageBinding
+import com.android.chamma.ui.mypage.model.ArticleModel
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*

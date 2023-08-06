@@ -1,4 +1,4 @@
-package com.android.chamma.ui.mypage
+package com.android.chamma.ui.mypage.chargepoint
 
 import android.app.AlertDialog
 import android.content.Context
