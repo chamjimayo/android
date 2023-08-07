@@ -247,10 +247,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         marker.map = naverMap
 
         marker.setOnClickListener {
-            BottomSheet.homeToiletInfo(requireContext(),data,
-                {startActivity(Intent(App.context(),QRActivity::class.java))},
-                {startActivity(Intent(App.context(), RestroomInfoActivity::class.java))}
-            ).show()
+            BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java))}) {id->
+                val intent = Intent(App.context(), RestroomInfoActivity::class.java)
+                    .putExtra("ID",id)
+                startActivity(intent)
+            }.show()
 
             true
         }
