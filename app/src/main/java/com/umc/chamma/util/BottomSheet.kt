@@ -26,6 +26,9 @@ object BottomSheet {
 
         return dialog
     }
+    
+    // TODO 위에거랑 똑같이 함수로 만들어서, 인자 넣은다음 .show()로 호출만 해주면 됨
+     
 
 
 
