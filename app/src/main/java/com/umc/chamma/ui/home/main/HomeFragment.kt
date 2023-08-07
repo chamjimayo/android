@@ -2,6 +2,7 @@ package com.umc.chamma.ui.home.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,6 +20,10 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.umc.chamma.config.App
+import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
+import com.umc.chamma.ui.qr.QRActivity
+import com.umc.chamma.util.BottomSheet
 import kotlin.math.*
 
 enum class markerType(val i : Int){
@@ -149,7 +154,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         val locate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
         naverMap.moveCamera(locate)
 
-        val markData = MarkerData(latitude = searchData!!.latitude, longitude = searchData!!.longitude)
+        val markData = MarkerData(latitude = searchData!!.latitude, longitude = searchData.longitude)
         setMarker(markData, markerType.SEARCH)
 
         HomeService(this).getNearToilet(toiletState
@@ -242,7 +247,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         marker.map = naverMap
 
         marker.setOnClickListener {
-            HomeBottomSheet(data).show(parentFragmentManager, "HomeBottomSheet")
+            BottomSheet.homeToiletInfo(requireContext(),data,
+                {startActivity(Intent(App.context(),QRActivity::class.java))},
+                {startActivity(Intent(App.context(), RestroomInfoActivity::class.java))}
+            ).show()
+
             true
         }
 

@@ -16,4 +16,5 @@ data class MarkerData(
     val publicOrPaid : String? = "",
     val reviewRating : Float? = 0F,
     val distance : Double? = 0.0,
+    val restroomId : Int? = 0
 )
