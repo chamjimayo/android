@@ -10,12 +10,17 @@ import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 import com.umc.chamma.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.umc.chamma.databinding.ActivityReviewBinding
+import com.umc.chamma.util.BottomSheet
 
 class ReviewActivity : com.umc.chamma.config.BaseActivityVB<ActivityReviewBinding>(ActivityReviewBinding::inflate) {
     private lateinit var bottomSheet: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.toolBar.setNavigationOnClickListener {
+            finish()//왜안되냐!->잘못된 범위의 괄호안에다 넣음
+        }
 
         val dataList:ArrayList<ReviewData> = arrayListOf()
 
@@ -47,35 +52,7 @@ class ReviewActivity : com.umc.chamma.config.BaseActivityVB<ActivityReviewBindin
         binding.recyclerView.layoutManager= LinearLayoutManager(this)
 
         binding.optionBtn.setOnClickListener{
-            bottomSheet = layoutInflater.inflate(R.layout.fragment_btmshtdialog_sort_list, null)
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val btnClose = bottomSheet.findViewById<Button>(R.id.btmshtBtnClose)
-            val newestTv=bottomSheet.findViewById<Button>(R.id.newestTv)
-            val highestTv=bottomSheet.findViewById<Button>(R.id.highestTv)
-            val lowTv=bottomSheet.findViewById<Button>(R.id.lowTv)
-
-            // calendar bottomsheetdialog 설정
-            bottomSheetDialog.setContentView(bottomSheet)
-            bottomSheetDialog.show()
-
-            newestTv.setOnClickListener {
-                binding.optionBtn.text="최신순"
-            }
-            highestTv.setOnClickListener {
-                binding.optionBtn.text="별점 높은 순"
-
-            }
-            lowTv.setOnClickListener {
-                binding.optionBtn.text="별점 낮은 순"
-
-            }
-            btnClose.setOnClickListener {
-                bottomSheetDialog.dismiss()
-            }
-
-            binding.toolBar.setNavigationOnClickListener {
-                finish()//왜안되냐!
-            }
+            BottomSheet.reviewSequence(this,binding)
         }
     }
 }
