@@ -55,7 +55,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
         binding.reviewTv.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-        binding.toolBar.setNavigationOnClickListener {
+        binding.toolBar.setOnClickListener {
             finish()
         }
 
