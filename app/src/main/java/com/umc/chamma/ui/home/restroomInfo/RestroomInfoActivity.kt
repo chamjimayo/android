@@ -13,7 +13,7 @@ import com.naver.maps.map.a.g
 import com.umc.chamma.R
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityRestroomInfoBinding
-import com.umc.chamma.ui.home.model.RestroomDetailResponse
+import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
 import com.umc.chamma.ui.qr.QRActivity
 import me.relex.circleindicator.CircleIndicator3
 
@@ -24,7 +24,8 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_restroom_info)
+
+        val Id= intent.getIntExtra("ID",0)
 
         //풀스크린-MainActivity
         window.apply {
@@ -75,11 +76,13 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
         }
 
-        RestroomInfoService(this).tryToGetRestroomDetail(1)
+        RestroomInfoService(this).tryToGetRestroomDetail(Id)
     }
 
     override fun onTryToGetRDSuccess(response: RestroomDetailResponse){
         Log.d("연결결과",response.toString())
+        binding.restroomTv.text=response.data.restroomName
+
     }
     /*
     2023-08-05 23:19:12.502 19173-19173 연결결과

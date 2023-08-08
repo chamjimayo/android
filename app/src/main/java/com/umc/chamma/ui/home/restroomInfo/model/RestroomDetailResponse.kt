@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.home.model
+package com.umc.chamma.ui.home.restroomInfo.model
 
 import com.google.gson.annotations.SerializedName
 import com.umc.chamma.config.BaseResponse
@@ -30,7 +30,7 @@ data class RDResult(
     )
 
 data class equipementsList(
-    @SerializedName("equipmentName")val equimentName:String,
+    @SerializedName("equipmentName")val equimentName:String?,
     @SerializedName("id")val id:Int
 )
 
