@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
+import com.naver.maps.map.a.g
 //import com.android.chamma.R
 //import com.android.chamma.R
 import com.umc.chamma.R
@@ -45,8 +46,18 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
 
-        val indicator: CircleIndicator3 = binding.indicator
-        indicator.setViewPager(binding.restroomVp)
+        //val indicator: CircleIndicator3 = binding.indicator
+        //indicator.setViewPager(binding.restroomVp)
+        val pager = binding.restroomVp
+        val indicator = binding.pageIndicatorView
+
+        indicator.count=RestroomVPAdapter.itemCount
+        pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                indicator.selection = position
+            }
+        })
 
         binding.reviewTv.setOnClickListener {
             val intent = Intent(this, ReviewActivity::class.java)
@@ -55,7 +66,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
         binding.reviewTv.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-        binding.toolBar.setNavigationOnClickListener {
+        binding.toolBar.setOnClickListener {
             finish()
         }
 
