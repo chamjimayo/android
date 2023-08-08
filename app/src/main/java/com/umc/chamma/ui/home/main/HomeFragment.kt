@@ -2,11 +2,15 @@ package com.umc.chamma.ui.home.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.ui.home.model.NearToiletData
@@ -177,10 +181,16 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
                 locationState = false
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
-                naverMap.minZoom = 17.0
-                naverMap.locationTrackingMode = LocationTrackingMode.Follow
-                locationState = true
-                binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
+                val locationManager = App.context().getSystemService(LOCATION_SERVICE) as LocationManager
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    showCustomToast("위치 정보를 켜주세요")
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }else{
+                    naverMap.minZoom = 17.0
+                    naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                    locationState = true
+                    binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
+                }
             }
 
         }
