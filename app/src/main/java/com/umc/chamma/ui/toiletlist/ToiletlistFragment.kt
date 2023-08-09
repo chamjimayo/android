@@ -27,6 +27,7 @@ import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.umc.chamma.ui.toiletlist.adapter.ToiletListAdapter
+import com.umc.chamma.util.BottomSheet
 import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.TAG
 
@@ -37,6 +38,12 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
        super.onViewCreated(view, savedInstanceState)
 
+        setLocation()
+        setBtnListener()
+
+   }
+
+    private fun setLocation(){
         val locationManager = App.context().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -51,7 +58,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity as MainActivity)
                 fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
 //                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude)
-                    
+
                     //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
                     HomeService(this).getNearToilet("paid", 126.9731649095934, 37.560444374518106)
                 }
@@ -60,7 +67,26 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
             }
 
         }
-   }
+    }
+    
+    private fun setBtnListener(){
+        binding.btnSort.setOnClickListener { 
+            BottomSheet.toiletlistSort(App.context()){type->
+                // TODO 0 : 거리순 1 : 별점높은순 2 : 별점낮은순 으로 API 호출. 아직 API 구현안됨
+                when(type){
+                    0->{}
+                    1->{}
+                    2->{}
+                }
+            }.show()
+        }
+
+
+        binding.btnRangeFilter.setOnClickListener {
+
+        }
+    }
+    
     private fun clickItem(toiletId : Int){
         val intent = Intent(App.context(),RestroomInfoActivity::class.java)
             .putExtra("ID",toiletId)

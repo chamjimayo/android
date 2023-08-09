@@ -6,6 +6,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.umc.chamma.databinding.ActivityReviewBinding
 import com.umc.chamma.databinding.FragmentBtmshtdialogSortListBinding
 import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
+import com.umc.chamma.databinding.FragmentToiletlistBottomsheetBinding
 import com.umc.chamma.ui.home.model.NearToiletData
 
 object BottomSheet {
@@ -29,7 +30,16 @@ object BottomSheet {
         return dialog
     }
     
-    // TODO 위에거랑 똑같이 함수로 만들어서, 인자 넣은다음 .show()로 호출만 해주면 됨
+    fun toiletlistSort(context : Context, onClickListener : (Int) -> Unit) : BottomSheetDialog{
+        val dialog = BottomSheetDialog(context)
+        val binding = FragmentToiletlistBottomsheetBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(binding.root)
+        binding.btnDistance.setOnClickListener { onClickListener(0) }
+        binding.btnRatingAsc.setOnClickListener { onClickListener(1) }
+        binding.btnRatingDesc.setOnClickListener { onClickListener(2) }
+
+        return dialog
+    }
 
     fun reviewSequence(context : Context,subBinding: ActivityReviewBinding) {
         val dialog = BottomSheetDialog(context)

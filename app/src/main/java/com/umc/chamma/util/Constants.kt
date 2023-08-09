@@ -12,6 +12,7 @@ object Constants {
 
     const val RC_PERMISSION = 1000
 
+
     const val naverClientId = "NDnl6NnzM6FuLQvLPxqO"
     const val naverClientSecret = "ZjnRFs4F5s"
     const val naverClientName = "chamma"
