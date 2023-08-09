@@ -53,6 +53,23 @@
         android:textStyle="bold"/>
 
 
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:splitTrack="false"
+        android:max="4"
+        android:progressDrawable="@color/chamma_skyblue"
+        android:progress="2"
+        android:maxHeight="5dp"
+        android:minHeight="5dp"
+        android:background="@null"
+        android:tickMark="@drawable/toiletlist_seekbar_tick"
+        android:thumb="@drawable/toiletlist_seekbar_thumb"
+        app:layout_constraintTop_toBottomOf="@id/tv_recent_distance"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+    />
 
 
 
