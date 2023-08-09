@@ -59,7 +59,7 @@
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
+                android:textSize="11dp"
                 android:textColor="@color/chamma_signup_textgray"
                 android:text="종로역"/>
 

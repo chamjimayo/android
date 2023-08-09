@@ -10,6 +10,8 @@ object Constants {
     const val X_REFRESH_EXPIRE = "X_REFRESH_EXPIRE"
     const val X_LOGIN_TYPE = "X_LOGIN_TYPE"
 
+    const val RC_PERMISSION = 1000
+
     const val naverClientId = "NDnl6NnzM6FuLQvLPxqO"
     const val naverClientSecret = "ZjnRFs4F5s"
     const val naverClientName = "chamma"

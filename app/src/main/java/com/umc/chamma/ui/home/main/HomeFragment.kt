@@ -2,15 +2,19 @@ package com.umc.chamma.ui.home.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
-import com.umc.chamma.models.homemodel.MarkerData
-import com.umc.chamma.models.homemodel.NearToiletResponse
+import com.umc.chamma.ui.home.model.NearToiletData
+import com.umc.chamma.ui.home.model.NearToiletResponse
 import com.umc.chamma.ui.search.model.SearchResultData
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.search.SearchFragment
@@ -154,8 +158,12 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         val locate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
         naverMap.moveCamera(locate)
 
-        val markData = MarkerData(latitude = searchData!!.latitude, longitude = searchData.longitude)
-        setMarker(markData, markerType.SEARCH)
+        val marker = Marker()
+        marker.position = LatLng(searchData!!.latitude,searchData.longitude)
+        marker.icon = OverlayImage.fromResource(R.drawable.home_marker_searchloc)
+        marker.map = naverMap
+
+        markerList.add(marker)
 
         HomeService(this).getNearToilet(toiletState
             ,naverMap.cameraPosition.target.longitude
@@ -173,10 +181,16 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
                 locationState = false
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
-                naverMap.minZoom = 17.0
-                naverMap.locationTrackingMode = LocationTrackingMode.Follow
-                locationState = true
-                binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
+                val locationManager = App.context().getSystemService(LOCATION_SERVICE) as LocationManager
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    showCustomToast("위치 정보를 켜주세요")
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }else{
+                    naverMap.minZoom = 17.0
+                    naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                    locationState = true
+                    binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
+                }
             }
 
         }
@@ -235,14 +249,14 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
     }
     
     // marker 찍는 메소드
-    private fun setMarker(data : MarkerData, type : markerType){
+    private fun setMarker(data : NearToiletData, type : markerType){
 
         val marker = Marker()
         marker.position = LatLng(data.latitude,data.longitude)
 
         marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
         else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
-        else OverlayImage.fromResource(R.drawable.home_marker_searchloc)
+        else OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
 
         marker.map = naverMap
 

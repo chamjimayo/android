@@ -2,18 +2,16 @@ package com.umc.chamma.util
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.widget.Button
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.umc.chamma.R
 import com.umc.chamma.databinding.ActivityReviewBinding
 import com.umc.chamma.databinding.FragmentBtmshtdialogSortListBinding
 import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
-import com.umc.chamma.models.homemodel.MarkerData
+import com.umc.chamma.ui.home.model.NearToiletData
 
 object BottomSheet {
 
 
-    fun homeToiletInfo(context : Context, data : MarkerData, onBtnClickListener : () -> Unit, onTextClickListener : (Int) -> Unit) : BottomSheetDialog {
+    fun homeToiletInfo(context : Context, data : NearToiletData, onBtnClickListener : () -> Unit, onTextClickListener : (Int) -> Unit) : BottomSheetDialog {
         val dialog = BottomSheetDialog(context)
         val binding = FragmentHomeBottomsheetBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(binding.root)
