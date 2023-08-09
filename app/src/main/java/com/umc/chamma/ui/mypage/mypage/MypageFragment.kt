@@ -13,16 +13,18 @@ import android.view.ViewGroup
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.umc.chamma.config.App
+import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentMypageBinding
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.util.Constants.TAG
-import com.umc.chamma.util.LoginType.social
+import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
 class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
 
     var mainActivity: MainActivity? = null
+    private val social by lazy{ sharedPreferences.getString(X_LOGIN_TYPE,"") }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
