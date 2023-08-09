@@ -35,6 +35,7 @@ import com.umc.chamma.util.Constants.TAG
 class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToiletListBinding::bind, R.layout.fragment_toilet_list), HomeFragmentInterface{
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var sortType = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
        super.onViewCreated(view, savedInstanceState)
 
@@ -71,12 +72,21 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
     
     private fun setBtnListener(){
         binding.btnSort.setOnClickListener { 
-            BottomSheet.toiletlistSort(App.context()){type->
+            BottomSheet.toiletlistSort(requireContext(), sortType){type->
                 // TODO 0 : 거리순 1 : 별점높은순 2 : 별점낮은순 으로 API 호출. 아직 API 구현안됨
                 when(type){
-                    0->{}
-                    1->{}
-                    2->{}
+                    0->{
+                        binding.btnSort.text = "거리순 "
+                        sortType = 0
+                    }
+                    1->{
+                        binding.btnSort.text = "별점높은순 "
+                        sortType = 1
+                    }
+                    2->{
+                        binding.btnSort.text = "별점낮은순 "
+                        sortType = 2
+                    }
                 }
             }.show()
         }
