@@ -93,7 +93,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
 
 
         binding.btnRangeFilter.setOnClickListener {
-
+            startActivity(Intent(App.context(),ToiletlistFilterActivity::class.java))
         }
     }
     
