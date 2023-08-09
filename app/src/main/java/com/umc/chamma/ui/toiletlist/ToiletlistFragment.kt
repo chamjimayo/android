@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.LocationTrackingMode
 import com.umc.chamma.R
 import com.umc.chamma.config.App
+import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentToiletListBinding
 import com.umc.chamma.ui.home.main.HomeFragmentInterface
@@ -29,6 +30,7 @@ import com.umc.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.umc.chamma.ui.toiletlist.adapter.ToiletListAdapter
 import com.umc.chamma.util.BottomSheet
 import com.umc.chamma.util.Constants
+import com.umc.chamma.util.Constants.DISTANCE_FILTER
 import com.umc.chamma.util.Constants.TAG
 
 
@@ -36,12 +38,13 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var sortType = 0
+    private var distance = 0
+    private val distanceArr = mutableListOf(150.0,300.0,500.0,800.0,1000.0)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
        super.onViewCreated(view, savedInstanceState)
 
-        setLocation()
         setBtnListener()
-
    }
 
     private fun setLocation(){
@@ -58,10 +61,10 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
             ) {
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity as MainActivity)
                 fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
-//                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude)
+//                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance])
 
                     //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-                    HomeService(this).getNearToilet("paid", 126.9731649095934, 37.560444374518106)
+                    HomeService(this).getNearToilet("paid", 126.9731649095934, 37.560444374518106,distanceArr[distance])
                 }
             }else{
                 ActivityCompat.requestPermissions((activity as MainActivity), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constants.RC_PERMISSION)
@@ -111,6 +114,13 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
     }
 
     override fun onGetNearToiletFailure(message: String) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        distance = sharedPreferences.getInt(DISTANCE_FILTER,4)
+
+        setLocation()
     }
 
 

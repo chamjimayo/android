@@ -52,30 +52,90 @@
         android:textColor="@color/black"
         android:textStyle="bold"/>
 
-
-    <SeekBar
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:splitTrack="false"
-        android:max="4"
-        android:progressDrawable="@color/chamma_skyblue"
-        android:progress="2"
-        android:maxHeight="5dp"
-        android:minHeight="5dp"
-        android:background="@null"
-        android:tickMark="@drawable/toiletlist_seekbar_tick"
-        android:thumb="@drawable/toiletlist_seekbar_thumb"
-        app:layout_constraintTop_toBottomOf="@id/tv_recent_distance"
         android:layout_marginTop="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-    />
+        app:layout_constraintTop_toBottomOf="@id/tv_recent_distance">
+
+        <SeekBar
+            android:id="@+id/distance_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:splitTrack="false"
+            android:max="4"
+            android:progressDrawable="@color/chamma_skyblue"
+            android:progress="2"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
+            android:background="@null"
+            android:tickMark="@drawable/toiletlist_seekbar_tick"
+            android:thumb="@drawable/toiletlist_seekbar_thumb"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="35dp">
+
+            <TextView
+                android:id="@+id/tv_range1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/chamma_signup_strokegray"
+                android:text="150m"/>
+
+            <TextView
+                android:id="@+id/tv_range2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chamma_signup_strokegray"
+                android:layout_weight="1"
+                android:text="300m"/>
+
+            <TextView
+                android:id="@+id/tv_range3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chamma_signup_strokegray"
+                android:layout_weight="1"
+                android:text="500m"/>
+
+            <TextView
+                android:id="@+id/tv_range4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chamma_signup_strokegray"
+                android:layout_weight="1"
+                android:text="800m"/>
+
+            <TextView
+                android:id="@+id/tv_range5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chamma_signup_strokegray"
+                android:text="1km"/>
+
+        </LinearLayout>
+
+
+
+
+    </FrameLayout>
+
+
+
+
 
 
 
 
     <Button
-        android:id="@+id/btn_send"
+        android:id="@+id/btn_store"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/shape_signup_duplicheck"
@@ -86,7 +146,6 @@
         android:text="저장하기"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 
