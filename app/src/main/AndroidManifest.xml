@@ -22,6 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+
+        <activity android:name=".ui.toiletlist.ToiletlistFilterActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".ui.home.restroomInfo.RestroomInfoActivity"
             android:exported="false" />
