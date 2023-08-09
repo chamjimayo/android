@@ -7,6 +7,11 @@ import com.umc.chamma.R
 import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.home.main.HomeFragment
 import com.umc.chamma.ui.mypage.*
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointFragment
+import com.umc.chamma.ui.mypage.mypage.MypageFragment
+import com.umc.chamma.ui.mypage.review.ReviewFragment
+import com.umc.chamma.ui.mypage.usage.UsageFragment
+import com.umc.chamma.ui.mypage.userdata.UpdateUserData
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import com.umc.chamma.util.InappUtil
 
@@ -94,10 +99,10 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
     }
 
     fun mypageToUpdate() {
-        val updatdeFragment = UpdateUserData()
+        val updateFragment = UpdateUserData()
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,updatdeFragment )
+        transaction.replace(R.id.frame,updateFragment )
         transaction.addToBackStack(null)
         transaction.commit()
     }
