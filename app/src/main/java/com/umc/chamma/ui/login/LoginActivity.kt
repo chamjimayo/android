@@ -31,10 +31,10 @@ import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import com.umc.chamma.util.Constants.RC_PERMISSION
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
+import com.umc.chamma.util.LoginType.social
 
 class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
-    private var social = ""
     private lateinit var neededPermissionList : ArrayList<String>
     private val requiredPermissionList = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
         arrayOf(  // 안드로이드 13 이상 필요한 권한들
