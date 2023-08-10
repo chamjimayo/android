@@ -6,8 +6,7 @@ import android.view.View
 import com.umc.chamma.R
 import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.home.main.HomeFragment
-import com.umc.chamma.ui.mypage.*
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointFragment
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.ui.mypage.mypage.MypageFragment
 import com.umc.chamma.ui.mypage.review.ReviewFragment
 import com.umc.chamma.ui.mypage.usage.UsageFragment
@@ -23,7 +22,6 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
         binding.bottomNV.itemIconTintList = null
         setFullScreen()
         setBottomNavigation()
-        InappUtil.initBillingClient(this)
     }
 
 
@@ -89,14 +87,6 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
         transaction.commit()
     }
 
-    fun mypageToCharge() {
-        val chargePointFragment = ChargePointFragment()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,chargePointFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 
     fun mypageToUpdate() {
         val updateFragment = UpdateUserData()

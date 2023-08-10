@@ -1,9 +1,7 @@
 package com.umc.chamma.ui.mypage.mypage
 
 import com.umc.chamma.R
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +16,7 @@ import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentMypageBinding
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
@@ -39,7 +38,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
         binding.btnUsageMypage.setOnClickListener{mainActivity?.mypageToUsage()}
-        binding.btnChargeMypage.setOnClickListener { mainActivity?.mypageToCharge() }
+        binding.btnChargeMypage.setOnClickListener { startActivity(Intent(requireContext(),ChargePointActivity::class.java)) }
         binding.btnUpdateUserData.setOnClickListener { mainActivity?.mypageToUpdate() }
         binding.btnReview.setOnClickListener { mainActivity?.mypageToReview() }
         binding.btnLogoutMypage.setOnClickListener { logOut() }
