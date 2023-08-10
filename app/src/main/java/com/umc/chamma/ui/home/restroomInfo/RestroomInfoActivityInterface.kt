@@ -1,6 +1,7 @@
 package com.umc.chamma.ui.home.restroomInfo
 
-import com.umc.chamma.ui.home.model.RestroomDetailResponse
+import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+
 
 interface RestroomInfoActivityInterface {
     fun onTryToGetRDSuccess(response: RestroomDetailResponse)

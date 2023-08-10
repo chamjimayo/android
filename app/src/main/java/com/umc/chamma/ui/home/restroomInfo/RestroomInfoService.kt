@@ -1,7 +1,7 @@
 package com.umc.chamma.ui.home.restroomInfo
 
 import com.umc.chamma.config.App
-import com.umc.chamma.ui.home.model.RestroomDetailResponse
+import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +25,7 @@ class RestroomInfoService(val view : RestroomInfoActivityInterface) {
             }
 
             override fun onFailure(call: Call<RestroomDetailResponse>, t: Throwable) {
-                view.onTryToGetRDFailure("네트워크 오류")
+                view.onTryToGetRDFailure("네트워크 오류 ${t.toString()}")
             }
         })
     }

@@ -1,6 +1,6 @@
 package com.umc.chamma.ui.home.restroomInfo
 
-import com.umc.chamma.ui.home.model.RestroomDetailResponse
+import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
 import retrofit2.Call
 import retrofit2.http.*
 
