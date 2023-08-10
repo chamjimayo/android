@@ -1,6 +1,6 @@
 package com.umc.chamma.ui.home.main
 
-import com.umc.chamma.models.homemodel.NearToiletResponse
+import com.umc.chamma.ui.home.model.NearToiletResponse
 
 interface HomeFragmentInterface {
 

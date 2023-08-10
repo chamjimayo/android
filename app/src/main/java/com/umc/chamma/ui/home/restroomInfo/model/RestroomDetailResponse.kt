@@ -26,7 +26,6 @@ data class RDResult(
     @SerializedName("equipments")val equipements: ArrayList<equipementsList>,
     @SerializedName("reviews")val reviews:ArrayList<reviewList>,
     @SerializedName("restroomManager")val restroomManager:ArrayList<restroomManager>
-
     )
 
 data class equipementsList(

@@ -1,12 +1,13 @@
-package com.umc.chamma.ui.mypage
+package com.umc.chamma.ui.mypage.review
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.umc.chamma.databinding.ItemReviewMypageBinding
 import com.bumptech.glide.Glide
+import com.umc.chamma.databinding.ItemReviewMypageBinding
+import com.umc.chamma.ui.mypage.model.ListReview
 import java.text.SimpleDateFormat
 import java.util.*
 

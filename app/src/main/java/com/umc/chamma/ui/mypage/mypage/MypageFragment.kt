@@ -1,5 +1,6 @@
-package com.umc.chamma.ui.mypage
+package com.umc.chamma.ui.mypage.mypage
 
+import com.umc.chamma.R
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -9,16 +10,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.umc.chamma.R
+import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
 import com.umc.chamma.config.App
+import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentMypageBinding
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.util.Constants.TAG
-import com.kakao.sdk.user.UserApiClient
-import com.navercorp.nid.NaverIdLoginSDK
-import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
 class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage){
@@ -28,6 +28,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -35,6 +36,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
         binding.btnUsageMypage.setOnClickListener{mainActivity?.mypageToUsage()}
         binding.btnChargeMypage.setOnClickListener { mainActivity?.mypageToCharge() }
@@ -50,12 +52,6 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
         if (context is MainActivity) mainActivity = context
     }
-
-
-
-
-
-
 
 
     //로그아웃 코드
@@ -103,3 +99,6 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         }
     }
 }
+
+
+
