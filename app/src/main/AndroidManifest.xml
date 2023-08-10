@@ -25,6 +25,9 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
 
+        <activity android:name=".ui.mypage.chargepoint.ChargePointActivity"
+            android:exported="false"/>
+
         <activity android:name=".ui.toiletlist.ToiletlistFilterActivity"
             android:exported="false"/>
 
