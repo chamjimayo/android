@@ -2,22 +2,43 @@ package com.umc.chamma.ui.home.restroomInfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.umc.chamma.R
 import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding
 
-class RestroomVPAdapter (private var pageList: ArrayList<Int>) : RecyclerView.Adapter<RestroomPagerViewHolder>(){
+class RestroomVPAdapter (private var pageList: ArrayList<String>
+,private val activity: RestroomInfoActivity
+) : RecyclerView.Adapter<RestroomVPAdapter.MyViewHolder>(){
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestroomPagerViewHolder {
-        return RestroomPagerViewHolder( LayoutRestroomViewpagerItemBinding.inflate(LayoutInflater.from(parent.context),
-            parent,false))
+    class MyViewHolder(
+        private val binding: LayoutRestroomViewpagerItemBinding,
+        private val activity: RestroomInfoActivity
+    ): RecyclerView.ViewHolder(binding.root){
+        //val root=activity.context
+    fun bindWithView(data:String) {
+            Glide.with(binding.root.context).load(data).error("https://user-images.githubusercontent.com/4177453/114197766-a9b2c280-9920-11eb-9192-db38c51dc294.png").into(binding.pagerItemImage)
+
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(
+            LayoutRestroomViewpagerItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false),activity
+            )
+
     }
 
     override fun getItemCount(): Int {
         return pageList.size
     }
 
-    override fun onBindViewHolder(holder: RestroomPagerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RestroomVPAdapter.MyViewHolder, position: Int) {
         holder.bindWithView(pageList[position])
     }
 

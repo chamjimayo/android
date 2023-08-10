@@ -2,6 +2,8 @@ package com.umc.chamma.ui.home.model
 
 import com.google.gson.annotations.SerializedName
 import com.umc.chamma.config.BaseResponse
+import com.umc.chamma.ui.home.restroomInfo.model.equipementsList
+import com.umc.chamma.ui.home.restroomInfo.model.restroomManager
 
 data class NearToiletResponse (
     val data : ArrayList<NearToiletData>

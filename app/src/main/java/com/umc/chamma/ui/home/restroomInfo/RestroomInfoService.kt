@@ -25,7 +25,7 @@ class RestroomInfoService(val view : RestroomInfoActivityInterface) {
             }
 
             override fun onFailure(call: Call<RestroomDetailResponse>, t: Throwable) {
-                view.onTryToGetRDFailure("네트워크 오류")
+                view.onTryToGetRDFailure("네트워크 오류 ${t.toString()}")
             }
         })
     }

@@ -15,7 +15,7 @@ data class RDResult(
     @SerializedName("unisex")val unisex:Boolean,
     @SerializedName("address")val address:String,
     @SerializedName("operatingHour")val operatingHour:String,
-    @SerializedName("restroomPhoto")val restroomPhoto:String,
+    @SerializedName("restroomPhoto")val restroomPhoto:ArrayList<String>,
     @SerializedName("equipmentExistenceProbability")val equipmentExistenceProbability:Int,//
     @SerializedName("publicOrPaid")val publicOrPaid:String,
     @SerializedName("accessibleToiletExistence")val accessibleToiletExistence:Boolean,
@@ -25,7 +25,8 @@ data class RDResult(
     @SerializedName("availableFemaleToiletCount")val availableFemaleToiletCount:Int,
     @SerializedName("equipments")val equipements: ArrayList<equipementsList>,
     @SerializedName("reviews")val reviews:ArrayList<reviewList>,
-    @SerializedName("restroomManager")val restroomManager:ArrayList<restroomManager>
+    @SerializedName("restroomManager")val restroomManager:ArrayList<restroomManager>,
+    @SerializedName("averageRating")val averageRating:Float
     )
 
 data class equipementsList(
