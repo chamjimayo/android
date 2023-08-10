@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:text="QR 코드 스캔"
+        android:textStyle="bold"
         android:textColor="@color/chamma_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,15 +24,26 @@
         android:textSize="28dp" />
 
     <ImageView
+        android:id="@+id/barcodeImg"
         android:layout_width="272dp"
         android:layout_height="263dp"
-
         android:background="#00FF0000"
         android:src="@drawable/qu_frame_ex"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="화장실 문 기기에 있는 QR을\n 화면에 맞게 스캔해주세요."
+        app:layout_constraintTop_toBottomOf="@+id/barcodeImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
 
+        android:textColor="#ADB5BD"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
