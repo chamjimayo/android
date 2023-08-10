@@ -43,14 +43,16 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
             Manifest.permission.READ_MEDIA_IMAGES,
             Manifest.permission.POST_NOTIFICATIONS,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA
         )
     }else{
         arrayOf(  // 안드로이드 13 미만 필요한 권한들
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA
         )
     }
 
