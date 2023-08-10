@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import com.android.billingclient.api.*
 import com.umc.chamma.config.App
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
 import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointPostData
@@ -12,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object InappUtil : PurchasesUpdatedListener {
+class InappUtil(private val activity : ChargePointActivity) : PurchasesUpdatedListener {
 
     private val tempList =
         listOf("point_1000", "point_3000", "point_5000", "point_8000", "point_10000")
@@ -22,7 +23,7 @@ object InappUtil : PurchasesUpdatedListener {
         fun onProgress()
     }
 
-    private const val TAG = "GooglepayUtil"
+    private val TAG = "GooglepayUtil"
 
     private lateinit var billingCilent: BillingClient
     private var productDetailsList: List<ProductDetails> = mutableListOf()
@@ -173,6 +174,7 @@ object InappUtil : PurchasesUpdatedListener {
                     response: Response<ChargePointResponse>
                 ) {
                     response.body()?.let{
+                        if(response.code() == 200) activity.setUserPoint()
                     }
                 }
 

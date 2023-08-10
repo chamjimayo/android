@@ -10,21 +10,26 @@ import com.umc.chamma.util.InappUtil
 
 class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityChargepointBinding::inflate), ChargePointActivityInterface {
 
-
+    private val inappUtil by lazy{InappUtil(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inappUtil.initBillingClient(this)
         setBtnListener()
-        ChargePointService(this).getUserInfo()
+        setUserPoint()
 
     }
 
+    fun setUserPoint(){
+        ChargePointService(this).getUserInfo()
+    }
+
     private fun setBtnListener(){
-        binding.btn1000Charge.setOnClickListener { InappUtil.getPay(this,"point_1000") }
-        binding.btn3000Charge.setOnClickListener { InappUtil.getPay(this,"point_3000") }
-        binding.btn5000Charge.setOnClickListener { InappUtil.getPay(this,"point_5000") }
-        binding.btn8000Charge.setOnClickListener { InappUtil.getPay(this,"point_8000")  }
-        binding.btn10000Charge.setOnClickListener { InappUtil.getPay(this,"point_10000") }
+        binding.btn1000Charge.setOnClickListener { inappUtil.getPay(this,"point_1000") }
+        binding.btn3000Charge.setOnClickListener { inappUtil.getPay(this,"point_3000") }
+        binding.btn5000Charge.setOnClickListener { inappUtil.getPay(this,"point_5000") }
+        binding.btn8000Charge.setOnClickListener { inappUtil.getPay(this,"point_8000")  }
+        binding.btn10000Charge.setOnClickListener { inappUtil.getPay(this,"point_10000") }
         binding.btnBackCharge.setOnClickListener { finish() }
     }
 
