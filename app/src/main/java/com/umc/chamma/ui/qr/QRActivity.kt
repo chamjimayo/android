@@ -18,7 +18,6 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         capture.initializeFromIntent(intent,savedInstanceState)
         capture.decode()
 
-
     }
 
     override fun onResume() {
