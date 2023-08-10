@@ -6,23 +6,22 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import com.umc.chamma.databinding.DialogTitleTwoButtonBinding
+import com.umc.chamma.databinding.DialogOnlyTitleTwoButtonBinding
 
-class TitleTwoButtonDialog(
+class OnlyTitleTwoButtonDialog(
     context: Context,
     private val title: String,
-    private val info: String,
     private val firstButton: String,
     private val secondButton: String,
     private val onFirstButtonClick: View.OnClickListener,
     private val onSecondCheckButtonClick: View.OnClickListener
 ): Dialog(context) {
 
-    private lateinit var binding: DialogTitleTwoButtonBinding
+    private lateinit var binding: DialogOnlyTitleTwoButtonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DialogTitleTwoButtonBinding.inflate(layoutInflater)
+        binding = DialogOnlyTitleTwoButtonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
     }
@@ -31,7 +30,6 @@ class TitleTwoButtonDialog(
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         this.tvTitle.text = title
-        this.tvText.text = info.replace(" ", "\u00A0")
         this.btnSecond.apply {
             text = secondButton
             setOnClickListener(onSecondCheckButtonClick)

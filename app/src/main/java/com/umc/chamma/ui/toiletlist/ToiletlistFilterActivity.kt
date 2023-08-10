@@ -18,6 +18,7 @@ class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>
     private val distance by lazy{ sharedPreferences.getInt(DISTANCE_FILTER,4) }
     private lateinit var distanceTextArr : MutableList<TextView>
     private var curProgress = 0
+    private var changeState = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,7 +32,7 @@ class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>
 
         binding.distanceSeekbar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
+                changeState = true
                 curProgress = progress
                 distanceTextArr.forEach{it.setTextColor(ContextCompat.getColor(App.context(), R.color.chamma_signup_strokegray))}
                 distanceTextArr[progress].setTextColor(ContextCompat.getColor(App.context(), R.color.black))
@@ -51,9 +52,36 @@ class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>
         }
 
         binding.btnBack.setOnClickListener {
-            finish()
+            if(changeState){
+                showTitleTwoButtonDialog(this,"변경된 내용이 있어요!","이 페이지에서 나가면 변경 사항이 저장되지 않아요.", "괜찮아요", "저장하기",
+                    {finish()}){
+                    sharedPreferences.edit()
+                        .putInt(DISTANCE_FILTER,curProgress)
+                        .apply()
+
+                    finish()
+                }
+            }else{
+                finish()
+            }
         }
 
+    }
+
+
+    override fun onBackPressed() {
+        if(changeState){
+            showTitleTwoButtonDialog(this,"변경된 내용이 있어요!","이 페이지에서 나가면 변경 사항이 저장되지 않아요.", "괜찮아요", "저장하기",
+                {finish()}){
+                sharedPreferences.edit()
+                    .putInt(DISTANCE_FILTER,curProgress)
+                    .apply()
+
+                finish()
+            }
+        }else{
+            finish()
+        }
     }
 
 }

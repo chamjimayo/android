@@ -57,8 +57,8 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
     //로그아웃 코드
     fun logOut(){
 
-        showTitleTwoButtonDialog(requireContext(),"로그아웃 하시나요?","","취소","확인",
-            {dismissTitleTwoButtonDialog()},{
+        showOnlyTitleTwoButtonDialog(requireContext(),"로그아웃 하시나요?","취소","확인",
+            {dismissOnlyTitleTwoButtonDialog()},{
                 if (social == "KAKAO") kakaoLogout()
                 else if (social == "NAVER") naverLogout()
             })
