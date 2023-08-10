@@ -1,7 +1,6 @@
 package com.umc.chamma.ui.toiletlist
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
@@ -12,7 +11,6 @@ import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityToiletlistFilterBinding
 import com.umc.chamma.util.Constants.DISTANCE_FILTER
-import com.umc.chamma.util.Constants.TAG
 
 
 class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>(ActivityToiletlistFilterBinding::inflate)  {

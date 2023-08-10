@@ -30,6 +30,9 @@ class TitleTwoButtonDialog(
     private fun initView() = with(binding) {
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        if(title.isBlank()) this.tvTitle.visibility = View.GONE
+        if(info.isBlank()) this.tvText.visibility = View.GONE
+
         this.tvTitle.text = title
         this.tvText.text = info.replace(" ", "\u00A0")
         this.btnSecond.apply {

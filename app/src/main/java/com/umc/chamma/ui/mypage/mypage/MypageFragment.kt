@@ -56,17 +56,13 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
     //로그아웃 코드
     fun logOut(){
-        AlertDialog.Builder(mainActivity)
-            .setTitle("알림")
-            .setMessage("로그아웃 하시겠습니까?")
-            .setPositiveButton("넵") { dialog, which -> //로그아웃 코드
+
+        showTitleTwoButtonDialog(requireContext(),"로그아웃 하시나요?","","취소","확인",
+            {dismissTitleTwoButtonDialog()},{
                 if (social == "KAKAO") kakaoLogout()
                 else if (social == "NAVER") naverLogout()
-            }
-            .setNegativeButton("아니요"
-            ) { dialog, which -> Log.d("logOut", "suspend logOut") }
-            .create()
-            .show()
+            })
+
     }
 
 
