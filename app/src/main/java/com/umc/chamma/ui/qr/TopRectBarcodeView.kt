@@ -28,14 +28,14 @@ class TopRectBarcodeView @JvmOverloads constructor(
     ): Rect {
         // create new rect instance that hold the container.
         val intersection = Rect(container)
-        // specify the position of left direction.
+        // specify the position of left direction.53
         intersection.left = dpToPx(53)
-        // specify the position of top direction.
+        // specify the position of top direction.240
         intersection.top = dpToPx(240)
         // specify the position of right direction.
         intersection.right =
             framingRectSize.width - dpToPx(53)
-        // specify the position of bottom direction.
+        // specify the position of bottom direction.275
         intersection.bottom =
             framingRectSize.height + dpToPx(275)
         return intersection
