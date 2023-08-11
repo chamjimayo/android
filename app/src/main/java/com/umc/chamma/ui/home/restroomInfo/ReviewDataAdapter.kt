@@ -7,14 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.umc.chamma.databinding.ItemReviewBinding
 import com.bumptech.glide.Glide
 import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
+import com.umc.chamma.ui.home.restroomInfo.model.ReviewData2
 
 
-class ReviewDataAdapter (private val dataList:ArrayList<ReviewData>?):
+class ReviewDataAdapter (private val dataList:ArrayList<ReviewData2>?):
     RecyclerView.Adapter<ReviewDataAdapter.DataViewHolder>() {
     inner class DataViewHolder(private val viewBinding: ItemReviewBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         private val context = viewBinding.root.context
 
-        fun bind(data: ReviewData) {
+        fun bind(data: ReviewData2) {
 
 
             viewBinding.yearTv.text = data.year.toString()
@@ -30,7 +31,11 @@ class ReviewDataAdapter (private val dataList:ArrayList<ReviewData>?):
                 .into(viewBinding.circleIv)
 
 
-        } }
+
+        }
+        }
+
+
 
 
 
