@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/shape_bottomsheet"
     android:orientation="vertical">
 
     <ImageView
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="화장실 이름"
             android:textColor="@color/chamma_black"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold"/>
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart = "10dp"
             android:text="유료화장실"
-            android:textSize="12sp"/>
+            android:textSize="12dp"/>
 
     </LinearLayout>
 
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4.5"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:layout_marginStart="5dp"
             android:textColor="@color/chamma_black"/>
 
@@ -77,7 +78,7 @@
         android:layout_marginStart = "15dp"
         android:layout_marginTop="15dp"
         android:text="내 위치로부터 100m"
-        android:textSize="12sp"/>
+        android:textSize="12dp"/>
 
     <Button
         android:id="@+id/btn_use"

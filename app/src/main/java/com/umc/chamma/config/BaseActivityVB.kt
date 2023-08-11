@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.umc.chamma.util.LoadingDialog
+import com.umc.chamma.util.OnlyTitleTwoButtonDialog
 import com.umc.chamma.util.TitleImageTwoButtonDialog
 import com.umc.chamma.util.TitleTwoButtonDialog
 
@@ -17,6 +18,7 @@ abstract class BaseActivityVB<B : ViewBinding>(private val inflate: (LayoutInfla
     protected lateinit var binding: B
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog : TitleImageTwoButtonDialog
+    private lateinit var onlyTitleTwoButtonDialog: OnlyTitleTwoButtonDialog
     private var loadingDialog = LoadingDialog()
 
 
@@ -52,6 +54,22 @@ abstract class BaseActivityVB<B : ViewBinding>(private val inflate: (LayoutInfla
     ) {
         titleTwoButtonDialog = TitleTwoButtonDialog(context, title, info, firstButton, secondButton, onFirstButtonClick, onSecondButtonClick)
         titleTwoButtonDialog.show()
+    }
+
+    fun showOnlyTitleTwoButtonDialog(
+        context: Context,
+        title: String,
+        firstButton: String,
+        secondButton: String,
+        onFirstButtonClick: View.OnClickListener,
+        onSecondButtonClick: View.OnClickListener
+    ){
+        onlyTitleTwoButtonDialog = OnlyTitleTwoButtonDialog(context,title,firstButton,secondButton,onFirstButtonClick,onSecondButtonClick)
+        onlyTitleTwoButtonDialog.show()
+    }
+
+    fun dismissOnlyTitleTwoButtonDialog(){
+        onlyTitleTwoButtonDialog.dismiss()
     }
 
     fun dismissTitleTwoButtonDialog() {

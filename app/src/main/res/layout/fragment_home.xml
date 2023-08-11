@@ -77,7 +77,7 @@
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="60dp"
-        android:textSize="17sp"/>
+        android:textSize="17dp"/>
 
     <LinearLayout
         android:id="@+id/layout_toilet_type"
@@ -99,7 +99,7 @@
             android:paddingRight="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:text="전체보기"/>
 
         <View
@@ -116,7 +116,7 @@
             android:paddingRight="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:textColor="@color/chamma_gray"
             android:text="무료화장실"/>
 
@@ -134,7 +134,7 @@
             android:paddingRight="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:textColor="@color/chamma_gray"
             android:text="유료화장실"/>
 
@@ -153,7 +153,7 @@
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:text="2300P"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:textColor="@color/white"/>
 
 

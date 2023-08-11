@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="45dp"
-    tools:context=".ui.mypage.ChargePointFragment">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -13,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btn_back_charge"
@@ -78,7 +77,7 @@
                 android:text="보유포인트" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tv_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -120,14 +119,19 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/im_ic_1000_charge"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="16dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_1000_chargepoint" />
+                android:background="@drawable/shape_home_topbtn_blue"
+                android:paddingVertical="5dp"
+                android:textSize="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/white"
+                android:text="₩ 1,000"/>
+
+
         </LinearLayout>
 
         <View
@@ -163,14 +167,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/im_ic_3000_charge"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="16dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_3000_chargepoint" />
+                android:background="@drawable/shape_home_topbtn_blue"
+                android:paddingVertical="5dp"
+                android:textSize="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/white"
+                android:text="₩ 3,000"/>
         </LinearLayout>
 
         <View
@@ -206,14 +213,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/im_ic_5000_charge"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="16dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_5000_chargepoint" />
+                android:background="@drawable/shape_home_topbtn_blue"
+                android:paddingVertical="5dp"
+                android:textSize="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/white"
+                android:text="₩ 5,000"/>
         </LinearLayout>
 
         <View
@@ -249,14 +259,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/im_ic_8000_charge"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="16dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_8000_chargepoint" />
+                android:background="@drawable/shape_home_topbtn_blue"
+                android:paddingVertical="5dp"
+                android:textSize="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/white"
+                android:text="₩ 8,000"/>
         </LinearLayout>
 
         <View
@@ -292,14 +305,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/im_ic_10000_charge"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingEnd="16dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_10000_chargepoint" />
+                android:background="@drawable/shape_home_topbtn_blue"
+                android:paddingVertical="5dp"
+                android:textSize="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/white"
+                android:text="₩ 10,000"/>
         </LinearLayout>
 
         <View

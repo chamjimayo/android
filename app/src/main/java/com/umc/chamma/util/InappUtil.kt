@@ -3,8 +3,17 @@ package com.umc.chamma.util
 import android.app.Activity
 import android.util.Log
 import com.android.billingclient.api.*
+import com.umc.chamma.config.App
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
+import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointPostData
+import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-object InappUtil : PurchasesUpdatedListener {
+class InappUtil(private val activity : ChargePointActivity) : PurchasesUpdatedListener {
 
     private val tempList =
         listOf("point_1000", "point_3000", "point_5000", "point_8000", "point_10000")
@@ -14,7 +23,7 @@ object InappUtil : PurchasesUpdatedListener {
         fun onProgress()
     }
 
-    private const val TAG = "GooglepayUtil"
+    private val TAG = "GooglepayUtil"
 
     private lateinit var billingCilent: BillingClient
     private var productDetailsList: List<ProductDetails> = mutableListOf()
@@ -140,8 +149,9 @@ object InappUtil : PurchasesUpdatedListener {
                 Log.d(TAG, "구매 성공")
 
                 // 서버로 구매성공 데이터 보내기
-                val data = PurchaseData("", productId, purchase.purchaseToken)
+                val data = ChargePointPostData(productId, purchase.purchaseToken)
                 Log.d(TAG, "$data")
+                postPurchaseData(data)
 
                 val consumeParams = ConsumeParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
@@ -154,5 +164,27 @@ object InappUtil : PurchasesUpdatedListener {
         }
 
     }
+
+    private fun postPurchaseData(data : ChargePointPostData){
+        val chargePointRetro = App.getRetro().create(ChargePointRetrofitInterface::class.java)
+        chargePointRetro.postChargePoint(data)
+            .enqueue(object : Callback<ChargePointResponse>{
+                override fun onResponse(
+                    call: Call<ChargePointResponse>,
+                    response: Response<ChargePointResponse>
+                ) {
+                    response.body()?.let{
+                        if(response.code() == 200) activity.setUserPoint()
+                    }
+                }
+
+                override fun onFailure(call: Call<ChargePointResponse>, t: Throwable) {
+
+                }
+            })
+    }
+
+
+
 
 }

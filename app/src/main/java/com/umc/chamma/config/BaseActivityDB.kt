@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.umc.chamma.util.LoadingDialog
+import com.umc.chamma.util.OnlyTitleTwoButtonDialog
 import com.umc.chamma.util.TitleImageTwoButtonDialog
 import com.umc.chamma.util.TitleTwoButtonDialog
 
@@ -19,6 +20,7 @@ abstract class BaseActivityDB<B : ViewDataBinding>(
     protected lateinit var binding: B
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog: TitleImageTwoButtonDialog
+    private lateinit var onlyTitleTwoButtonDialog: OnlyTitleTwoButtonDialog
     private var loadingDialog = LoadingDialog()
 
 
@@ -57,6 +59,22 @@ abstract class BaseActivityDB<B : ViewDataBinding>(
 
     fun dismissTitleTwoButtonDialog() {
         titleTwoButtonDialog.dismiss()
+    }
+
+    fun showOnlyTitleTwoButtonDialog(
+        context: Context,
+        title: String,
+        firstButton: String,
+        secondButton: String,
+        onFirstButtonClick: View.OnClickListener,
+        onSecondButtonClick: View.OnClickListener
+    ){
+        onlyTitleTwoButtonDialog = OnlyTitleTwoButtonDialog(context,title,firstButton,secondButton,onFirstButtonClick,onSecondButtonClick)
+        onlyTitleTwoButtonDialog.show()
+    }
+
+    fun dismissOnlyTitleTwoButtonDialog(){
+        onlyTitleTwoButtonDialog.dismiss()
     }
 
     fun showTitleImageTwoButtonDialog(
