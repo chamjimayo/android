@@ -8,44 +8,51 @@
         android:id="@+id/decoratedBarcodeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:zxing_scanner_layout="@layout/custom_barcode_scanner"/>
+        app:zxing_scanner_layout="@layout/custom_barcode_scanner" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A0000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:text="QR 코드 스캔"
-        android:textStyle="bold"
         android:textColor="@color/chamma_main"
+        android:textSize="28dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="28dp" />
-<!--  android:layout_width="272dp"
-        android:layout_height="263dp"
-                android:background="#00FF0000"
-    -->
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--  android:layout_width="272dp"
+            android:layout_height="263dp"
+                    android:background="#00FF0000"
+        -->
     <ImageView
         android:id="@+id/barcodeImg"
         android:layout_width="252dp"
         android:layout_height="252dp"
         android:background="#00000000"
-        android:src="@drawable/qr_frame3"
+        android:src="@drawable/qr_frame"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="화장실 문 기기에 있는 QR을\n 화면에 맞게 스캔해주세요."
-        app:layout_constraintTop_toBottomOf="@+id/barcodeImg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
-
+        android:text="화장실 문 기기에 있는 QR을\n 화면에 맞게 스캔해주세요."
         android:textColor="#ADB5BD"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeImg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
