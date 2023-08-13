@@ -4,9 +4,7 @@ data class ReviewData2 (
 
         val Nickname:String,
         val url:Int,
-        val year:String,
-        val month:String,
-        val day:Int,
+        val yearmonthday:String,
         val starNum:Float,
         val content:String
 

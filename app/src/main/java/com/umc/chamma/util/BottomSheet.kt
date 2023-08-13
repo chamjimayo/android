@@ -11,6 +11,7 @@ import com.umc.chamma.databinding.FragmentBtmshtdialogSortListBinding
 import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
 import com.umc.chamma.databinding.FragmentToiletlistBottomsheetBinding
 import com.umc.chamma.ui.home.model.NearToiletData
+import com.umc.chamma.ui.home.restroomInfo.ReviewService
 
 object BottomSheet {
 
@@ -60,7 +61,7 @@ object BottomSheet {
         return dialog
     }
 
-    fun reviewSequence(context : Context,subBinding: ActivityReviewBinding) {
+    fun reviewSequence(context : Context,subBinding: ActivityReviewBinding,service:ReviewService,Id:Int) {
         val dialog = BottomSheetDialog(context)
         val binding = FragmentBtmshtdialogSortListBinding.inflate(LayoutInflater.from(context))
         dialog.setContentView(binding.root)
@@ -69,13 +70,17 @@ object BottomSheet {
 
         binding.newestTv.setOnClickListener {
             subBinding.optionBtn.text="최신순"
+            service.tryToGetReviewListLatest(Id)
         }
         binding.highestTv.setOnClickListener {
             subBinding.optionBtn.text="별점 높은 순"
+            service.tryToGetReviewListHR(Id)
+
 
         }
         binding.lowTv.setOnClickListener {
             subBinding.optionBtn.text="별점 낮은 순"
+            service.tryToGetReviewListLR(Id)
 
         }
         binding.btmshtBtnClose.setOnClickListener {

@@ -18,9 +18,8 @@ class ReviewDataAdapter (private val dataList:ArrayList<ReviewData2>?):
         fun bind(data: ReviewData2) {
 
 
-            viewBinding.yearTv.text = data.year.toString()
-            viewBinding.monthTv.text = data.month.toString()
-            viewBinding.dayTv.text = data.day.toString()
+            viewBinding.yearmonthdayTv.text = data.yearmonthday.toString()
+
 
             viewBinding.contentTv.text = data.content
 
