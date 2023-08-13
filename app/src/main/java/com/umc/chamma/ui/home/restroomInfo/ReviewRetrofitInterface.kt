@@ -8,5 +8,5 @@ import retrofit2.http.*
 interface ReviewRetrofitInterface {
 
     @GET("/api/review/list/latest/{restroomId}")
-    fun tryToGetReviewList(@Path("restroomId") restroomId:Int) : Call<ReviewResponse>
+    fun tryToGetReviewListHR(@Path("restroomId") restroomId:Int) : Call<ReviewResponse>
 }

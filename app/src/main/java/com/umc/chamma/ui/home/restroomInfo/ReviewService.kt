@@ -12,23 +12,23 @@ class ReviewService(val view : ReviewActivityInterface) {
 
 //val accessToken="Bearer e1323423534"
 
-    fun tryToGetReviewList(restroomId:Int){
+    fun tryToGetReviewListHR(restroomId:Int){
 
         val ReviewRetrofitInterface = App.getRetro().create(ReviewRetrofitInterface::class.java)
-        ReviewRetrofitInterface.tryToGetReviewList(restroomId = restroomId)
+        ReviewRetrofitInterface.tryToGetReviewListHR(restroomId = restroomId)
             .enqueue(object : Callback<ReviewResponse>{
             override fun onResponse(
                 call: Call<ReviewResponse>,
                 response: Response<ReviewResponse>
             ) {
                 response.body()?.let{
-                    if(response.code() == 200) view.onTryToGetRLSuccess(it)
-                    else view.onTryToGetRLFailure("API 오류")
+                    if(response.code() == 200) view.onTryToGetRL_HRSuccess(it)
+                    else view.onTryToGetRL_HRFailure("API 오류")
                 }
             }
 
             override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
-                view.onTryToGetRLFailure("네트워크 오류 ${t.toString()}")
+                view.onTryToGetRL_HRFailure("네트워크 오류 ${t.toString()}")
             }
         })
     }

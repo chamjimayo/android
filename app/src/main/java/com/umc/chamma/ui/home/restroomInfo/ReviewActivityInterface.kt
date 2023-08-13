@@ -4,7 +4,7 @@ import com.umc.chamma.ui.home.restroomInfo.model.ReviewResponse
 
 
 interface ReviewActivityInterface {
-    fun onTryToGetRLSuccess(response: ReviewResponse)
+    fun onTryToGetRL_HRSuccess(response: ReviewResponse)
 
-    fun onTryToGetRLFailure(message:String)
+    fun onTryToGetRL_HRFailure(message:String)
 }
