@@ -59,18 +59,37 @@ ReviewActivityInterface{
         binding.optionBtn.setOnClickListener{
             BottomSheet.reviewSequence(this,binding)
         }
+        ReviewService(this).tryToGetReviewListLatest(Id)
         ReviewService(this).tryToGetReviewListHR(Id)
+        ReviewService(this).tryToGetReviewListLR(Id)
+
     }
 
     override fun onTryToGetRL_HRSuccess(response: ReviewResponse) {
-        Log.d("리뷰결과",response.toString())
+        Log.d("리뷰결과","HR "+response.toString())
+    }
+
+    override fun onTryToGetRL_HRFailure(message: String) {
+        Log.d("리뷰결과","HR "+message)
+    }
+
+    override fun onTryToGetRL_LatestSuccess(response: ReviewResponse) {
+        Log.d("리뷰결과","Latest "+response.toString())
     }
 /*
 ReviewResponse(data=[ReviewData(dateTime=2023-08-12, rating=5, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=414, userId=3),
 ReviewData(dateTime=2023-08-12, rating=2, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=10, userId=3), ReviewData(dateTime=2023-08-12, rating=4, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=9, userId=3), ReviewData(dateTime=2023-08-12, rating=5, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=8, userId=3), ReviewData(dateTime=2023-08-12, rating=5, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=7, userId=3), ReviewData(dateTime=2023-08-12, rating=2, restroomId=2, reviewContent=테스트 리뷰입니다., reviewId=6, userId=3)])
  */
-    override fun onTryToGetRL_HRFailure(message: String) {
-        Log.d("리뷰결과",message)
+    override fun onTryToGetRL_LatestFailure(message: String) {
+        Log.d("리뷰결과","Latest "+message)
+    }
+
+    override fun onTryToGetRL_LRSuccess(response: ReviewResponse) {
+        Log.d("리뷰결과","LR "+response.toString())
+    }
+
+    override fun onTryToGetRL_LRFailure(message: String) {
+        Log.d("리뷰결과","LR "+message)
     }
 
 }
