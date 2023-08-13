@@ -20,5 +20,10 @@ data class ReviewData(
     @SerializedName("reviewId")
     val reviewId: Int,
     @SerializedName("userId")
-    val userId: Int
+    val userId: Int,
+    @SerializedName("userProfile")
+    val userProfile:String,
+    @SerializedName("nickname")
+    val nickname:String
+
 )
