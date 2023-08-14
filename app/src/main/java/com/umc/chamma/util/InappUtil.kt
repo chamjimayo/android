@@ -4,20 +4,20 @@ import android.app.Activity
 import android.util.Log
 import com.android.billingclient.api.*
 import com.umc.chamma.config.App
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
+import com.umc.chamma.ui.mypage.chargepoint.InappInterface
 import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointPostData
 import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class InappUtil(private val activity : ChargePointActivity) : PurchasesUpdatedListener {
+object InappUtil : PurchasesUpdatedListener {
 
     private val tempList =
         listOf("point_1000", "point_3000", "point_5000", "point_8000", "point_10000")
 
+    var inappInterface : InappInterface?=null
 
     interface GooglepayUtilDelegate {
         fun onProgress()
@@ -174,8 +174,9 @@ class InappUtil(private val activity : ChargePointActivity) : PurchasesUpdatedLi
                     response: Response<ChargePointResponse>
                 ) {
                     response.body()?.let{
-                        if(response.code() == 200) activity.setUserPoint()
+                        if(response.code() == 200) inappInterface?.successBill()
                     }
+                    if(response.body() == null) inappInterface?.failBill()
                 }
 
                 override fun onFailure(call: Call<ChargePointResponse>, t: Throwable) {
