@@ -3,8 +3,11 @@ package com.umc.chamma.ui.main
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.umc.chamma.R
+import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
+import com.umc.chamma.ui.community.CommunityFragment
 import com.umc.chamma.ui.home.main.HomeFragment
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.ui.mypage.mypage.MypageFragment
@@ -14,7 +17,7 @@ import com.umc.chamma.ui.mypage.userdata.UpdateUserData
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import com.umc.chamma.util.InappUtil
 
-class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +47,7 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
 
                     R.id.navigation_community -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, com.umc.chamma.ui.community.CommunityFragment())
+                            .replace(R.id.frame, CommunityFragment())
                             .addToBackStack(null)
                             .commitAllowingStateLoss()
                     }
@@ -108,6 +111,19 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
 
     fun goBackMypage() {
         onBackPressed()
+    }
+
+    fun hideBottomNavigation(bool: Boolean){
+       val bottomNavigation = binding.bottomNV
+
+        if(bool == true){
+            bottomNavigation.visibility = View.VISIBLE
+        }
+
+        if(bool == false){
+            bottomNavigation.visibility = View.INVISIBLE
+        }
+
     }
 
 

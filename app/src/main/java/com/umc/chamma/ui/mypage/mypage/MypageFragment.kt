@@ -43,6 +43,9 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         binding.btnReview.setOnClickListener { mainActivity?.mypageToReview() }
         binding.btnLogoutMypage.setOnClickListener { logOut() }
 
+        mainActivity?.hideBottomNavigation(true)
+
+
         return binding.root
     }
 

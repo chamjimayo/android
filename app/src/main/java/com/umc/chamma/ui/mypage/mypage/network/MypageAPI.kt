@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.mypage.network
+package com.umc.chamma.ui.mypage.mypage.network
 
 
 import com.umc.chamma.ui.signup.model.NickcheckResponse
