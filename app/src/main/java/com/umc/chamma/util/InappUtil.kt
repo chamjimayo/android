@@ -8,6 +8,7 @@ import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
 import com.umc.chamma.ui.mypage.chargepoint.InappInterface
 import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointPostData
 import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointResponse
+import com.umc.chamma.util.Constants.TAG
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,13 +24,16 @@ object InappUtil : PurchasesUpdatedListener {
         fun onProgress()
     }
 
-    private val TAG = "GooglepayUtil"
 
     private lateinit var billingCilent: BillingClient
     private var productDetailsList: List<ProductDetails> = mutableListOf()
     private lateinit var consumeListenser: ConsumeResponseListener
 
     private var productId = ""
+
+    fun setinappInterface(temp: InappInterface) {
+        this.inappInterface = temp
+    }
 
 
     /**
@@ -176,11 +180,12 @@ object InappUtil : PurchasesUpdatedListener {
                     response.body()?.let{
                         if(response.code() == 200) inappInterface?.successBill()
                     }
-                    if(response.body() == null) inappInterface?.failBill()
+                    if(response.body() == null)  inappInterface?.failBill()
+
                 }
 
                 override fun onFailure(call: Call<ChargePointResponse>, t: Throwable) {
-
+                    inappInterface?.failBill()
                 }
             })
     }
