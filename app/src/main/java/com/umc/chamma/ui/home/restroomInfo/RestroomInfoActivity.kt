@@ -32,6 +32,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
         super.onCreate(savedInstanceState)
 
         val Id= intent.getIntExtra("ID",0)
+        Log.d("연결결과 ",Id.toString())
 
         //풀스크린-MainActivity
         window.apply {
