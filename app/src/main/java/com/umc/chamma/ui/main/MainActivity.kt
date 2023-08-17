@@ -21,6 +21,7 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
         super.onCreate(savedInstanceState)
         binding.bottomNV.itemIconTintList = null
         setFullScreen()
+        InappUtil.initBillingClient(this)
         setBottomNavigation()
     }
 
