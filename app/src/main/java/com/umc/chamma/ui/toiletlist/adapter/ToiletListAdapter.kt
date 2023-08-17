@@ -8,6 +8,7 @@ import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemToiletListBinding
 import com.umc.chamma.ui.home.model.NearToiletData
 import com.umc.chamma.ui.search.model.SearchResultData
+import kotlin.math.roundToInt
 
 class ToiletListAdapter(
     private val datas : ArrayList<NearToiletData>,
@@ -22,7 +23,7 @@ class ToiletListAdapter(
                 .into(binding.ivThumnail)
 
             binding.tvName.text = item.restroomName
-            binding.tvRating.text = item.reviewRating.toString()
+            binding.tvRating.text = ((item.reviewRating!! * 100.0).roundToInt() / 100.0).toString()
             binding.tvDistance.text = "${item.distance?.toInt()}m"
 
             binding.root.setOnClickListener {

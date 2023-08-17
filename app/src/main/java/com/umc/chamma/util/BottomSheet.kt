@@ -12,6 +12,7 @@ import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
 import com.umc.chamma.databinding.FragmentToiletlistBottomsheetBinding
 import com.umc.chamma.ui.home.model.NearToiletData
 import com.umc.chamma.ui.home.restroomInfo.ReviewService
+import kotlin.math.roundToInt
 
 object BottomSheet {
 
@@ -23,10 +24,10 @@ object BottomSheet {
 
         binding.tvName.text = data.restroomName
         binding.tvDistance.text = "내 위치로부터 ${data.distance?.toInt()}m"
-        binding.tvRating.text = data.reviewRating.toString()
+        binding.tvRating.text = ((data.reviewRating!! * 100.0).roundToInt() / 100.0).toString()
         if(data.publicOrPaid == "public") binding.tvType.text = "무료화장실"
         else binding.tvType.text = "유료화장실"
-        binding.ratingbar.rating = data.reviewRating!!
+        binding.ratingbar.rating = data.reviewRating
 
         binding.btnUse.setOnClickListener { onBtnClickListener() }
         binding.tvName.setOnClickListener { onTextClickListener(data.restroomId!!) }
