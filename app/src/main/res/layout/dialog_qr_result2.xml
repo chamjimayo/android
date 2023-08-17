@@ -19,7 +19,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="17dp"
-            android:background="@drawable/tissue"
             android:text="200p"
             android:gravity="center"
             android:textColor="@color/chamma_main"
