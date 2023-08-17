@@ -20,7 +20,7 @@ class RestroomVPAdapter (private var pageList: ArrayList<String>
     ): RecyclerView.ViewHolder(binding.root){
         //val root=activity.context
     fun bindWithView(data:String) {
-            Glide.with(binding.root.context).load(data).error("https://user-images.githubusercontent.com/4177453/114197766-a9b2c280-9920-11eb-9192-db38c51dc294.png").into(binding.pagerItemImage)
+            Glide.with(binding.root.context).load(data).error(R.drawable.restroom_ex).into(binding.pagerItemImage)
 
         }
     }

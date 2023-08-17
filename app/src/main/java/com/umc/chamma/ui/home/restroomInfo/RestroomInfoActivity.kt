@@ -64,6 +64,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
         binding.reviewTv.setOnClickListener {
             val intent = Intent(this, ReviewActivity::class.java)
+                .putExtra("ID",Id)
             startActivity(intent)
         }
 
@@ -107,6 +108,8 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
 
         binding.ratingBar.rating=data.averageRating
+        binding.starNumTv.text=data.averageRating.toString()
+
         RestroomVPAdapter=RestroomVPAdapter(data.restroomPhoto,this)
         binding.restroomVp.apply {
             adapter = RestroomVPAdapter
