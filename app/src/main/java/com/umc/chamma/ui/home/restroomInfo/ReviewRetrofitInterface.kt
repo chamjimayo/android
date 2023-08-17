@@ -14,6 +14,6 @@ interface ReviewRetrofitInterface {
     fun tryToGetReviewListLatest(@Path("restroomId") restroomId:Int) : Call<ReviewResponse>
 
 
-    @GET("/api/review/list/latest/{restroomId}")
+    @GET("/api/review/list/low-rating/{restroomId}")
     fun tryToGetReviewListLR(@Path("restroomId") restroomId:Int) : Call<ReviewResponse>
 }
