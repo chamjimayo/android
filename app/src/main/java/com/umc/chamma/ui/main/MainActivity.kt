@@ -28,6 +28,8 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
     }
 
 
+
+
     private fun setBottomNavigation(){
         binding.bottomNV.run {
             setOnItemSelectedListener { item ->

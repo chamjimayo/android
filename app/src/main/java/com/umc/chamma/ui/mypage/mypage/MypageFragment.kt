@@ -17,6 +17,7 @@ import com.umc.chamma.databinding.FragmentMypageBinding
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
@@ -45,6 +46,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
         return binding.root
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
