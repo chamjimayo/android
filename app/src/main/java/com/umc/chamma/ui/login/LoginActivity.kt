@@ -31,6 +31,7 @@ import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import com.umc.chamma.util.Constants.RC_PERMISSION
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
+import com.umc.chamma.util.Constants.X_REFRESH_EXPIRE
 
 class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityInterface {
 
@@ -201,8 +202,8 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
         sharedPreferences.edit()
             .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
             .putString(X_REFRESH_TOKEN, result.refreshToken)
-            .putString(X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
-            .putString(X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .putString(X_ACCESS_EXPIRE, result.accessTokenExpiredDate)
+            .putString(X_REFRESH_EXPIRE, result.refreshTokenExpiredDate)
             .putString(X_LOGIN_TYPE, social)
             .apply()
     }

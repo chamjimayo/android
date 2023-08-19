@@ -9,19 +9,28 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.R
+import com.umc.chamma.config.BaseActivityVB
+import com.umc.chamma.databinding.ActivitySplashBinding
 import com.umc.chamma.ui.login.LoginActivity
+import com.umc.chamma.ui.login.model.LoginResponseData
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.splash.model.RefreshJwtPostData
+import com.umc.chamma.util.Constants
+import com.umc.chamma.util.Constants.TAG
+import com.umc.chamma.util.Constants.X_ACCESS_EXPIRE
 import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
+import com.umc.chamma.util.Constants.X_REFRESH_EXPIRE
+import com.umc.chamma.util.Constants.X_REFRESH_TOKEN
 import com.umc.chamma.util.LoadingDialog
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivityVB<ActivitySplashBinding>(ActivitySplashBinding::inflate), RefreshTokenInterface {
 
     private val dialog = LoadingDialog()
 
@@ -47,7 +56,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun autoLogin(){
-        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")
+        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")?:""
+        val refreshToken = sharedPreferences.getString(X_REFRESH_TOKEN,"")?:""
+        val accessExpire = sharedPreferences.getString(X_ACCESS_EXPIRE,"")?:""
+        val refreshExpire = sharedPreferences.getString(X_REFRESH_EXPIRE,"")?:""
+
 
 
         /* TODO
@@ -58,12 +71,45 @@ class SplashActivity : AppCompatActivity() {
                 -> 지났을 경우 : LoginActivity 로 이동
          */
 
-        // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 작성
-        if (!jwt.isNullOrBlank()) startActivity(Intent(this, MainActivity::class.java))
+        if (jwt.isNotBlank()) {
+            if(isDatePassed(accessExpire)){
+                if(isDatePassed(refreshExpire)){
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }else RefreshTokenService(this).refreshJwt(RefreshJwtPostData(refreshToken))
+
+            }else startActivity(Intent(this, MainActivity::class.java))
+        }
         else startActivity(Intent(this, LoginActivity::class.java))
         //추가
         dialog.dismiss()
         finish()
+    }
+
+    
+    // 현재날짜가 주어진날짜 보다 지났는지 판별해주는 함수
+    private fun isDatePassed(dateStr : String) : Boolean{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val date = LocalDateTime.parse(dateStr, formatter)
+        val now = LocalDateTime.now()
+
+        return now.isAfter(date)
+    }
+
+    override fun onPostRefreshJwtSuccess(data: LoginResponseData) {
+        storeTokens(data)
+    }
+
+    override fun onPostRefreshJwtFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    private fun storeTokens(result : LoginResponseData){
+        sharedPreferences.edit()
+            .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
+            .putString(X_REFRESH_TOKEN, result.refreshToken)
+            .putString(X_ACCESS_EXPIRE, result.accessTokenExpiredDate)
+            .putString(X_REFRESH_EXPIRE, result.refreshTokenExpiredDate)
+            .apply()
     }
 
     private fun showAlert(){
