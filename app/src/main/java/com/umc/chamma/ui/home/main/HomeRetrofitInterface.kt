@@ -14,5 +14,8 @@ interface HomeRetrofitInterface {
         @Query("distance") distance : Double?=null,
         @Query("longitude") longitude : Double,
         @Query("latitude") latitude : Double,
+        @Query("sortBy") sortBy : String?=null,
+        @Query("page") page : Int?=null,
+        @Query("size") size : Int?=null
     ) : Call<NearToiletResponse>
 }

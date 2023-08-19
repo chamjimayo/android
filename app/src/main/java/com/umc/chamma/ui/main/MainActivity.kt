@@ -4,9 +4,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.umc.chamma.R
+import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.home.main.HomeFragment
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.ui.mypage.mypage.MypageFragment
 import com.umc.chamma.ui.mypage.review.ReviewFragment
 import com.umc.chamma.ui.mypage.usage.UsageFragment
@@ -14,8 +14,7 @@ import com.umc.chamma.ui.mypage.userdata.UpdateUserData
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import com.umc.chamma.util.InappUtil
 
-class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
-
+class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,10 +73,6 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
     }
 
 
-
-
-
-
     //mypage에서 다른 화면으로 이동
     fun mypageToUsage() {
         val usageFragment = UsageFragment()
@@ -110,7 +105,4 @@ class MainActivity : com.umc.chamma.config.BaseActivityVB<ActivityMainBinding>(A
     fun goBackMypage() {
         onBackPressed()
     }
-
-
-
 }
