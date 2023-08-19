@@ -6,13 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".config.App"
@@ -22,17 +20,19 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/chamma_logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true">
-
-        <activity android:name=".ui.mypage.chargepoint.ChargePointActivity"
-            android:exported="false"/>
-
-        <activity android:name=".ui.toiletlist.ToiletlistFilterActivity"
-            android:exported="false"/>
-
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.qr.QrPointResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mypage.chargepoint.ChargePointActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.toiletlist.ToiletlistFilterActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.home.restroomInfo.RestroomInfoActivity"
             android:exported="false" />
@@ -62,12 +62,12 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.signup.SignupActivity"
             android:exported="true"

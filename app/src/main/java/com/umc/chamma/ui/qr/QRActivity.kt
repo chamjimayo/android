@@ -2,6 +2,7 @@ package com.umc.chamma.ui.qr
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,10 +12,12 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import com.journeyapps.barcodescanner.*
 import com.umc.chamma.R
+import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityQrBinding
 import com.umc.chamma.databinding.DialogQrResult2Binding
 import com.umc.chamma.databinding.DialogQrResultBinding
+import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -64,12 +67,14 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
                         showCustomToast("참을래요 완료")
                         dialog.dismiss()
-                        finish()
+                        //finish()
                     }
                     myDialogBinding.btnPostEditBackOk.setOnClickListener{
                         showCustomToast("이용할래요 완료")
                         dialog.dismiss()
                         finish()
+                        val intent= Intent(App.context(), QrPointResultActivity::class.java)
+                        startActivity(intent)
                     }
                 }
                 else{
