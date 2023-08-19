@@ -50,6 +50,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
    }
 
     private fun setLocation(){
+        showLoading()
         val locationManager = App.context().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -69,14 +70,17 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
                     HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
                 }
             }else{
+                dismissLoading()
                 ActivityCompat.requestPermissions((activity as MainActivity), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constants.RC_PERMISSION)
             }
         }
     }
     
     private fun setBtnListener(){
-        binding.btnSort.setOnClickListener { 
+        binding.btnSort.setOnClickListener {
+
             BottomSheet.toiletlistSort(requireContext(), sortType){type->
+                showLoading()
                 // TODO 0 : 거리순 1 : 별점높은순 2 : 별점낮은순 으로 API 호출. 아직 API 구현안됨
                 setSortType(type)
                 sharedPreferences.edit()
@@ -118,13 +122,15 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
     }
 
     override fun onGetNearToiletSuccess(result: NearToiletResponse) {
-
+        dismissLoading()
         val adapter = ToiletListAdapter(result.data,::clickItem)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = LinearLayoutManager(App.context())
     }
 
     override fun onGetNearToiletFailure(message: String) {
+        dismissLoading()
+        showCustomToast(message)
     }
 
     override fun onResume() {
