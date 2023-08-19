@@ -24,6 +24,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".config.SessionExpiredReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.example.yourapp.SESSION_EXPIRED" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".ui.qr.QrPointResultActivity"
             android:exported="false" />

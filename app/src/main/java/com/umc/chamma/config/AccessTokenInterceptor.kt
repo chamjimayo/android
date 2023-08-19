@@ -11,6 +11,7 @@ import com.umc.chamma.ui.splash.RefreshTokenInterface
 import com.umc.chamma.ui.splash.RefreshTokenService
 import com.umc.chamma.ui.splash.model.RefreshJwtPostData
 import com.umc.chamma.util.Constants
+import com.umc.chamma.util.Constants.SESSION_EXPIRED_ACTION
 import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
 import com.umc.chamma.util.Constants.xapikey
 import okhttp3.Interceptor
@@ -24,15 +25,6 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
 
     private lateinit var jwtToken : String
 
-/* TODO 통신시 ACCESS_TOKEN 유효기간 확인
-    ACCESS_TOKEN 만료기간지났을 경우
-    -> 안지났을 경우 : MainActivity 로 이동
-    -> 지났을 경우 : REFRESH_TOKEN 유효기간 확인
-        -> 안지났을 경우 : /api/auth/token/access 로 ACCESSTOKEN 갱신
-        -> 지났을 경우 : 세션만료 모달창 -> LoginActivity 로 이동
- */
-
-    // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 생략
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         autoLogin()
@@ -54,13 +46,18 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
         if (jwt.isNotBlank()) {
             if(isDatePassed(accessExpire)){
                 if(isDatePassed(refreshExpire)){
-                    // TODO 세션만료 모달
+                    sessionExpired()
                 }else RefreshTokenService(this).refreshJwt(RefreshJwtPostData(refreshToken))
 
             }else jwtToken = jwt
         }else{
-            // TODO 세션만료 모달
+            sessionExpired()
         }
+    }
+
+    private fun sessionExpired() {
+        val intent = Intent(SESSION_EXPIRED_ACTION)
+        context.sendBroadcast(intent)
     }
 
 
@@ -89,6 +86,5 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
             .putString(Constants.X_REFRESH_EXPIRE, result.refreshTokenExpiredDate)
             .apply()
     }
-
 
 }

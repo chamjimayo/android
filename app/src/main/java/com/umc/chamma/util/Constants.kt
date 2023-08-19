@@ -11,6 +11,7 @@ object Constants {
     const val X_LOGIN_TYPE = "X_LOGIN_TYPE"
     const val DISTANCE_FILTER = "DISTANCE_FILTER"
     const val SORT_TYPE = "SORT_TYPE"
+    const val SESSION_EXPIRED_ACTION = "SESSION_EXPIRED_ACTION"
 
     const val RC_PERMISSION = 1000
 
