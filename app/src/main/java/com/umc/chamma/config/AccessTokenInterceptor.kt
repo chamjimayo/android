@@ -1,33 +1,96 @@
 package com.umc.chamma.config
 
 import android.content.Context
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import com.umc.chamma.config.App.Companion.sharedPreferences
+import com.umc.chamma.ui.login.LoginActivity
+import com.umc.chamma.ui.login.model.LoginResponseData
+import com.umc.chamma.ui.splash.RefreshTokenInterface
+import com.umc.chamma.ui.splash.RefreshTokenService
+import com.umc.chamma.ui.splash.model.RefreshJwtPostData
+import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
 import com.umc.chamma.util.Constants.xapikey
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class AccessTokenInterceptor(private val context: Context) : Interceptor {
+class AccessTokenInterceptor(private val context: Context) : Interceptor, RefreshTokenInterface {
 
-/* TODO 통신시 ACCESS_TOKEN 유효기간 확인
-    ACCESS_TOKEN 만료기간지났을 경우
-    -> 안지났을 경우 : MainActivity 로 이동
-    -> 지났을 경우 : REFRESH_TOKEN 유효기간 확인
-        -> 안지났을 경우 : /api/auth/token/access 로 ACCESSTOKEN 갱신
-        -> 지났을 경우 : 세션만료 모달창 -> LoginActivity 로 이동
- */
 
-    // ACCESS_TOKEN 유효기간 무한이라고 가정하고 우선 생략
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
+        val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")?:""
+        val refreshToken = sharedPreferences.getString(Constants.X_REFRESH_TOKEN,"")?:""
+        val accessExpire = sharedPreferences.getString(Constants.X_ACCESS_EXPIRE,"")?:""
+        val refreshExpire = sharedPreferences.getString(Constants.X_REFRESH_EXPIRE,"")?:""
+
+
+        if (jwt.isNotBlank()) {
+            if(isDatePassed(accessExpire)){
+                if(isDatePassed(refreshExpire)){
+                    sessionExpired()
+                }else RefreshTokenService(this).refreshJwt(RefreshJwtPostData(refreshToken))
+
+            }else return initHeader(chain)
+        }
+
+        return initHeader(chain)
+    }
+
+    private fun initHeader(chain : Interceptor.Chain): Response{
+        val jwt: String? = sharedPreferences.getString(X_ACCESS_TOKEN, null)
         val builder: Request.Builder = chain.request().newBuilder()
-        val jwtToken: String? = sharedPreferences.getString(X_ACCESS_TOKEN, null)
-        if (jwtToken != null) {
-            builder.addHeader("Bearer-Token", jwtToken)
+        if(jwt != null){
+            builder.addHeader("Bearer-Token", jwt)
         }
         builder.addHeader("x-api-key", xapikey)
         return chain.proceed(builder.build())
     }
+
+
+    private fun sessionExpired() {
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed(Runnable{
+            val toast = Toast.makeText(context, "세션이 만료되었습니다", Toast.LENGTH_SHORT)
+            toast.show()
+        },0)
+
+        val intent = Intent(context, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
+    }
+
+
+    // 현재날짜가 주어진날짜 보다 지났는지 판별해주는 함수
+    private fun isDatePassed(dateStr : String) : Boolean{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val date = LocalDateTime.parse(dateStr, formatter)
+        val now = LocalDateTime.now()
+
+        return now.isAfter(date)
+    }
+
+    override fun onPostRefreshJwtSuccess(data: LoginResponseData) {
+        storeTokens(data)
+    }
+
+    override fun onPostRefreshJwtFailure(message: String) {
+    }
+
+    private fun storeTokens(result : LoginResponseData){
+        sharedPreferences.edit()
+            .putString(X_ACCESS_TOKEN, "Bearer " + result.accessToken)
+            .putString(Constants.X_REFRESH_TOKEN, result.refreshToken)
+            .putString(Constants.X_ACCESS_EXPIRE, result.accessTokenExpiredDate)
+            .putString(Constants.X_REFRESH_EXPIRE, result.refreshTokenExpiredDate)
+            .apply()
+    }
+
 }
