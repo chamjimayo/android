@@ -31,6 +31,7 @@ import com.umc.chamma.ui.toiletlist.adapter.ToiletListAdapter
 import com.umc.chamma.util.BottomSheet
 import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.DISTANCE_FILTER
+import com.umc.chamma.util.Constants.SORT_TYPE
 import com.umc.chamma.util.Constants.TAG
 
 
@@ -38,6 +39,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var sortType = 0
+    private var sortArr = mutableListOf("distance","rating","rating")
     private var distance = 0
     private val distanceArr = mutableListOf(150.0,300.0,500.0,800.0,1000.0)
 
@@ -61,15 +63,14 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
             ) {
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity as MainActivity)
                 fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
-//                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance])
+//                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance],sortArr[sortType])
 
                     //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-                    HomeService(this).getNearToilet("paid", 126.9731649095934, 37.560444374518106,distanceArr[distance])
+                    HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
                 }
             }else{
                 ActivityCompat.requestPermissions((activity as MainActivity), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constants.RC_PERMISSION)
             }
-
         }
     }
     
@@ -77,26 +78,36 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
         binding.btnSort.setOnClickListener { 
             BottomSheet.toiletlistSort(requireContext(), sortType){type->
                 // TODO 0 : 거리순 1 : 별점높은순 2 : 별점낮은순 으로 API 호출. 아직 API 구현안됨
-                when(type){
-                    0->{
-                        binding.btnSort.text = "거리순 "
-                        sortType = 0
-                    }
-                    1->{
-                        binding.btnSort.text = "별점높은순 "
-                        sortType = 1
-                    }
-                    2->{
-                        binding.btnSort.text = "별점낮은순 "
-                        sortType = 2
-                    }
-                }
+                setSortType(type)
+                sharedPreferences.edit()
+                    .putInt(SORT_TYPE,sortType)
+                    .apply()
+
+                //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
+                HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
             }.show()
         }
 
 
         binding.btnRangeFilter.setOnClickListener {
             startActivity(Intent(App.context(),ToiletlistFilterActivity::class.java))
+        }
+    }
+
+    private fun setSortType(type : Int){
+        when(type){
+            0->{
+                binding.btnSort.text = "거리순 "
+                sortType = 0
+            }
+            1->{
+                binding.btnSort.text = "별점높은순 "
+                sortType = 1
+            }
+            2->{
+                binding.btnSort.text = "별점낮은순 "
+                sortType = 2
+            }
         }
     }
     
@@ -119,7 +130,8 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
     override fun onResume() {
         super.onResume()
         distance = sharedPreferences.getInt(DISTANCE_FILTER,4)
-
+        sortType = sharedPreferences.getInt(SORT_TYPE,0)
+        setSortType(sortType)
         setLocation()
     }
 

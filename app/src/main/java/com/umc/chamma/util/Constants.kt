@@ -10,6 +10,7 @@ object Constants {
     const val X_REFRESH_EXPIRE = "X_REFRESH_EXPIRE"
     const val X_LOGIN_TYPE = "X_LOGIN_TYPE"
     const val DISTANCE_FILTER = "DISTANCE_FILTER"
+    const val SORT_TYPE = "SORT_TYPE"
 
     const val RC_PERMISSION = 1000
 
