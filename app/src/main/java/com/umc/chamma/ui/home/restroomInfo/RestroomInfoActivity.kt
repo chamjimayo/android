@@ -77,7 +77,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
         }
 
         binding.useBtn.setOnClickListener {
-            startActivity(Intent(this, QRActivity::class.java))
+            startActivity(Intent(this, QRActivity::class.java).putExtra("ID",Id))
 
         }
 
