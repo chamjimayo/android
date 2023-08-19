@@ -136,8 +136,6 @@ object InappUtil : PurchasesUpdatedListener {
             .build()
 
         val responseCode = billingCilent.launchBillingFlow(activity, flowParams).responseCode
-        Log.d(TAG, responseCode.toString())
-        Log.d(TAG, BillingClient.BillingResponseCode.OK.toString())
     }
 
     // TODO 결제 결과 수신
@@ -146,11 +144,10 @@ object InappUtil : PurchasesUpdatedListener {
         billingResult: BillingResult,
         purchases: MutableList<Purchase>?
     ) {
-        Log.d(TAG, "???? ${billingResult.responseCode}")
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (purchase in purchases) {
 
-                Log.d(TAG, "구매 성공")
+                Log.d(TAG, purchase.toString())
 
                 // 서버로 구매성공 데이터 보내기
                 val data = ChargePointPostData(productId, purchase.purchaseToken)

@@ -22,6 +22,7 @@ import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding
 import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
 import com.umc.chamma.ui.qr.QRActivity
 import me.relex.circleindicator.CircleIndicator3
+import kotlin.math.roundToInt
 
 class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(ActivityRestroomInfoBinding::inflate)
     ,RestroomInfoActivityInterface{
@@ -32,6 +33,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
         super.onCreate(savedInstanceState)
 
         val Id= intent.getIntExtra("ID",0)
+        Log.d("연결결과 ",Id.toString())
 
         //풀스크린-MainActivity
         window.apply {
@@ -108,7 +110,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
 
         binding.ratingBar.rating=data.averageRating
-        binding.starNumTv.text=data.averageRating.toString()
+        binding.starNumTv.text=String.format("%.2f",data.averageRating)
 
         RestroomVPAdapter=RestroomVPAdapter(data.restroomPhoto,this)
         binding.restroomVp.apply {
