@@ -23,20 +23,8 @@ import java.time.format.DateTimeFormatter
 
 class AccessTokenInterceptor(private val context: Context) : Interceptor, RefreshTokenInterface {
 
-    private lateinit var jwtToken : String
-
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        autoLogin()
-
-        val builder: Request.Builder = chain.request().newBuilder()
-        builder.addHeader("Bearer-Token", jwtToken)
-        builder.addHeader("x-api-key", xapikey)
-        return chain.proceed(builder.build())
-    }
-
-
-    private fun autoLogin(){
         val jwt = sharedPreferences.getString(X_ACCESS_TOKEN,"")?:""
         val refreshToken = sharedPreferences.getString(Constants.X_REFRESH_TOKEN,"")?:""
         val accessExpire = sharedPreferences.getString(Constants.X_ACCESS_EXPIRE,"")?:""
@@ -46,18 +34,32 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
         if (jwt.isNotBlank()) {
             if(isDatePassed(accessExpire)){
                 if(isDatePassed(refreshExpire)){
-                    sessionExpired()
+                    startLoginActivity()
                 }else RefreshTokenService(this).refreshJwt(RefreshJwtPostData(refreshToken))
 
-            }else jwtToken = jwt
+            }else return initHeader(chain)
         }else{
-            sessionExpired()
+            startLoginActivity()
         }
+
+        return initHeader(chain)
     }
 
-    private fun sessionExpired() {
-        val intent = Intent(SESSION_EXPIRED_ACTION)
-        context.sendBroadcast(intent)
+    private fun initHeader(chain : Interceptor.Chain): Response{
+        val jwt: String? = sharedPreferences.getString(X_ACCESS_TOKEN, null)
+        val builder: Request.Builder = chain.request().newBuilder()
+        if(jwt != null){
+            builder.addHeader("Bearer-Token", jwt)
+            builder.addHeader("x-api-key", xapikey)
+        }
+        return chain.proceed(builder.build())
+    }
+
+
+    private fun startLoginActivity() {
+        val intent = Intent(context, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
     }
 
 
@@ -72,7 +74,6 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
 
     override fun onPostRefreshJwtSuccess(data: LoginResponseData) {
         storeTokens(data)
-        jwtToken = data.accessToken
     }
 
     override fun onPostRefreshJwtFailure(message: String) {
