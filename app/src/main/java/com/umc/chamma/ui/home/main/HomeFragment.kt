@@ -25,7 +25,12 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import com.umc.chamma.config.App
+import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointService
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.QRActivity
 import com.umc.chamma.util.BottomSheet
 import kotlin.math.*
@@ -36,8 +41,8 @@ enum class markerType(val i : Int){
     SEARCH(2)
 }
 
-class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.chamma.config.BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
-    HomeFragmentInterface {
+class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
+    HomeFragmentInterface, ChargePointActivityInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -59,7 +64,6 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.etSearch.setOnFocusChangeListener  { view, hasFocus ->
             if(hasFocus){
                 parentFragmentManager.beginTransaction()
@@ -68,6 +72,13 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
                     .commitAllowingStateLoss()
             }
         }
+
+        binding.btnPoint.setOnClickListener {
+            startActivity(Intent(requireContext(), ChargePointActivity::class.java))
+        }
+
+        // 사용자 정보 (point) 불러오기
+        ChargePointService(this).getUserInfo()
 
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)
@@ -95,8 +106,6 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
             binding.etSearch.visibility = View.VISIBLE
             binding.layoutSearchResultAppbar.visibility = View.GONE
         }
-
-
     }
 
     override fun onMapReady(nM: NaverMap) {
@@ -281,8 +290,16 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         }
     }
 
+    override fun onGetUserInfoSuccess(data: UserinfoData) {
+        binding.btnPoint.text = data.point.toString() + "P"
+    }
+
+    override fun onGetUserInfoFailure(message: String) {
+        showCustomToast(message)
+    }
+
     override fun onGetNearToiletFailure(message : String) {
-        // TODO 오류내용 Toast 메세지
+        showCustomToast(message)
     }
 
     private fun removeMarker(){
