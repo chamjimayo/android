@@ -20,7 +20,7 @@ class ToiletListAdapter(
         fun bind(item : NearToiletData){
             Glide.with(App.context())
                 .load(item.restroomPhoto)
-                .into(binding.ivThumnail)
+                .into(binding.ivThumnailImg)
 
             binding.tvName.text = item.restroomName
             binding.tvRating.text = ((item.reviewRating!! * 100.0).roundToInt() / 100.0).toString()

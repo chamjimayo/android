@@ -39,7 +39,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var sortType = 0
-    private var sortArr = mutableListOf("distance","rating","rating")
+    private var sortArr = mutableListOf("distance","rating_des","rating_asc")
     private var distance = 0
     private val distanceArr = mutableListOf(150.0,300.0,500.0,800.0,1000.0)
 
