@@ -24,6 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.reviewwrite.ReviewWriteActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.qr.QrPointResultActivity"
             android:exported="false" />
