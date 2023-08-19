@@ -24,8 +24,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
-class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate) {
+class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
+    ,QrActivityInterface{
 
+    val qrActivityInterface=this
     private lateinit var capture : CustomCaptureManager
     private var Id by Delegates.notNull<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,8 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                         //finish()
                     }
                     myDialogBinding.btnPostEditBackOk.setOnClickListener{
+                        QrService(qrActivityInterface).tryToUseRestroom(Id)
+
                         showCustomToast("이용할래요 완료")
                         dialog.dismiss()
                         finish()
@@ -154,5 +158,13 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         fun resultCallback(callback: (BarcodeResult?) -> Unit) {
             this.callback = callback
         }
+    }
+
+    override fun onTryToUseRestroomSuccess(response: UseRestroomResponse) {
+        Log.d("qr연결결과1 ",response.toString())
+    }
+
+    override fun onTryToUseRestroomFailure(message: String) {
+        Log.d("qr연결결과1 ",message)
     }
 }
