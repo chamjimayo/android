@@ -2,6 +2,8 @@ package com.umc.chamma.ui.qr
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -54,7 +56,10 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     val myDialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
                     val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
                     val dialog = build.create()
+                    dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
                     dialog.show()
+
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
                         showCustomToast("참을래요 완료")
@@ -71,6 +76,8 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     val myDialogBinding = DialogQrResultBinding.inflate(LayoutInflater.from(this@QRActivity))
                     val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
                     val dialog = build.create()
+                    dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
                     dialog.show()
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
