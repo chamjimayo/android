@@ -1,22 +1,28 @@
 package com.umc.chamma.ui.qr
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import com.journeyapps.barcodescanner.*
+import com.umc.chamma.R
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityQrBinding
+import com.umc.chamma.databinding.DialogQrResult2Binding
+import com.umc.chamma.databinding.DialogQrResultBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate) {
 
     private lateinit var capture : CustomCaptureManager
-
+    private var Id by Delegates.notNull<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,6 +30,8 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         //capture.initializeFromIntent(intent,savedInstanceState)
        // capture.decode()
         initializeQrScanner(savedInstanceState)
+        Id= intent.getIntExtra("ID",0)
+        Log.d("qr연결결과 ",Id.toString())
 
     }
     private fun initializeQrScanner(savedInstanceState: Bundle?) {
@@ -34,11 +42,55 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
             capture.decode()
             capture.resultCallback {
                 Log.d("Tester", "returnResult: $it")
-                Toast.makeText(this@QRActivity,"returnResult: $it",Toast.LENGTH_LONG).show()
+                val data = it?.text?.split('/')?.last()
+                if(data?.toInt()==Id){
+                    /*
+                      val dialog = BottomSheetDialog(context)
+        val binding = FragmentBtmshtdialogSortListBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(binding.root)
+
+        dialog.show()
+                     */
+                    val myDialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
+                    val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
+                    val dialog = build.create()
+                    dialog.show()
+
+                    myDialogBinding.btnPostEditBackCancel.setOnClickListener {
+                        showCustomToast("참을래요 완료")
+                        dialog.dismiss()
+                        finish()
+                    }
+                    myDialogBinding.btnPostEditBackOk.setOnClickListener{
+                        showCustomToast("이용할래요 완료")
+                        dialog.dismiss()
+                        finish()
+                    }
+                }
+                else{
+                    val myDialogBinding = DialogQrResultBinding.inflate(LayoutInflater.from(this@QRActivity))
+                    val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
+                    val dialog = build.create()
+                    dialog.show()
+
+                    myDialogBinding.btnPostEditBackCancel.setOnClickListener {
+                        showCustomToast("닫기 완료")
+                        dialog.dismiss()
+                        // activity 종료하기
+                        finish()
+                    }
+
+                    myDialogBinding.btnPostEditBackOk.setOnClickListener {
+                        showCustomToast("재시도 완료")
+                        dialog.dismiss()
+                    }
+                }
+
+                Toast.makeText(this@QRActivity,"returnResult: $data",Toast.LENGTH_LONG).show()
                 CoroutineScope(Dispatchers.Main).launch {
                     capture.onPause()
                     capture.onDestroy()
-                    delay(200)
+                    delay(500)
                     initializeQrScanner(savedInstanceState)
                     capture.onResume()
                 }
