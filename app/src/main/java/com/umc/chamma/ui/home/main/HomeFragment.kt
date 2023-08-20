@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.fragment.findNavController
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.ui.home.model.NearToiletData
