@@ -27,10 +27,10 @@
         <activity android:name=".ui.using.LobbyActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
-        <activity android:name="PauseActivity"
+        <activity android:name=".ui.using.PauseActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
-        <activity android:name="GameoverActivity"
+        <activity android:name=".ui.using.GameoverActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity android:name=".ui.using.GameActivity"

@@ -1,10 +1,9 @@
 package com.umc.chamma.ui.using
 
-import GameoverActivity
-import PauseActivity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
@@ -53,6 +52,8 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setFullScreen()
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
@@ -240,6 +241,14 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
 
         }
 
+    }
+
+    private fun setFullScreen(){
+        window.apply {
+            statusBarColor = Color.TRANSPARENT
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
     }
 
     override fun onResume() {

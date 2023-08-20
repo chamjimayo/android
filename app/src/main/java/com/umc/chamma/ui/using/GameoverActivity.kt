@@ -1,11 +1,10 @@
 
+package com.umc.chamma.ui.using
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.umc.chamma.databinding.ActivityGameoverBinding
-import com.umc.chamma.ui.main.MainActivity
-import com.umc.chamma.ui.using.GameActivity
 
 class GameoverActivity : AppCompatActivity(){
     private lateinit var binding : ActivityGameoverBinding
@@ -20,7 +19,7 @@ class GameoverActivity : AppCompatActivity(){
         val retry = binding.btnGameoverRetry
 
         exit.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LobbyActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

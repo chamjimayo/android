@@ -1,11 +1,9 @@
-
+package com.umc.chamma.ui.using
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.umc.chamma.databinding.ActivityPauseBinding
-import com.umc.chamma.ui.main.MainActivity
-import com.umc.chamma.ui.using.UsingActivity
 
 class PauseActivity : AppCompatActivity(){
     private lateinit var binding : ActivityPauseBinding
@@ -22,7 +20,7 @@ class PauseActivity : AppCompatActivity(){
         }
 
         exitbtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LobbyActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
