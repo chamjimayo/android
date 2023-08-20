@@ -1,5 +1,6 @@
 package com.umc.chamma.ui.qr
 
+import android.util.Log
 import com.umc.chamma.config.App
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivityInterface
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoRetrofitInterface
@@ -20,6 +21,8 @@ class QrService(val view : QrActivityInterface) {
                 call: Call<UseRestroomResponse>,
                 response: Response<UseRestroomResponse>
             ) {
+               // if(response.code()==400)
+                    view.onTryToUseRestroomFailure(response.toString())
                 response.body()?.let{
                     if(response.code() == 200) view.onTryToUseRestroomSuccess(it)
                     else view.onTryToUseRestroomFailure("API 오류")
