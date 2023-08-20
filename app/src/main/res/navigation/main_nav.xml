@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.umc.chamma.ui.home.main.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.umc.chamma.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/toiletlistFragment"
+        android:name="com.umc.chamma.ui.toiletlist.ToiletlistFragment"
+        android:label="fragment_toilet_list"
+        tools:layout="@layout/fragment_toilet_list"/>
+
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.umc.chamma.ui.community.CommunityFragment"
+        android:label="fragment_community"
+        tools:layout="@layout/fragment_community"/>
+
+    <fragment
+        android:id="@+id/mypageFragment"
+        android:name="com.umc.chamma.ui.mypage.mypage.MypageFragment"
+        android:label="fragment_mypage"
+        tools:layout="@layout/fragment_mypage">
+
+        <action
+            android:id="@+id/action_mypageFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment"/>
+
+        <action
+            android:id="@+id/action_mypageFragment_to_usageFragment"
+            app:destination="@id/usageFragment"/>
+
+        <action
+            android:id="@+id/action_mypageFragment_to_userinfoFragment"
+            app:destination="@id/userinfoFragment"/>
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.umc.chamma.ui.mypage.review.ReviewFragment"
+        android:label="fragment_review"
+        tools:layout="@layout/fragment_review"/>
+
+    <fragment
+        android:id="@+id/usageFragment"
+        android:name="com.umc.chamma.ui.mypage.usage.UsageFragment"
+        android:label="fragment_usage"
+        tools:layout="@layout/fragment_usage"/>
+
+    <fragment
+        android:id="@+id/userinfoFragment"
+        android:name="com.umc.chamma.ui.mypage.userdata.UpdateUserData"
+        android:label="fragment_userInfo"
+        tools:layout="@layout/fragment_update_user_data"/>
+</navigation>

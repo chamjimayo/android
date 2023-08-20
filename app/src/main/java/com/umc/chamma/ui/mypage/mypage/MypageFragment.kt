@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.umc.chamma.config.App
@@ -38,10 +39,10 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
     ): View? {
 
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
-        binding.btnUsageMypage.setOnClickListener{mainActivity?.mypageToUsage()}
+        binding.btnUsageMypage.setOnClickListener{findNavController().navigate(R.id.action_mypageFragment_to_usageFragment)}
         binding.btnChargeMypage.setOnClickListener { startActivity(Intent(requireContext(),ChargePointActivity::class.java)) }
-        binding.btnUpdateUserData.setOnClickListener { mainActivity?.mypageToUpdate() }
-        binding.btnReview.setOnClickListener { mainActivity?.mypageToReview() }
+        binding.btnUpdateUserData.setOnClickListener { findNavController().navigate(R.id.action_mypageFragment_to_userinfoFragment) }
+        binding.btnReview.setOnClickListener { findNavController().navigate((R.id.action_mypageFragment_to_reviewFragment)) }
         binding.btnLogoutMypage.setOnClickListener { logOut() }
 
         return binding.root

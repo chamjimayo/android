@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentReviewBinding
@@ -24,7 +25,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         val fragmentReview = FragmentReviewBinding.bind(view)
         binding = fragmentReview
-        binding.btnBackReview.setOnClickListener { mainActivity.goBackMypage() }
+        binding.btnBackReview.setOnClickListener { findNavController().navigateUp() }
 
         binding.rvReview.layoutManager = LinearLayoutManager(context)
         binding.rvReview.adapter = reviewAdapter

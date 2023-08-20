@@ -3,6 +3,11 @@ package com.umc.chamma.ui.main
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
@@ -19,6 +24,8 @@ import com.umc.chamma.util.InappUtil
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
+
+    private lateinit var navController : NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.bottomNV.itemIconTintList = null
@@ -28,46 +35,19 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
     }
 
 
-
-
     private fun setBottomNavigation(){
-        binding.bottomNV.run {
-            setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.navigation_home -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, HomeFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-                    R.id.navigation_toilets -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, ToiletlistFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.frame) as NavHostFragment
+        navController = navHostFragment.navController
+        findViewById<BottomNavigationView>(R.id.bottomNV)
+            .setupWithNavController(navController)
 
-                    R.id.navigation_community -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, com.umc.chamma.ui.community.CommunityFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-
-                    R.id.navigation_mypage -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, MypageFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-
-                }
-                true
+        binding.bottomNV.setOnItemSelectedListener { item->
+            if(binding.bottomNV.selectedItemId != item.itemId){
+                NavigationUI.onNavDestinationSelected(item,navController,false)
             }
-            selectedItemId = R.id.navigation_home
+            true
         }
     }
-
 
     // 풀스크린 적용
     private fun setFullScreen(){
@@ -78,37 +58,9 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
-
-    //mypage에서 다른 화면으로 이동
-    fun mypageToUsage() {
-        val usageFragment = UsageFragment()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,usageFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-
-    fun mypageToUpdate() {
-        val updateFragment = UpdateUserData()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,updateFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    fun mypageToReview() {
-        val reviewFragment = ReviewFragment()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,reviewFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    fun goBackMypage() {
-        onBackPressed()
+    override fun onBackPressed() {
+        if(!navController.popBackStack()){
+            super.onBackPressed()
+        }
     }
 }
