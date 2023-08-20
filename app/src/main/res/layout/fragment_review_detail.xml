@@ -52,6 +52,9 @@
                 android:id="@+id/ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:layout_marginTop="7dp"
+                android:progressTint="@color/chamma_yellow"
                 style="@style/Widget.AppCompat.RatingBar.Small"/>
 
         </LinearLayout>
@@ -135,6 +138,7 @@
         android:hint="특이사항을 입력해주세요."
         android:gravity="top"
         android:textSize="13dp"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:background="@drawable/shape_fillgray_strokegray"
         android:textColorHint="@color/chamma_signup_strokegray"

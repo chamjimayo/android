@@ -55,11 +55,29 @@
         android:id="@+id/rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.RatingBar"
+        android:numStars="5"
+        android:isIndicator="false"
+        android:progressTint="@color/chamma_yellow"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
         app:layout_constraintTop_toBottomOf="@id/tv_announce"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_signup_gender"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="bottom"
+        android:textColor="@color/chamma_signup_textgray"
+        android:outlineProvider="none"
+        android:text="다음"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

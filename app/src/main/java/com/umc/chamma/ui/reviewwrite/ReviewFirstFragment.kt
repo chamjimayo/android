@@ -2,7 +2,9 @@ package com.umc.chamma.ui.reviewwrite
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import com.umc.chamma.R
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentReviewFirstBinding
@@ -14,9 +16,23 @@ class ReviewFirstFragment(val restroomId : Int) : BaseFragmentVB<FragmentReviewF
     RestroomInfoActivityInterface {
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         RestroomInfoService(this).tryToGetRestroomDetail(restroomId)
+
+        binding.ratingBar.setOnRatingBarChangeListener { p0, p1, p2 ->
+            binding.btnNext.isEnabled = true
+            binding.btnNext.setBackgroundResource(R.drawable.shape_signup_duplicheck)
+            binding.btnNext.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
+        }
+
+        binding.btnNext.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.review_frame, ReviewDetailFragment(restroomId, binding.ratingBar.rating))
+                .commit()
+        }
     }
 
 
