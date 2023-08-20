@@ -68,14 +68,15 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
-                        showCustomToast("참을래요 완료")
+                        //showCustomToast("참을래요 완료")
                         dialog.dismiss()
                         //finish()
                     }
                     myDialogBinding.btnPostEditBackOk.setOnClickListener{
                         QrService(qrActivityInterface).tryToUseRestroom(Id)
+                        QrService(qrActivityInterface).tryToDeductPoint(200)
 
-                        showCustomToast("이용할래요 완료")
+                        //showCustomToast("이용할래요 완료")
                         dialog.dismiss()
                         finish()
                         val intent= Intent(App.context(), QrPointResultActivity::class.java)
@@ -93,14 +94,14 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
-                        showCustomToast("닫기 완료")
+                        //showCustomToast("닫기 완료")
                         dialog.dismiss()
                         // activity 종료하기
                         finish()
                     }
 
                     myDialogBinding.btnPostEditBackOk.setOnClickListener {
-                        showCustomToast("재시도 완료")
+                        //showCustomToast("재시도 완료")
                         dialog.dismiss()
                     }
                 }
@@ -169,6 +170,14 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
     override fun onTryToUseRestroomFailure(message: String) {
         Log.d("qr연결결과1 ",message)
+    }
+
+    override fun onTryToDeductPointSuccess(response: DeductPointResponse) {
+        Log.d("qr연결결과2 ",response.toString())
+    }
+
+    override fun onTryToDeductPointFailure(message: String) {
+        Log.d("qr연결결과2 ",message)
     }
 
     private fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){

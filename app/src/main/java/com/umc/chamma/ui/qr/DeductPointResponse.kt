@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 import com.umc.chamma.config.BaseResponse
 import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 
-data class UseRestroomResponse(
+data class DeductPointResponse(
     @SerializedName("data")
-    val data: List<UseResponseData>,
+    val data: List<DeductResponseData>
 
 ):BaseResponse()
 
-data class UseResponseData(
-    @SerializedName("restroomId")
-    val restroomId: Int,
+data class DeductResponseData(
+    @SerializedName("point")
+    val point: Int,
     @SerializedName("userId")
     val userId: Int
 )

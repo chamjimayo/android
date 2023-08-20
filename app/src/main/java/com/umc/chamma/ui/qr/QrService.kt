@@ -9,12 +9,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class QrService(val view : QrActivityInterface) {
-
+    val QrRetrofitInterface = App.getRetro().create(QrRetrofitInterface::class.java)
 
     fun tryToUseRestroom(restroomId:Int){
 
-        val QrRetrofitInterface = App.getRetro().create(QrRetrofitInterface::class.java)
-        QrRetrofitInterface.tryToUseRestroom(restroomId=restroomId)
+
+        QrRetrofitInterface.tryToUseRestroom(restroomId=UseRestroomRequest(restroomId))
             .enqueue(object : Callback<UseRestroomResponse>{
             override fun onResponse(
                 call: Call<UseRestroomResponse>,
@@ -33,4 +33,24 @@ class QrService(val view : QrActivityInterface) {
             )
     }
 
+    fun tryToDeductPoint(point:Int){
+        QrRetrofitInterface.tryToDeductPoint(point=DeductPointRequest(point))
+            .enqueue(object :Callback<DeductPointResponse>{
+                override fun onResponse(
+                    call: Call<DeductPointResponse>,
+                    response: Response<DeductPointResponse>
+                ) {
+                    response.body()?.let{
+                        if(response.code() == 200) view.onTryToDeductPointSuccess(it)
+                        else view.onTryToDeductPointFailure("API 오류")
+                    }                }
+
+                override fun onFailure(call: Call<DeductPointResponse>, t: Throwable) {
+                    view.onTryToDeductPointFailure("네트워크 오류 ${t.toString()}")
+                }
+            })
+    }
+
 }
+
+
