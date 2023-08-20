@@ -1,5 +1,6 @@
 package com.umc.chamma.ui.reviewwrite
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,12 +15,14 @@ import com.umc.chamma.databinding.FragmentReviewDetailBinding
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivityInterface
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoService
 import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+import com.umc.chamma.ui.reviewwrite.model.ReviewWritePostData
+import com.umc.chamma.ui.reviewwrite.model.ReviewWriteSuccessData
 
 class ReviewDetailFragment(
     private val restroomId : Int,
     private val rating : Float
     ) : BaseFragmentVB<FragmentReviewDetailBinding>(FragmentReviewDetailBinding::bind, R.layout.fragment_review_detail),
-    RestroomInfoActivityInterface {
+    RestroomInfoActivityInterface, ReviewWriteActivityInterface {
 
     private var fixtureArr = arrayListOf<Button>()
     private var btnState = false
@@ -37,7 +40,9 @@ class ReviewDetailFragment(
         etChangeListener()
 
         binding.btnComplete.setOnClickListener {
-            
+            ReviewWriteService(this).postReviewWrite(
+                ReviewWritePostData(restroomId,binding.etReviewComment.text.toString(),rating)
+            )
         }
     }
 
@@ -54,6 +59,16 @@ class ReviewDetailFragment(
 
                 if(it == binding.btnSomeFixture) binding.etFixtureSpec.visibility = View.VISIBLE
                 else binding.etFixtureSpec.visibility = View.GONE
+
+                if(btnState && binding.etReviewComment.text.isNotBlank()){
+                    binding.btnComplete.isEnabled = true
+                    binding.btnComplete.setBackgroundResource(R.drawable.shape_signup_duplicheck)
+                    binding.btnComplete.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
+                }else{
+                    binding.btnComplete.isEnabled = false
+                    binding.btnComplete.setBackgroundResource(R.drawable.shape_signup_gender)
+                    binding.btnComplete.setTextColor(ContextCompat.getColor(applicationContext, R.color.chamma_signup_textgray))
+                }
             }
         }
     }
@@ -100,6 +115,14 @@ class ReviewDetailFragment(
     }
 
     override fun onTryToGetRDFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onPostReviewWriteSuccess(result: ReviewWriteSuccessData) {
+        startActivity(Intent(requireContext(),ReviewFinishActivity::class.java))
+    }
+
+    override fun onPostReviewWriteFailure(message: String) {
         showCustomToast(message)
     }
 }

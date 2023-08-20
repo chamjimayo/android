@@ -33,7 +33,6 @@ class SearchFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startActivity(Intent(requireContext(),ReviewWriteActivity::class.java))
 
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)
