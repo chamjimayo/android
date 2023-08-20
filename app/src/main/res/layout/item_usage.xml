@@ -128,6 +128,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btn_make_review"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="13dp"

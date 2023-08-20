@@ -28,6 +28,8 @@ class ArticleAdapter: ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diffU
                     .into(binding.ivImageUsageLyout)
             }
 
+
+
         }
     }
 

@@ -10,8 +10,11 @@ class ReviewWriteActivity : BaseActivityVB<ActivityReviewwriteBinding>(ActivityR
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val restroomId = intent.getIntExtra("ID",0)
+
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.review_frame, ReviewFirstFragment())
+            .replace(R.id.review_frame, ReviewFirstFragment(restroomId))
             .commit()
 
     }
