@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -49,6 +50,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
+
     // 풀스크린 적용
     private fun setFullScreen(){
         window.apply {
@@ -58,9 +60,4 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
-    override fun onBackPressed() {
-        if(!navController.popBackStack()){
-            super.onBackPressed()
-        }
-    }
 }
