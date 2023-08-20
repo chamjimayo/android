@@ -108,6 +108,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         }
     }
 
+
+
     override fun onMapReady(nM: NaverMap) {
         Log.d(TAG,"onMapReady")
         naverMap = nM
@@ -314,6 +316,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
         val c = 2 * asin(sqrt(a))
         return (R * c).toInt()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mapView.onDestroy()
     }
 
 
