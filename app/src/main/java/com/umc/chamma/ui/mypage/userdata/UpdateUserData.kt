@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,7 +66,7 @@ class UpdateUserData : com.umc.chamma.config.BaseFragmentVB<FragmentUpdateUserDa
         btnListener()
         textChangeListener()
 
-        binding.btnBackUpdate.setOnClickListener { mainActivity.goBackMypage() }
+        binding.btnBackUpdate.setOnClickListener { findNavController().navigateUp() }
         binding.btnProfileUser.setOnClickListener { navigatePhotos() }
     }
 

@@ -101,4 +101,8 @@ dependencies {
     // Inapp 결제
     implementation("com.android.billingclient:billing:5.0.0")
 
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+
 }
