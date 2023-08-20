@@ -15,6 +15,7 @@
     <color name="chamma_black">#212529</color>
     <color name="chamma_yellow">#FFDD8D</color>
     <color name="chamma_skyblue">#CBE3FF</color>
+    <color name="chamma_light_gray">#F8F9FA</color>
 
     <color name="chamma_login_light">#D3D7DC</color>
 
