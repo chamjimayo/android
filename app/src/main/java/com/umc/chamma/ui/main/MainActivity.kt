@@ -4,14 +4,17 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.umc.chamma.R
+import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.home.main.HomeFragment
+import com.umc.chamma.ui.login.model.LoginResponseData
 import com.umc.chamma.ui.mypage.mypage.MypageFragment
 import com.umc.chamma.ui.mypage.review.ReviewFragment
 import com.umc.chamma.ui.mypage.usage.UsageFragment
 import com.umc.chamma.ui.mypage.userdata.UpdateUserData
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
+import com.umc.chamma.util.Constants
 import com.umc.chamma.util.InappUtil
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -23,6 +26,8 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         InappUtil.initBillingClient(this)
         setBottomNavigation()
     }
+
+
 
 
     private fun setBottomNavigation(){
@@ -62,6 +67,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
             selectedItemId = R.id.navigation_home
         }
     }
+
 
     // 풀스크린 적용
     private fun setFullScreen(){

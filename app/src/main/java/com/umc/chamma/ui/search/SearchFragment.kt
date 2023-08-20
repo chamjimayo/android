@@ -9,11 +9,13 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.chamma.R
+import com.umc.chamma.config.App
 import com.umc.chamma.databinding.FragmentSearchBinding
 import com.umc.chamma.ui.search.model.SearchResultData
 import com.umc.chamma.ui.home.main.HomeFragment
 import com.umc.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.umc.chamma.ui.search.adapter.SearchResultAdapter
+import com.umc.chamma.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
