@@ -10,17 +10,29 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.umc.chamma.R
+import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.reviewwrite.ReviewWriteActivity
+import com.umc.chamma.ui.using.UsingActivity
+import com.umc.chamma.util.Constants.IS_USING
 import com.umc.chamma.util.InappUtil
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
 
     private lateinit var navController : NavController
+    private val usingState by lazy{sharedPreferences.getBoolean(IS_USING,false)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(usingState){
+            val intent = Intent(this,UsingActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+
         binding.bottomNV.itemIconTintList = null
         setFullScreen()
         InappUtil.initBillingClient(this)
