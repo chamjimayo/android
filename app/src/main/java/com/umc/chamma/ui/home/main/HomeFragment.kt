@@ -273,6 +273,10 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         marker.map = naverMap
 
         marker.setOnClickListener {
+            marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
+            else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_clicked_paytoilet)
+            else OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
+
             BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()))}) {id->
                 val intent = Intent(App.context(), RestroomInfoActivity::class.java)
                     .putExtra("ID",id)
