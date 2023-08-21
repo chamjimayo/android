@@ -29,6 +29,15 @@
         <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
+    <style name="Theme.Chamma.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Chamma.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Chamma.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
