@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/userinfoFragment"
-        android:name="com.umc.chamma.ui.mypage.userdata.UpdateUserData"
+        android:name="com.umc.chamma.ui.mypage.changeprofile.ChangeprofileFragment"
         android:label="fragment_userInfo"
-        tools:layout="@layout/fragment_update_user_data"/>
+        tools:layout="@layout/fragment_change_profile"/>
 </navigation>

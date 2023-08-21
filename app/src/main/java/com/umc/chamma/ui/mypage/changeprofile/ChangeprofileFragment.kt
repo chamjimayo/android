@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.mypage.userdata
+package com.umc.chamma.ui.mypage.changeprofile
 
 import android.app.Activity
 import android.content.Intent
@@ -18,7 +18,7 @@ import retrofit2.Response
 import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseFragmentVB
-import com.umc.chamma.databinding.FragmentUpdateUserDataBinding
+import com.umc.chamma.databinding.FragmentChangeProfileBinding
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
@@ -27,7 +27,7 @@ import com.umc.chamma.ui.signup.model.NickcheckResponse
 import com.umc.chamma.ui.signup.network.NickcheckAPI
 
 
-class UpdateUserData : BaseFragmentVB<FragmentUpdateUserDataBinding>(FragmentUpdateUserDataBinding::bind, R.layout.fragment_update_user_data),
+class ChangeprofileFragment : BaseFragmentVB<FragmentChangeProfileBinding>(FragmentChangeProfileBinding::bind, R.layout.fragment_change_profile),
 GetUserinfoInterface {
 
 
@@ -146,7 +146,7 @@ GetUserinfoInterface {
         binding.etNick.setText(data.nickname)
         oldNick = data.nickname
         //TODO gender 적용,  사진 적용
-        binding.btnMale.setBackgroundResource(R.drawable.shape_signup_et_focus)
+        binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)
     }
 
     override fun onGetUserInfoFailure(message: String) {
