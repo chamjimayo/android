@@ -3,6 +3,7 @@ package com.umc.chamma.ui.main
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +17,7 @@ import com.umc.chamma.databinding.ActivityMainBinding
 import com.umc.chamma.ui.reviewwrite.ReviewWriteActivity
 import com.umc.chamma.ui.using.UsingActivity
 import com.umc.chamma.util.Constants.IS_USING
+import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.InappUtil
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -26,6 +28,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d(TAG,usingState.toString())
         if(usingState){
             val intent = Intent(this,UsingActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

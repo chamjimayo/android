@@ -14,8 +14,9 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences.edit()
-            .putBoolean(IS_USING,false)
+            .putBoolean(IS_USING,true)
             .apply()
+
 
         binding.btnEnd.setOnClickListener {
             EnduseService(this).postEnduse()
