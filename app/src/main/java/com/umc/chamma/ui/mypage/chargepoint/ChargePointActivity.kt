@@ -13,6 +13,7 @@ import com.umc.chamma.util.InappUtil
 
 class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityChargepointBinding::inflate), ChargePointActivityInterface, InappInterface {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         InappUtil.setinappInterface(this)
@@ -38,15 +39,17 @@ class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityC
 
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
+        dismissLoading()
         binding.tvPoint.text = data.point.toString()
     }
 
     override fun onGetUserInfoFailure(message: String) {
+        dismissLoading()
         showCustomToast(message)
     }
 
     override fun successBill() {
-        showCustomToast("충전 성공")
+        showLoading()
         setUserPoint()
     }
 
