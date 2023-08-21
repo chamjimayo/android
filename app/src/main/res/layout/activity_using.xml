@@ -86,7 +86,6 @@
         android:text="이용종료"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 
