@@ -20,14 +20,17 @@ import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityRestroomInfoBinding
 import com.umc.chamma.databinding.LayoutRestroomViewpagerItemBinding
 import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.QRActivity
 import me.relex.circleindicator.CircleIndicator3
 import kotlin.math.roundToInt
+import kotlin.properties.Delegates
 
 class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(ActivityRestroomInfoBinding::inflate)
     ,RestroomInfoActivityInterface{
     private var pageItemList = ArrayList<String>()
     private lateinit var RestroomVPAdapter: RestroomVPAdapter
+    private var price by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +80,8 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
         }
 
         binding.useBtn.setOnClickListener {
-            startActivity(Intent(this, QRActivity::class.java).putExtra("ID",Id))
+            startActivity(Intent(this, QRActivity::class.java).putExtra("ID",Id).putExtra("Price",price)
+            )
 
         }
 
@@ -164,4 +168,5 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
     override fun onTryToGetRDFailure(message:String){
         Log.d("연결결과",message)
     }
+
 }

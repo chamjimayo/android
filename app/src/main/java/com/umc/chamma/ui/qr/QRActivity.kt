@@ -15,16 +15,17 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.journeyapps.barcodescanner.*
-import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityQrBinding
 import com.umc.chamma.databinding.DialogQrResult2Binding
 import com.umc.chamma.databinding.DialogQrResultBinding
-import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
+import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
+import com.umc.chamma.ui.qr.model.DeductPointResponse
+import com.umc.chamma.ui.qr.model.UseRestroomResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -36,16 +37,22 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
     val qrActivityInterface=this
     private lateinit var capture : CustomCaptureManager
-    private var Id by Delegates.notNull<Int>()
+    private var id by Delegates.notNull<Int>()
+    private var price :Int=0
+    private var point:Int=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       // capture = CaptureManager(this,binding.decoratedBarcodeView)
+        // capture = CaptureManager(this,binding.decoratedBarcodeView)
         //capture.initializeFromIntent(intent,savedInstanceState)
-       // capture.decode()
+        // capture.decode()
         initializeQrScanner(savedInstanceState)
-        Id= intent.getIntExtra("ID",0)
-        Log.d("qr연결결과 ",Id.toString())
+        id= intent.getIntExtra("ID",0)
+        price=intent.getIntExtra("Price",0)
+        Log.d("qr연결결과 ",id.toString())
+
+        QrService(this).getUserInfo()
 
     }
     private fun initializeQrScanner(savedInstanceState: Bundle?) {
@@ -57,9 +64,9 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
             capture.resultCallback {
                 Log.d("Tester", "returnResult: $it")
                 val data = it?.text?.split('/')?.last()
-                if(data?.toInt()==Id){
-                    val myDialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
-                    val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
+                if(data?.toInt()==id){
+                    val dialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
+                    val build = AlertDialog.Builder(this@QRActivity).setView(dialogBinding.root)
                     val dialog = build.create()
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     dialog.window?.setGravity(Gravity.BOTTOM);
@@ -67,20 +74,40 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
                     this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
 
-                    myDialogBinding.btnPostEditBackCancel.setOnClickListener {
-                        //showCustomToast("참을래요 완료")
-                        dialog.dismiss()
-                        //finish()
-                    }
-                    myDialogBinding.btnPostEditBackOk.setOnClickListener{
-                        QrService(qrActivityInterface).tryToUseRestroom(Id)
-                        QrService(qrActivityInterface).tryToDeductPoint(200)
+                    if(price<=point) {
+                        dialogBinding.btnPostEditBackCancel.setOnClickListener {
+                            //showCustomToast("참을래요 완료")
+                            dialog.dismiss()
+                            val intent = Intent(App.context(), MainActivity::class.java)
+                            startActivity(intent)
+                            //finish()
+                        }
+                        dialogBinding.btnPostEditBackOk.setOnClickListener {
+                            QrService(qrActivityInterface).tryToUseRestroom(id)
+                            QrService(qrActivityInterface).tryToDeductPoint(price)
 
-                        //showCustomToast("이용할래요 완료")
-                        dialog.dismiss()
-                        finish()
-                        val intent= Intent(App.context(), QrPointResultActivity::class.java)
-                        startActivity(intent)
+                            //showCustomToast("이용할래요 완료")
+                            dialog.dismiss()
+                            finish()
+                            val intent = Intent(App.context(), QrPointResultActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    else{
+                        dialogBinding.tissueTv.text=price.toString()+"p보유"
+                        dialogBinding.contentTv.text="앗,잠시만요!\n 포인트가 부족해요."
+                        dialogBinding.btnPostEditBackCancel.text="닫기"
+                        dialogBinding.btnPostEditBackOk.text="충전하기"
+
+                        dialogBinding.btnPostEditBackCancel.setOnClickListener {
+                            dialog.dismiss()
+                            val intent = Intent(App.context(), MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                        dialogBinding.btnPostEditBackOk.setOnClickListener {
+                            val intent = Intent(App.context(), ChargePointActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
                 }
                 else{
@@ -179,6 +206,15 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
     override fun onTryToDeductPointFailure(message: String) {
         Log.d("qr연결결과2 ",message)
     }
+
+    override fun onGetUserInfoSuccess(data: UserinfoData) {
+        point=data.point
+    }
+
+    override fun onGetUserInfoFailure(message: String) {
+        TODO("Not yet implemented")
+    }
+
 
     private fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
