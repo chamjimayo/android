@@ -1,17 +1,13 @@
 package com.umc.chamma.ui.mypage.chargepoint
 
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.ViewModelProvider
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityChargepointBinding
-import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointResult
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
-import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.InappUtil
 
 
-class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityChargepointBinding::inflate), ChargePointActivityInterface, InappInterface {
+class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityChargepointBinding::inflate), GetUserinfoInterface, InappInterface {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +18,7 @@ class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityC
     }
 
     private fun setUserPoint(){
-        ChargePointService(this).getUserInfo()
+        GetUserinfoService(this).getUserInfo()
     }
 
 

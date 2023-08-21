@@ -12,8 +12,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.navigation.fragment.findNavController
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.ui.home.model.NearToiletData
@@ -31,8 +29,8 @@ import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointService
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.QRActivity
 import com.umc.chamma.util.BottomSheet
@@ -45,7 +43,7 @@ enum class markerType(val i : Int){
 }
 
 class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
-    HomeFragmentInterface, ChargePointActivityInterface {
+    HomeFragmentInterface, GetUserinfoInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -81,7 +79,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         }
 
         // 사용자 정보 (point) 불러오기
-        ChargePointService(this).getUserInfo()
+        GetUserinfoService(this).getUserInfo()
 
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)

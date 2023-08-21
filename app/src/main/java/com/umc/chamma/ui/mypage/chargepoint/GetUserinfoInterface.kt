@@ -2,7 +2,7 @@ package com.umc.chamma.ui.mypage.chargepoint
 
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 
-interface ChargePointActivityInterface {
+interface GetUserinfoInterface {
 
 
     fun onGetUserInfoSuccess(data : UserinfoData)

@@ -15,17 +15,13 @@ import com.umc.chamma.databinding.FragmentMypageBinding
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointService
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
-import com.umc.chamma.ui.mypage.mypage.network.MypageResponse
 import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage),ChargePointActivityInterface{
+class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBinding::bind, R.layout.fragment_mypage),GetUserinfoInterface{
 
     private val social by lazy{ sharedPreferences.getString(X_LOGIN_TYPE,"") }
 
@@ -44,7 +40,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
     override fun onResume() {
         super.onResume()
-        ChargePointService(this).getUserInfo()
+        GetUserinfoService(this).getUserInfo()
     }
 
 
