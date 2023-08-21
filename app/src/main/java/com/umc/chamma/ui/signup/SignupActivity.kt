@@ -1,11 +1,15 @@
 package com.umc.chamma.ui.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.umc.chamma.R
 import com.umc.chamma.config.App
@@ -34,12 +38,23 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
     private var authId = ""
     private var authType = ""
 
+    private lateinit var galleryLauncher : ActivityResultLauncher<Intent>
+    private val RC_GALLERY = 100
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(intent.hasExtra("authId")){
             authId = intent.getStringExtra("authId").toString()
             authType = intent.getStringExtra("authType").toString()
+        }
+
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
+            if(result.resultCode == Activity.RESULT_OK){
+                val uri = result.data?.data
+                binding.btnProfile.setImageURI(uri)
+            }
+
         }
 
         etFocusListener()
@@ -76,10 +91,6 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
         binding.btnFemale.setOnClickListener {
             binding.btnMale.setBackgroundResource(R.drawable.shape_signup_gender)
             binding.btnFemale.setBackgroundResource(R.drawable.shape_signup_et_focus)
-        }
-
-        binding.btnDuplicheck.setOnClickListener {
-
         }
 
         binding.btnMale.setOnClickListener {
@@ -119,6 +130,15 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
         binding.btnSend.setOnClickListener {
             sendSignup()
         }
+
+        binding.btnProfile.setOnClickListener {
+            openGallery()
+        }
+    }
+
+    private fun openGallery(){
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryLauncher.launch(galleryIntent)
     }
 
     private fun textChangeListener(){
