@@ -10,9 +10,11 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.naver.maps.map.a.g
+import com.navercorp.nid.NaverIdLoginSDK
 //import com.android.chamma.R
 //import com.android.chamma.R
 import com.umc.chamma.R
@@ -31,12 +33,12 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
     private var pageItemList = ArrayList<String>()
     private lateinit var RestroomVPAdapter: RestroomVPAdapter
     private var price by Delegates.notNull<Int>()
-
+    private var id:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val Id= intent.getIntExtra("ID",0)
-        Log.d("연결결과 ",Id.toString())
+        id= intent.getIntExtra("ID",0)
+        Log.d("연결결과 ",id.toString())
 
         //풀스크린-MainActivity
         window.apply {
@@ -69,7 +71,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
 
         binding.reviewTv.setOnClickListener {
             val intent = Intent(this, ReviewActivity::class.java)
-                .putExtra("ID",Id)
+                .putExtra("ID",id)
             startActivity(intent)
         }
 
@@ -79,18 +81,27 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
             finish()
         }
 
-        binding.useBtn.setOnClickListener {
-            startActivity(Intent(this, QRActivity::class.java).putExtra("ID",Id).putExtra("Price",price)
-            )
 
-        }
 
-        RestroomInfoService(this).tryToGetRestroomDetail(Id)
+        RestroomInfoService(this).tryToGetRestroomDetail(id)
     }
 
     override fun onTryToGetRDSuccess(response: RestroomDetailResponse){
         Log.d("연결결과",response.toString())
         val data=response.data
+
+        if(data.publicOrPaid == "public") {
+            binding.useBtn.text="무료화장실 입니다"
+            binding.useBtn.setBackgroundResource(R.drawable.shape_signup_gender)
+            binding.useBtn.setTextColor(ContextCompat.getColor(NaverIdLoginSDK.applicationContext, R.color.chamma_signup_textgray))
+        }
+        else {
+            binding.useBtn.setOnClickListener {
+                startActivity(
+                    Intent(this, QRActivity::class.java).putExtra("ID", id).putExtra("Price", price)
+                )
+            }
+        }
 
         binding.restroomTv.text=data.restroomName
 
