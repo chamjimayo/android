@@ -54,7 +54,6 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
         super.onCreate(savedInstanceState)
 
         setFullScreen()
-
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         mediaPlayer = MediaPlayer.create(this, R.raw.bgm)
@@ -116,8 +115,9 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
 
                     // 레벨 구간별 점수 증가폭 증가. 점수 증가
                     when(score){
-                        in (0..39) -> score++
-                        in (40..319) -> score += 2
+                        in (0..19) -> score++
+                        in (20..50) -> score += 2
+                        in (51..450) -> score += 3
                     }
                     scoretxt.text = score.toString()
 
@@ -141,7 +141,7 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
                                 .into(level)
                             soundPool.play(levelupsound, 1.0f, 1.0f, 0,0,1.0f)
 
-                            progresstime += 30
+                            progresstime += 40
                         }
                         20 ->{           // 20점일때 : 레벨3
                             levelupstate = true
@@ -151,7 +151,8 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
                                 .into(level)
                             soundPool.play(levelupsound, 1.0f, 1.0f, 0,0,1.0f)
 
-                            progresstime += 30
+                            sleeptime += 100
+                            progresstime += 40
 
                         }
                         40 ->{          // 40점일때 : 레벨4
@@ -201,12 +202,7 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
 
                         }
                     }
-
-
                 }
-
-
-
 
                 false
             }
@@ -287,6 +283,7 @@ class GameActivity : BaseActivityVB<ActivityGameBinding>(ActivityGameBinding::in
 
             // 게임 Over
             val intent = Intent(this, GameoverActivity::class.java)
+                .putExtra("SCORE",score)
             startActivity(intent)
 
         }.start()
