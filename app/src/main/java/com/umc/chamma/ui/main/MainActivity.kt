@@ -70,10 +70,4 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
-
-    override fun onBackPressed() {
-        if(!navController.popBackStack()){
-            super.onBackPressed()
-        }
-    }
 }

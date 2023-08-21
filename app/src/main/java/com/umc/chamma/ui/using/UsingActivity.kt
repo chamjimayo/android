@@ -5,13 +5,14 @@ import android.os.Bundle
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityUsingBinding
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.using.CurRestrom.restroomId
 
 class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding::inflate){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val restroomId = intent.getIntExtra("ID",0)
+        restroomId = intent.getIntExtra("ID",0)
 
         binding.close.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
