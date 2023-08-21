@@ -29,10 +29,12 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".ui.using.PauseActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
         <activity android:name=".ui.using.GameoverActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
         <activity android:name=".ui.using.GameActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>

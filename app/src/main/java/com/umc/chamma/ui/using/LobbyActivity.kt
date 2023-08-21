@@ -14,7 +14,6 @@ class LobbyActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLobbyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         super.onCreate(savedInstanceState)
         binding = ActivityLobbyBinding.inflate(layoutInflater)
         setContentView(binding.root)
