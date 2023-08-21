@@ -12,11 +12,11 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.close.setOnClickListener {
+        binding.btnEnd.setOnClickListener {
             EnduseService(this).postEnduse()
         }
 
-        binding.game.setOnClickListener {
+        binding.btnGame.setOnClickListener {
             val intent = Intent(this,LobbyActivity::class.java)
             startActivity(intent)
         }
