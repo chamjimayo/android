@@ -11,8 +11,11 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val restroomId = intent.getIntExtra("ID",0)
+
         binding.close.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+                .putExtra("ID",restroomId)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

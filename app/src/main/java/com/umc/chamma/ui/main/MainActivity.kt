@@ -1,10 +1,10 @@
 package com.umc.chamma.ui.main
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -19,6 +19,7 @@ import com.umc.chamma.ui.mypage.mypage.MypageFragment
 import com.umc.chamma.ui.mypage.review.ReviewFragment
 import com.umc.chamma.ui.mypage.usage.UsageFragment
 import com.umc.chamma.ui.mypage.userdata.UpdateUserData
+import com.umc.chamma.ui.reviewwrite.ReviewWriteActivity
 import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import com.umc.chamma.util.Constants
 import com.umc.chamma.util.InappUtil
@@ -33,6 +34,17 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         setFullScreen()
         InappUtil.initBillingClient(this)
         setBottomNavigation()
+
+        if(intent.hasExtra("ID")){
+            val restroomId = intent.getIntExtra("ID",0)
+            showTitleTwoButtonDialog(this,"이용은 만족스러웠나요?",
+            "더 나은 화장실 이용을 위해 리뷰를 남겨주세요",
+            "괜찮아요","리뷰쓰기",{dismissTitleTwoButtonDialog()}){
+                val intent = Intent(this,ReviewWriteActivity::class.java)
+                    .putExtra("ID",restroomId)
+                startActivity(intent)
+            }
+        }
     }
 
 
@@ -50,7 +62,6 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
-
     // 풀스크린 적용
     private fun setFullScreen(){
         window.apply {
@@ -60,4 +71,9 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
+    override fun onBackPressed() {
+        if(!navController.popBackStack()){
+            super.onBackPressed()
+        }
+    }
 }
