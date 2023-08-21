@@ -40,6 +40,9 @@
                 android:id="@+id/iv_profile"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                app:civ_border_color="@color/chamma_signup_lightgray"
+                app:civ_border_overlay="false"
+                app:civ_border_width="1dp"
                 android:src="@drawable/profile_select_btn"/>
 
 
