@@ -29,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
+class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
 
     private var gender = ""
     private var nick = ""
@@ -39,8 +39,6 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
     private var authType = ""
 
     private lateinit var galleryLauncher : ActivityResultLauncher<Intent>
-    private val RC_GALLERY = 100
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +52,6 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
                 val uri = result.data?.data
                 binding.btnProfile.setImageURI(uri)
             }
-
         }
 
         etFocusListener()
@@ -83,15 +80,6 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
     }
 
     private fun btnListener(){
-        binding.btnMale.setOnClickListener {
-            binding.btnFemale.setBackgroundResource(R.drawable.shape_signup_gender)
-            binding.btnMale.setBackgroundResource(R.drawable.shape_signup_et_focus)
-        }
-
-        binding.btnFemale.setOnClickListener {
-            binding.btnMale.setBackgroundResource(R.drawable.shape_signup_gender)
-            binding.btnFemale.setBackgroundResource(R.drawable.shape_signup_et_focus)
-        }
 
         binding.btnMale.setOnClickListener {
             gender = "male"

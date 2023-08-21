@@ -1,14 +1,12 @@
 package com.umc.chamma.ui.mypage.chargepoint
 
 import com.umc.chamma.config.App
-import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointPostData
-import com.umc.chamma.ui.mypage.chargepoint.model.ChargePointResponse
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChargePointService(val view : ChargePointActivityInterface){
+class GetUserinfoService(val view : GetUserinfoInterface){
 
 
     fun getUserInfo(){
