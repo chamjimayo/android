@@ -7,4 +7,10 @@ interface QrActivityInterface {
     fun onTryToUseRestroomSuccess(response: UseRestroomResponse)
 
     fun onTryToUseRestroomFailure(message:String)
+
+
+    fun onTryToDeductPointSuccess(response: DeductPointResponse)
+
+    fun onTryToDeductPointFailure(message:String)
+
 }

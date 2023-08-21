@@ -2,14 +2,21 @@ package com.umc.chamma.ui.qr
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.journeyapps.barcodescanner.*
 import com.umc.chamma.R
 import com.umc.chamma.config.App
@@ -51,30 +58,25 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                 Log.d("Tester", "returnResult: $it")
                 val data = it?.text?.split('/')?.last()
                 if(data?.toInt()==Id){
-                    /*
-                      val dialog = BottomSheetDialog(context)
-        val binding = FragmentBtmshtdialogSortListBinding.inflate(LayoutInflater.from(context))
-        dialog.setContentView(binding.root)
-
-        dialog.show()
-                     */
                     val myDialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
                     val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
                     val dialog = build.create()
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
+                    dialog.window?.setGravity(Gravity.BOTTOM);
                     dialog.show()
 
+                    this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
-                        showCustomToast("참을래요 완료")
+                        //showCustomToast("참을래요 완료")
                         dialog.dismiss()
                         //finish()
                     }
                     myDialogBinding.btnPostEditBackOk.setOnClickListener{
                         QrService(qrActivityInterface).tryToUseRestroom(Id)
+                        QrService(qrActivityInterface).tryToDeductPoint(200)
 
-                        showCustomToast("이용할래요 완료")
+                        //showCustomToast("이용할래요 완료")
                         dialog.dismiss()
                         finish()
                         val intent= Intent(App.context(), QrPointResultActivity::class.java)
@@ -86,23 +88,25 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     val build = AlertDialog.Builder(this@QRActivity).setView(myDialogBinding.root)
                     val dialog = build.create()
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
+                    dialog.window?.setGravity(Gravity.BOTTOM);
                     dialog.show()
+                    this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
+
 
                     myDialogBinding.btnPostEditBackCancel.setOnClickListener {
-                        showCustomToast("닫기 완료")
+                        //showCustomToast("닫기 완료")
                         dialog.dismiss()
                         // activity 종료하기
                         finish()
                     }
 
                     myDialogBinding.btnPostEditBackOk.setOnClickListener {
-                        showCustomToast("재시도 완료")
+                        //showCustomToast("재시도 완료")
                         dialog.dismiss()
                     }
                 }
 
-                Toast.makeText(this@QRActivity,"returnResult: $data",Toast.LENGTH_LONG).show()
+                //Toast.makeText(this@QRActivity,"returnResult: $data",Toast.LENGTH_LONG).show()
                 CoroutineScope(Dispatchers.Main).launch {
                     capture.onPause()
                     capture.onDestroy()
@@ -166,5 +170,41 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
     override fun onTryToUseRestroomFailure(message: String) {
         Log.d("qr연결결과1 ",message)
+    }
+
+    override fun onTryToDeductPointSuccess(response: DeductPointResponse) {
+        Log.d("qr연결결과2 ",response.toString())
+    }
+
+    override fun onTryToDeductPointFailure(message: String) {
+        Log.d("qr연결결과2 ",message)
+    }
+
+    private fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){
+        val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+        if (Build.VERSION.SDK_INT < 30){
+            val display = windowManager.defaultDisplay
+            val size = Point()
+
+            display.getSize(size)
+
+            val window = dialog.window
+
+            val x = (size.x * width).toInt()
+            val y = (size.y * height).toInt()
+
+            window?.setLayout(x, y)
+
+        }else{
+            val rect = windowManager.currentWindowMetrics.bounds
+
+            val window = dialog.window
+            val x = (rect.width() * width).toInt()
+            val y = (rect.height() * height).toInt()
+
+            window?.setLayout(x, y)
+        }
+
     }
 }
