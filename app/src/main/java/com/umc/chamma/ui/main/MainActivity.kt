@@ -5,18 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
-import com.umc.chamma.R
-import com.umc.chamma.config.BaseActivityVB
-import com.umc.chamma.databinding.ActivityMainBinding
-import com.umc.chamma.ui.community.CommunityFragment
-import com.umc.chamma.ui.home.main.HomeFragment
-import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
-import com.umc.chamma.ui.mypage.mypage.MypageFragment
-import com.umc.chamma.ui.mypage.review.ReviewFragment
-import com.umc.chamma.ui.mypage.usage.UsageFragment
-import com.umc.chamma.ui.mypage.userdata.UpdateUserData
-import com.umc.chamma.ui.toiletlist.ToiletlistFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -67,38 +55,6 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
 
 
     private fun setBottomNavigation(){
-        binding.bottomNV.run {
-            setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.navigation_home -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, HomeFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-                    R.id.navigation_toilets -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, ToiletlistFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-
-                    R.id.navigation_community -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, CommunityFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-
-                    R.id.navigation_mypage -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frame, MypageFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-
-                }
-                true
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.frame) as NavHostFragment
         navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.bottomNV)
@@ -120,58 +76,5 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
-
-
-
-
-
-
-
-    //mypage에서 다른 화면으로 이동
-    fun mypageToUsage() {
-        val usageFragment = UsageFragment()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,usageFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-
-    fun mypageToUpdate() {
-        val updateFragment = UpdateUserData()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,updateFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    fun mypageToReview() {
-        val reviewFragment = ReviewFragment()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame,reviewFragment )
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    fun goBackMypage() {
-        onBackPressed()
-    }
-
-    fun hideBottomNavigation(bool: Boolean){
-       val bottomNavigation = binding.bottomNV
-
-        if(bool == true){
-            bottomNavigation.visibility = View.VISIBLE
-        }
-
-        if(bool == false){
-            bottomNavigation.visibility = View.INVISIBLE
-        }
-
-    }
-
 
 }
