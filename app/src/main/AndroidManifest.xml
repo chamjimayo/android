@@ -24,6 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".mypageReviewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_mypage_review"
+            android:theme="@style/Theme.Chamma.NoActionBar" />
         <activity android:name=".ui.using.LobbyActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
@@ -47,6 +53,7 @@
         <activity
             android:name=".ui.qr.QrPointResultActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.mypage.chargepoint.ChargePointActivity"
             android:exported="false" />
