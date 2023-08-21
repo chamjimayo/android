@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.fragment.findNavController
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.ui.home.model.NearToiletData
@@ -107,6 +108,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
             binding.layoutSearchResultAppbar.visibility = View.GONE
         }
     }
+
+
 
     override fun onMapReady(nM: NaverMap) {
         Log.d(TAG,"onMapReady")
@@ -314,6 +317,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
         val c = 2 * asin(sqrt(a))
         return (R * c).toInt()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mapView.onDestroy()
     }
 
 

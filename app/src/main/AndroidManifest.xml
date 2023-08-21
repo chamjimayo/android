@@ -24,6 +24,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chamma"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.using.LobbyActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.using.PauseActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
+        <activity android:name=".ui.using.GameoverActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
+        <activity android:name=".ui.using.GameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ui.using.UsingActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.reviewwrite.ReviewFinishActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.reviewwrite.ReviewWriteActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.qr.QrPointResultActivity"
             android:exported="false" />

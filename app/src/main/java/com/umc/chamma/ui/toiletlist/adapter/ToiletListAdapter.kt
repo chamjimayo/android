@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemToiletListBinding
 import com.umc.chamma.ui.home.model.NearToiletData
@@ -20,6 +21,7 @@ class ToiletListAdapter(
         fun bind(item : NearToiletData){
             Glide.with(App.context())
                 .load(item.restroomPhoto)
+                .error(R.drawable.restroom_ex)
                 .into(binding.ivThumnailImg)
 
             binding.tvName.text = item.restroomName
