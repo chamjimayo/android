@@ -117,6 +117,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         Log.d(TAG,"onMapReady")
         naverMap = nM
         naverMap.uiSettings.isZoomControlEnabled = false
+        naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.None
         naverMap.minZoom = 10.0
