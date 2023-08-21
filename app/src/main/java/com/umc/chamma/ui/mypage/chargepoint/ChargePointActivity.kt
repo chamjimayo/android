@@ -39,17 +39,14 @@ class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityC
 
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
-        dismissLoading()
         binding.tvPoint.text = data.point.toString()
     }
 
     override fun onGetUserInfoFailure(message: String) {
-        dismissLoading()
         showCustomToast(message)
     }
 
     override fun successBill() {
-        showLoading()
         setUserPoint()
     }
 
