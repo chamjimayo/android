@@ -7,7 +7,7 @@ import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 
 data class DeductPointResponse(
     @SerializedName("data")
-    val data: List<DeductResponseData>
+    val data: DeductResponseData
 
 ):BaseResponse()
 
