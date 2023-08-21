@@ -89,6 +89,9 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
+        binding.tvNameMyypage.visibility = View.VISIBLE
+        binding.tvPointMypage.visibility = View.VISIBLE
+        binding.tvNimMypage.visibility = View.VISIBLE
         binding.tvPointMypage.text = data.point.toString()
         binding.tvNameMyypage.text = data.nickname
     }
