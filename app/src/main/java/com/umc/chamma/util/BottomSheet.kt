@@ -34,7 +34,10 @@ object BottomSheet {
             binding.btnUse.text = "무료화장실 입니다"
             binding.btnUse.isEnabled = false
         }
-        else binding.tvType.text = "유료화장실"
+        else {
+            binding.tvType.text = "유료화장실"
+            binding.btnUse.text = data.price.toString() + " 포인트에 이용하기"
+        }
         binding.ratingbar.rating = data.reviewRating
 
         binding.btnUse.setOnClickListener { onBtnClickListener() }
