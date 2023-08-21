@@ -139,9 +139,6 @@ class UpdateUserData : com.umc.chamma.config.BaseFragmentVB<FragmentUpdateUserDa
             nickCheck()
         }
 
-        binding.btnSend2.setOnClickListener {
-            sendSignup()
-        }
     }
 
     private fun textChangeListener(){
@@ -211,40 +208,7 @@ class UpdateUserData : com.umc.chamma.config.BaseFragmentVB<FragmentUpdateUserDa
             })
     }
 
-    private fun sendSignup(){
-        val data = SignupPostData(authType,authId,name,nick,gender)
-        Log.d(Constants.TAG,"$data")
-        com.umc.chamma.config.App.getRetro().create(SignupAPI::class.java)
-            .signup(data).enqueue(object : Callback<SignupResponse> {
-                override fun onResponse(
-                    call: Call<SignupResponse>,
-                    response: Response<SignupResponse>
-                ) {
 
-                    if(response.code() == 200) {
-                        storeTokens(response.body()!!.data)
-                        // 회원가입 성공
-                        val intent = Intent(mainActivity, MainActivity::class.java)
-                        startActivity(intent)
-                    }else{
-
-                    }
-                }
-
-                override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
-                    Log.d(Constants.TAG,"${t.message}")
-                }
-            })
-    }
-
-    private fun storeTokens(result : SignupResponseData){
-        App.sharedPreferences.edit()
-            .putString(Constants.X_ACCESS_TOKEN, "Bearer " + result.accessToken)
-            .putString(Constants.X_REFRESH_TOKEN, result.refreshToken)
-            .putString(Constants.X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
-            .putString(Constants.X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
-            .apply()
-    }
 
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)

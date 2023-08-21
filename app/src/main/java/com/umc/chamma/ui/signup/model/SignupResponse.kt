@@ -9,6 +9,6 @@ data class SignupResponse(
 data class SignupResponseData(
     val accessToken : String,
     val refreshToken : String,
-    val accessTokenValidityMs : Long,
-    val refreshTokenValidityMs : Long
+    val accessTokenExpiredDate : String,
+    val refreshTokenExpiredDate : String
 )
