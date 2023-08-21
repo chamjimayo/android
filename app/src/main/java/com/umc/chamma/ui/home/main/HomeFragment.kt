@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -277,11 +279,27 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
             else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_clicked_paytoilet)
             else OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
 
-            BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()))}) {id->
+            val bottomsheet = BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()))}) {id->
                 val intent = Intent(App.context(), RestroomInfoActivity::class.java)
                     .putExtra("ID",id)
                 startActivity(intent)
-            }.show()
+            }
+
+            bottomsheet.apply{
+                window?.run {
+                    setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    setDimAmount(0f)
+                }
+            }
+
+            bottomsheet.setOnDismissListener {
+                marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+                else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
+                else OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+            }
+
+            bottomsheet.show()
+
 
             true
         }
