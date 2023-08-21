@@ -131,8 +131,7 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
                     }
                 }
                 // 로그인 성공 부분
-                else if (token != null) {
-                    Log.d(TAG, "앱 로그인 성공 ${token.accessToken}")
+                else{
                     // 로그인 성공시 정보 불러오기
                     kakaoCallInfo()
                 }

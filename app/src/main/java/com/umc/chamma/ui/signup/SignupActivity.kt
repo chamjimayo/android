@@ -238,8 +238,8 @@ class SignupActivity : com.umc.chamma.config.BaseActivityVB<ActivitySignupBindin
         App.sharedPreferences.edit()
             .putString(Constants.X_ACCESS_TOKEN, "Bearer " + result.accessToken)
             .putString(Constants.X_REFRESH_TOKEN, result.refreshToken)
-            .putString(Constants.X_ACCESS_EXPIRE, result.accessTokenValidityMs.toString())
-            .putString(Constants.X_REFRESH_TOKEN, result.refreshTokenValidityMs.toString())
+            .putString(Constants.X_ACCESS_EXPIRE, result.accessTokenExpiredDate)
+            .putString(Constants.X_REFRESH_TOKEN, result.refreshTokenExpiredDate)
             .apply()
     }
 
