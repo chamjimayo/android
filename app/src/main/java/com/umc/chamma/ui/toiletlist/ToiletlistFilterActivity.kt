@@ -61,9 +61,8 @@ class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>
 
                     finish()
                 }
-            }else{
-                finish()
-            }
+            }else finish()
+
         }
 
     }
@@ -79,9 +78,7 @@ class ToiletlistFilterActivity : BaseActivityVB<ActivityToiletlistFilterBinding>
 
                 finish()
             }
-        }else{
-            finish()
-        }
+        }else finish()
     }
 
 }

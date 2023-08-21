@@ -1,6 +1,7 @@
 package com.umc.chamma.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,11 +10,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.chamma.R
+import com.umc.chamma.config.App
 import com.umc.chamma.databinding.FragmentSearchBinding
 import com.umc.chamma.ui.search.model.SearchResultData
 import com.umc.chamma.ui.home.main.HomeFragment
+import com.umc.chamma.ui.reviewwrite.ReviewWriteActivity
 import com.umc.chamma.ui.search.adapter.RecentKeywordAdapter
 import com.umc.chamma.ui.search.adapter.SearchResultAdapter
+import com.umc.chamma.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +32,7 @@ class SearchFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         binding.etSearch.requestFocus()
         binding.etSearch.setOnKeyListener(onEditKeyListener)

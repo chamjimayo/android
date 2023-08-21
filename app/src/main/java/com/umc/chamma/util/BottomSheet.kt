@@ -2,8 +2,10 @@ package com.umc.chamma.util
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ActivityReviewBinding
@@ -12,6 +14,7 @@ import com.umc.chamma.databinding.FragmentHomeBottomsheetBinding
 import com.umc.chamma.databinding.FragmentToiletlistBottomsheetBinding
 import com.umc.chamma.ui.home.model.NearToiletData
 import com.umc.chamma.ui.home.restroomInfo.ReviewService
+import kotlin.math.roundToInt
 
 object BottomSheet {
 
@@ -23,10 +26,19 @@ object BottomSheet {
 
         binding.tvName.text = data.restroomName
         binding.tvDistance.text = "내 위치로부터 ${data.distance?.toInt()}m"
-        binding.tvRating.text = data.reviewRating.toString()
-        if(data.publicOrPaid == "public") binding.tvType.text = "무료화장실"
-        else binding.tvType.text = "유료화장실"
-        binding.ratingbar.rating = data.reviewRating!!
+        binding.tvRating.text = ((data.reviewRating!! * 100.0).roundToInt() / 100.0).toString()
+        if(data.publicOrPaid == "public") {
+            binding.tvType.text = "무료화장실"
+            binding.btnUse.setBackgroundResource(R.drawable.shape_signup_gender)
+            binding.btnUse.setTextColor(ContextCompat.getColor(applicationContext, R.color.chamma_signup_textgray))
+            binding.btnUse.text = "무료화장실 입니다"
+            binding.btnUse.isEnabled = false
+        }
+        else {
+            binding.tvType.text = "유료화장실"
+            binding.btnUse.text = data.price.toString() + " 포인트에 이용하기"
+        }
+        binding.ratingbar.rating = data.reviewRating
 
         binding.btnUse.setOnClickListener { onBtnClickListener() }
         binding.tvName.setOnClickListener { onTextClickListener(data.restroomId!!) }

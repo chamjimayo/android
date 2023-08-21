@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -11,6 +13,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.fragment.findNavController
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentHomeBinding
 import com.umc.chamma.ui.home.model.NearToiletData
@@ -25,7 +28,12 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import com.umc.chamma.config.App
+import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivityInterface
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointService
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.QRActivity
 import com.umc.chamma.util.BottomSheet
 import kotlin.math.*
@@ -36,8 +44,8 @@ enum class markerType(val i : Int){
     SEARCH(2)
 }
 
-class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.chamma.config.BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
-    HomeFragmentInterface {
+class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragmentVB<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), OnMapReadyCallback,
+    HomeFragmentInterface, ChargePointActivityInterface {
 
     private lateinit var mainActivity : MainActivity
     private lateinit var mapView : MapView
@@ -59,7 +67,6 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.etSearch.setOnFocusChangeListener  { view, hasFocus ->
             if(hasFocus){
                 parentFragmentManager.beginTransaction()
@@ -68,6 +75,13 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
                     .commitAllowingStateLoss()
             }
         }
+
+        binding.btnPoint.setOnClickListener {
+            startActivity(Intent(requireContext(), ChargePointActivity::class.java))
+        }
+
+        // 사용자 정보 (point) 불러오기
+        ChargePointService(this).getUserInfo()
 
         mapView = mainActivity.findViewById(R.id.mapview)
         mapView.getMapAsync(this)
@@ -95,14 +109,15 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
             binding.etSearch.visibility = View.VISIBLE
             binding.layoutSearchResultAppbar.visibility = View.GONE
         }
-
-
     }
+
+
 
     override fun onMapReady(nM: NaverMap) {
         Log.d(TAG,"onMapReady")
         naverMap = nM
         naverMap.uiSettings.isZoomControlEnabled = false
+        naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.None
         naverMap.minZoom = 10.0
@@ -261,11 +276,31 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         marker.map = naverMap
 
         marker.setOnClickListener {
-            BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java))}) {id->
+            marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
+            else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_clicked_paytoilet)
+            else OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
+
+            val bottomsheet = BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()))}) {id->
                 val intent = Intent(App.context(), RestroomInfoActivity::class.java)
                     .putExtra("ID",id)
                 startActivity(intent)
-            }.show()
+            }
+
+            bottomsheet.apply{
+                window?.run {
+                    setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    setDimAmount(0f)
+                }
+            }
+
+            bottomsheet.setOnDismissListener {
+                marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+                else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_paytoilet)
+                else OverlayImage.fromResource(R.drawable.home_marker_freetoilet)
+            }
+
+            bottomsheet.show()
+
 
             true
         }
@@ -281,8 +316,16 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         }
     }
 
+    override fun onGetUserInfoSuccess(data: UserinfoData) {
+        binding.btnPoint.text = data.point.toString() + "P"
+    }
+
+    override fun onGetUserInfoFailure(message: String) {
+        showCustomToast(message)
+    }
+
     override fun onGetNearToiletFailure(message : String) {
-        // TODO 오류내용 Toast 메세지
+        showCustomToast(message)
     }
 
     private fun removeMarker(){
@@ -297,6 +340,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : com.umc.ch
         val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
         val c = 2 * asin(sqrt(a))
         return (R * c).toInt()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mapView.onDestroy()
     }
 
 

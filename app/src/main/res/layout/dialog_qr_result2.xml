@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="16dp"
-    android:background="@drawable/shape_qr_dialog">
+    android:layout_width="252dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    android:background="@drawable/shape_qr_dialog"
+    android:layout_gravity="bottom|center">
 
-    <LinearLayout
-        android:layout_width="252dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+    >
 
         <TextView
             android:id="@+id/tissueTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="23dp"
+            android:background="@drawable/tissue"
             android:layout_marginBottom="17dp"
-            android:background="@drawable/tissueimg"
-            android:text="200p"
+
             android:gravity="center"
+            android:text="200p"
             android:textColor="@color/chamma_main"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
+            android:id="@+id/contentTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="31dp"
+            android:layout_marginTop="17dp"
             android:text="200포인트가 차감됩니다.\n     결제를 하실건가요?"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tissueTv" />
 
         <LinearLayout
+            android:id="@+id/btnLL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="11dp">
+            android:layout_marginBottom="11dp"
+            android:layout_marginTop="31dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentTv">
 
             <Button
                 android:id="@+id/btn_post_edit_back_cancel"
@@ -62,5 +73,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

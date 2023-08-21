@@ -15,7 +15,6 @@ class ChargePointActivity : BaseActivityVB<ActivityChargepointBinding>(ActivityC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        InappUtil.initBillingClient(this)
         InappUtil.setinappInterface(this)
         setBtnListener()
         setUserPoint()

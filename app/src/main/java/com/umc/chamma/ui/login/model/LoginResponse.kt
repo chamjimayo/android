@@ -4,12 +4,12 @@ import com.umc.chamma.config.BaseResponse
 
 data class LoginResponse(
     val data : LoginResponseData
-) : com.umc.chamma.config.BaseResponse()
+) : BaseResponse()
 
 data class LoginResponseData(
     val accessToken : String,
     val refreshToken : String,
-    val accessTokenValidityMs : Long,
-    val refreshTokenValidityMs : Long
+    val accessTokenExpiredDate : String,
+    val refreshTokenExpiredDate : String
 
 )

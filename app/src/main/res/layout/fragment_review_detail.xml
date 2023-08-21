@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iv_thumnail"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/iv_thumnail_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/noimage_icon"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_restroom_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울숲 화장실" />
+
+            <RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:layout_marginTop="7dp"
+                android:progressTint="@color/chamma_yellow"
+                style="@style/Widget.AppCompat.RatingBar.Small"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_underTitle_create_review"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/chamma_signup_linegray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view_underTitle_create_review"
+        app:layout_constraintStart_toStartOf="@id/view_underTitle_create_review"
+        android:layout_marginTop="15dp"
+        android:text="비품은 다 있었나요?"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_title_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/tv_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_title"
+        android:text="*비품 : 휴지, 핸드워시, 페이퍼타올 등  "
+        android:textColor="@color/chamma_signup_textgray"
+        android:textSize="10dp" />
+
+
+    <Button
+        android:id="@+id/btn_is_fixture"
+        android:layout_width="68dp"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@id/view_underTitle_create_review"
+        android:text="네"
+        android:background="@drawable/shape_notfill_graystroke"/>
+
+    <Button
+        android:id="@+id/btn_no_fixture"
+        android:layout_width="68dp"
+        android:layout_height="30dp"
+        android:text="아니요"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="@id/btn_is_fixture"
+        app:layout_constraintStart_toEndOf="@id/btn_is_fixture"
+        android:background="@drawable/shape_notfill_graystroke"/>
+
+    <Button
+        android:id="@+id/btn_some_fixture"
+        android:layout_width="68dp"
+        android:layout_height="30dp"
+        android:text="특이사항"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="@id/btn_is_fixture"
+        app:layout_constraintStart_toEndOf="@id/btn_no_fixture"
+        android:background="@drawable/shape_notfill_graystroke"/>
+
+
+    <EditText
+        android:id="@+id/et_fixture_spec"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:hint="특이사항을 입력해주세요."
+        android:gravity="top"
+        android:textSize="13dp"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:background="@drawable/shape_fillgray_strokegray"
+        android:textColorHint="@color/chamma_signup_strokegray"
+        app:layout_constraintTop_toBottomOf="@id/btn_no_fixture"
+        app:layout_constraintStart_toStartOf="@id/view_underTitle_create_review"
+        app:layout_constraintEnd_toEndOf="@id/view_underTitle_create_review"/>
+
+
+    <TextView
+        android:id="@+id/tv_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_fixture_spec"
+        app:layout_constraintStart_toStartOf="@id/view_underTitle_create_review"
+        android:layout_marginTop="25dp"
+        android:text="이용후기를 남겨주세요."
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16dp" />
+
+
+    <EditText
+        android:id="@+id/et_review_comment"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:hint="화장실 이용후기를 15자 이상 남겨주시면\n다른 이용자들에게도 도움이 됩니다."
+        android:gravity="top"
+        android:textSize="13dp"
+        android:textColor="@color/black"
+        android:background="@drawable/shape_fillgray_strokegray"
+        android:textColorHint="@color/chamma_signup_strokegray"
+        app:layout_constraintTop_toBottomOf="@id/tv_title2"
+        app:layout_constraintStart_toStartOf="@id/view_underTitle_create_review"
+        app:layout_constraintEnd_toEndOf="@id/view_underTitle_create_review"/>
+
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_signup_gender"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="bottom"
+        android:textColor="@color/chamma_signup_textgray"
+        android:outlineProvider="none"
+        android:text="작성완료"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

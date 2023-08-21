@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.toiletlist.ToiletlistFragment"
     android:paddingTop="50dp"
+    android:background="@color/white"
     >
 
     <androidx.appcompat.widget.Toolbar
@@ -54,15 +55,32 @@
         android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"/>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/btn_sort"
-        android:layout_marginTop="15dp"
-        tools:listitem="@layout/item_toilet_list"/>
+        android:layout_marginTop="15dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_toilet_list"/>
+
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

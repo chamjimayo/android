@@ -30,5 +30,6 @@ data class NearToiletData(
     @SerializedName("restroomManager")val restroomManager:ArrayList<restroomManager>,
     @SerializedName("reviewRating")val reviewRating : Float? = 0F,
     @SerializedName("distance")val distance : Double? = 0.0,
-    @SerializedName("restroomId")val restroomId : Int? = 0
+    @SerializedName("restroomId")val restroomId : Int? = 0,
+    @SerializedName("price")val price : Int?=0
 )

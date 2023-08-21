@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemToiletListBinding
 import com.umc.chamma.ui.home.model.NearToiletData
 import com.umc.chamma.ui.search.model.SearchResultData
+import kotlin.math.roundToInt
 
 class ToiletListAdapter(
     private val datas : ArrayList<NearToiletData>,
@@ -19,10 +21,11 @@ class ToiletListAdapter(
         fun bind(item : NearToiletData){
             Glide.with(App.context())
                 .load(item.restroomPhoto)
-                .into(binding.ivThumnail)
+                .error(R.drawable.restroom_ex)
+                .into(binding.ivThumnailImg)
 
             binding.tvName.text = item.restroomName
-            binding.tvRating.text = item.reviewRating.toString()
+            binding.tvRating.text = ((item.reviewRating!! * 100.0).roundToInt() / 100.0).toString()
             binding.tvDistance.text = "${item.distance?.toInt()}m"
 
             binding.root.setOnClickListener {

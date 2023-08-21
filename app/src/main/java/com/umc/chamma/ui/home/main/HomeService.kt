@@ -8,10 +8,10 @@ import retrofit2.Response
 class HomeService(val view : HomeFragmentInterface) {
 
 
-    fun getNearToilet(type : String, longitude : Double, latitude : Double,distance : Double?=null){
+    fun getNearToilet(type : String, longitude : Double, latitude : Double,distance : Double?=null, sortBy : String?=null, page:Int?=null, size:Int?=null){
 
         val homeRetro = com.umc.chamma.config.App.getRetro().create(HomeRetrofitInterface::class.java)
-        homeRetro.getNearToilet(type,longitude = longitude, latitude = latitude, distance = distance)
+        homeRetro.getNearToilet(type,longitude = longitude, latitude = latitude, distance = distance, sortBy = sortBy, page=page,size=size)
             .enqueue(object : Callback<NearToiletResponse>{
             override fun onResponse(
                 call: Call<NearToiletResponse>,

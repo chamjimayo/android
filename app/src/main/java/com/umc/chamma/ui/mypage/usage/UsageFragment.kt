@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentUsageBinding
@@ -26,7 +27,7 @@ class UsageFragment : Fragment(R.layout.fragment_usage) {
 
         binding.rvUsage.layoutManager = LinearLayoutManager(context)
         binding.rvUsage.adapter = articleAdapter
-        binding.btnBackUsage.setOnClickListener { mainActivity.goBackMypage() }
+        binding.btnBackUsage.setOnClickListener { findNavController().navigateUp()}
 
         mainActivity.hideBottomNavigation(false)
 
