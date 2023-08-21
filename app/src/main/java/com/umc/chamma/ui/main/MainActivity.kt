@@ -10,18 +10,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.umc.chamma.R
-import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
-import com.umc.chamma.ui.home.main.HomeFragment
-import com.umc.chamma.ui.login.model.LoginResponseData
-import com.umc.chamma.ui.mypage.mypage.MypageFragment
-import com.umc.chamma.ui.mypage.review.ReviewFragment
-import com.umc.chamma.ui.mypage.usage.UsageFragment
-import com.umc.chamma.ui.mypage.userdata.UpdateUserData
 import com.umc.chamma.ui.reviewwrite.ReviewWriteActivity
-import com.umc.chamma.ui.toiletlist.ToiletlistFragment
-import com.umc.chamma.util.Constants
 import com.umc.chamma.util.InappUtil
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
