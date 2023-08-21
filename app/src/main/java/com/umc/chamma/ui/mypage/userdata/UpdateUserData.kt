@@ -30,7 +30,6 @@ import com.umc.chamma.ui.signup.network.NickcheckAPI
 class UpdateUserData : BaseFragmentVB<FragmentUpdateUserDataBinding>(FragmentUpdateUserDataBinding::bind, R.layout.fragment_update_user_data),
 GetUserinfoInterface {
 
-    lateinit var mainActivity: MainActivity
 
     private var oldNick = ""
     private var newNick = ""
@@ -47,10 +46,7 @@ GetUserinfoInterface {
                 val uri = result.data?.data
                 binding.btnProfileUser.setImageURI(uri)
                 isProfileChange = true
-
-                binding.btnSend2.isEnabled = true
-                binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_duplicheck)
-                binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
+                changeBtnAvailable()
             }
         }
 
@@ -95,20 +91,23 @@ GetUserinfoInterface {
         binding.etNick.addTextChangedListener(object :  TextWatcher{
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 newNick = binding.etNick.text.toString()
-
-                if(((oldNick != newNick) && isAvailableNick) || isProfileChange){
-                    binding.btnSend2.isEnabled = true
-                    binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_duplicheck)
-                    binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
-                }else{
-                    binding.btnSend2.isEnabled = false
-                    binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_gender)
-                    binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.chamma_signup_textgray))
-                }
+                changeBtnAvailable()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
         })
+    }
+
+    private fun changeBtnAvailable(){
+        if(((oldNick != newNick) && isAvailableNick) || isProfileChange){
+            binding.btnSend2.isEnabled = true
+            binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_duplicheck)
+            binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
+        }else{
+            binding.btnSend2.isEnabled = false
+            binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_gender)
+            binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.chamma_signup_textgray))
+        }
     }
 
     private fun nickCheck(){
@@ -120,17 +119,18 @@ GetUserinfoInterface {
                 ) {
                     if(response.code() == 200){
                         if(response.body()?.data?.nicknameDuplicate == true){
-                            mainActivity.runOnUiThread {
+                            (activity as MainActivity).runOnUiThread {
                                 binding.tvAnnounce.text = "이미 사용중인 닉네임입니다."
                                 binding.tvAnnounce.visibility = View.VISIBLE
                                 isAvailableNick = false
                             }
 
                         }else{
-                            mainActivity.runOnUiThread {
+                            (activity as MainActivity).runOnUiThread {
                                 binding.tvAnnounce.text = "사용 가능한 닉네임입니다."
                                 binding.tvAnnounce.visibility = View.VISIBLE
                                 isAvailableNick = true
+                                changeBtnAvailable()
                             }
                         }
                     }
