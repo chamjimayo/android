@@ -64,10 +64,10 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
             ) {
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity as MainActivity)
                 fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
-//                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance],sortArr[sortType])
+                    HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance],sortArr[sortType])
 
                     //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-                    HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
+//                    HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
                 }
             }else{
                 dismissLoading()
@@ -80,7 +80,6 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
         binding.btnSort.setOnClickListener {
 
             BottomSheet.toiletlistSort(requireContext(), sortType){type->
-                showLoading()
                 // TODO 0 : 거리순 1 : 별점높은순 2 : 별점낮은순 으로 API 호출. 아직 API 구현안됨
                 setSortType(type)
                 sharedPreferences.edit()
@@ -88,7 +87,8 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
                     .apply()
 
                 //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-                HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
+//                HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
+                setLocation()
             }.show()
         }
 

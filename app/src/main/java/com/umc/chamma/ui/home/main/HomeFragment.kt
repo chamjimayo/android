@@ -117,8 +117,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.None
-        naverMap.minZoom = 10.0
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.minZoom = 8.0
         locationBtnListener()
         toiletBtnListener()
         HomeService(this).getNearToilet(toiletState
@@ -189,9 +189,9 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         // 현위치 tracking 활성화 / 비활성화 버튼
         binding.btnLocation.setOnClickListener {
             if(locationState){
-                naverMap.minZoom = 10.0
                 naverMap.locationTrackingMode = LocationTrackingMode.None
                 locationState = false
+                naverMap.minZoom = 8.0
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
                 val locationManager = App.context().getSystemService(LOCATION_SERVICE) as LocationManager
@@ -199,8 +199,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
                     showCustomToast("위치 정보를 켜주세요")
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }else{
-                    naverMap.minZoom = 17.0
-                    naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                    naverMap.minZoom = 10.0
+                    naverMap.locationTrackingMode = LocationTrackingMode.Face
                     locationState = true
                     binding.btnLocation.setImageResource(R.drawable.home_location_btn_on)
                 }
