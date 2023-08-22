@@ -39,20 +39,18 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
     private lateinit var capture : CustomCaptureManager
     private var id :Int=0
     private var price :Int=0
-    private var point:Int=0
+    private var point = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        QrService(this).getUserInfo()
         // capture = CaptureManager(this,binding.decoratedBarcodeView)
         //capture.initializeFromIntent(intent,savedInstanceState)
         // capture.decode()
         id= intent.getIntExtra("ID",0)
         price=intent.getIntExtra("Price",0)
-        point=intent.getIntExtra("Point",0)
         initializeQrScanner(savedInstanceState)
-
-        //QrService(this).getUserInfo()
 
     }
     private fun initializeQrScanner(savedInstanceState: Bundle?) {
@@ -73,7 +71,6 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     dialog.show()
 
                     this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
-                    Log.d("포인트 ",point.toString()+" "+price.toString()+" "+id.toString())
 
                     if(price<=point) {
                         dialogBinding.tissueTv.text=price.toString()+"p"
@@ -214,7 +211,6 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         point=data.point
         Log.d("포인트 ","api 성공")
-
     }
 
     override fun onGetUserInfoFailure(message: String) {

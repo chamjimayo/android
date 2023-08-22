@@ -34,12 +34,10 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
     private lateinit var RestroomVPAdapter: RestroomVPAdapter
     private var price :Int=0
     private var id:Int=0
-    private var point:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         id= intent.getIntExtra("ID",0)
-        point=intent.getIntExtra("Point",0)
         Log.d("연결결과 ",id.toString())
 
         //풀스크린-MainActivity
@@ -103,7 +101,7 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
                 Log.d("포인트 ",price.toString())
 
                 startActivity(
-                    Intent(this, QRActivity::class.java).putExtra("ID", id).putExtra("Price", data.price).putExtra("Point",point)
+                    Intent(this, QRActivity::class.java).putExtra("ID", id).putExtra("Price", data.price)
                 )
             }
         }
