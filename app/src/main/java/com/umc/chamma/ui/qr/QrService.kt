@@ -38,45 +38,6 @@ class QrService(val view : QrActivityInterface) {
             )
     }
 
-    fun tryToDeductPoint(point:Int){
-        QrRetrofitInterface.tryToDeductPoint(point= DeductPointRequest(point))
-            .enqueue(object :Callback<DeductPointResponse>{
-                override fun onResponse(
-                    call: Call<DeductPointResponse>,
-                    response: Response<DeductPointResponse>
-                ) {
-                    response.body()?.let{
-                        if(response.code() == 200) view.onTryToDeductPointSuccess(it)
-                        else view.onTryToDeductPointFailure("API 오류")
-                    }                }
-
-                override fun onFailure(call: Call<DeductPointResponse>, t: Throwable) {
-                    view.onTryToDeductPointFailure("네트워크 오류 ${t.toString()}")
-                }
-            })
-    }
-
-    fun getUserInfo(){
-
-        val userInfoRetro = App.getRetro().create(ChargePointRetrofitInterface::class.java)
-        userInfoRetro.getUserInfo()
-            .enqueue(object : Callback<UserinfoResponse>{
-                override fun onResponse(
-                    call: Call<UserinfoResponse>,
-                    response: Response<UserinfoResponse>
-                ) {
-                    response.body()?.let{
-                        if(response.code() == 200) view.onGetUserInfoSuccess(response.body()!!.data)
-                        else view.onGetUserInfoFailure("유저정보 불러오기 실패")
-                    }
-                    if(response.body() == null) view.onGetUserInfoFailure("유저정보 불러오기 실패")
-                }
-
-                override fun onFailure(call: Call<UserinfoResponse>, t: Throwable) {
-                    view.onGetUserInfoFailure(t.message.toString())
-                }
-            })
-    }
 }
 
 

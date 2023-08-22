@@ -23,6 +23,8 @@ import com.umc.chamma.databinding.DialogQrResult2Binding
 import com.umc.chamma.databinding.DialogQrResultBinding
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
+import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.model.DeductPointResponse
 import com.umc.chamma.ui.qr.model.UseRestroomResponse
@@ -33,7 +35,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
-    ,QrActivityInterface{
+    ,QrActivityInterface, GetUserinfoInterface{
 
     val qrActivityInterface=this
     private lateinit var capture : CustomCaptureManager
@@ -44,7 +46,7 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        QrService(this).getUserInfo()
+        GetUserinfoService(this).getUserInfo()
         // capture = CaptureManager(this,binding.decoratedBarcodeView)
         //capture.initializeFromIntent(intent,savedInstanceState)
         // capture.decode()
@@ -85,8 +87,6 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                         dialogBinding.btnPostEditBackOk.setOnClickListener {
                             QrService(qrActivityInterface).tryToUseRestroom(id)
 
-                            QrService(qrActivityInterface).tryToDeductPoint(price)
-
                             //showCustomToast("이용할래요 완료")
                             dialog.dismiss()
                             finish()
@@ -102,8 +102,7 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
                         dialogBinding.btnPostEditBackCancel.setOnClickListener {
                             dialog.dismiss()
-                            val intent = Intent(App.context(), MainActivity::class.java)
-                            startActivity(intent)
+                            finish()
                         }
                         dialogBinding.btnPostEditBackOk.setOnClickListener {
                             val intent = Intent(App.context(), ChargePointActivity::class.java)
@@ -192,29 +191,20 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         }
     }
 
+    override fun onGetUserInfoSuccess(data: UserinfoData) {
+        point = data.point
+    }
+
+    override fun onGetUserInfoFailure(message: String) {
+        showCustomToast(message)
+    }
+
     override fun onTryToUseRestroomSuccess(response: UseRestroomResponse) {
         Log.d("qr연결결과1 ",response.toString())
     }
 
     override fun onTryToUseRestroomFailure(message: String) {
         Log.d("qr연결결과1 ",message)
-    }
-
-    override fun onTryToDeductPointSuccess(response: DeductPointResponse) {
-        Log.d("qr연결결과2 ",response.toString())
-    }
-
-    override fun onTryToDeductPointFailure(message: String) {
-        Log.d("qr연결결과2 ",message)
-    }
-
-    override fun onGetUserInfoSuccess(data: UserinfoData) {
-        point=data.point
-        Log.d("포인트 ","api 성공")
-    }
-
-    override fun onGetUserInfoFailure(message: String) {
-        TODO("Not yet implemented")
     }
 
 

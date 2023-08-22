@@ -13,9 +13,4 @@ interface QrRetrofitInterface {
     @POST("/api/restroom/use")
     fun tryToUseRestroom(@Body restroomId: UseRestroomRequest) : Call<UseRestroomResponse>
 
-    @POST("/api/users/point/deduct")
-    fun tryToDeductPoint(@Body point: DeductPointRequest) : Call<DeductPointResponse>
-
-    @GET("/api/users/me")
-    fun getUserInfo() : Call<UserinfoResponse>
 }

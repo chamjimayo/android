@@ -19,11 +19,11 @@ object InappUtil : PurchasesUpdatedListener {
         listOf("point_1000", "point_3000", "point_5000", "point_8000", "point_10000")
 
     var inappInterface : InappInterface?=null
+    var chargeState = false
 
     interface GooglepayUtilDelegate {
         fun onProgress()
     }
-
 
     private lateinit var billingCilent: BillingClient
     private var productDetailsList: List<ProductDetails> = mutableListOf()
@@ -76,7 +76,6 @@ object InappUtil : PurchasesUpdatedListener {
                 Log.d(TAG, "소모 실패")
             }
         }
-
     }
 
     // TODO 상품 목록 조회
@@ -116,18 +115,21 @@ object InappUtil : PurchasesUpdatedListener {
     // TODO 상품 결제 요청
 
     fun getPay(activity: Activity, count: String) {
+        chargeState = true
         var list: MutableList<BillingFlowParams.ProductDetailsParams> = mutableListOf()
         Log.d(TAG, "getpay 실행")
 
         productId = count
 
         for (i in productDetailsList.indices) {
+            Log.d(TAG, productDetailsList[i].toString())
             if (productDetailsList[i].productId == count) {
                 var flowProductDetailParams = BillingFlowParams.ProductDetailsParams.newBuilder()
                     .setProductDetails(productDetailsList[i])
                     .build()
 
                 list.add(flowProductDetailParams)
+                break
             }
         }
 
@@ -167,24 +169,27 @@ object InappUtil : PurchasesUpdatedListener {
     }
 
     private fun postPurchaseData(data : ChargePointPostData){
-        val chargePointRetro = App.getRetro().create(ChargePointRetrofitInterface::class.java)
-        chargePointRetro.postChargePoint(data)
-            .enqueue(object : Callback<ChargePointResponse>{
-                override fun onResponse(
-                    call: Call<ChargePointResponse>,
-                    response: Response<ChargePointResponse>
-                ) {
-                    response.body()?.let{
-                        if(response.code() == 200) inappInterface?.successBill()
+        if(chargeState){
+            chargeState = false
+            val chargePointRetro = App.getRetro().create(ChargePointRetrofitInterface::class.java)
+            chargePointRetro.postChargePoint(data)
+                .enqueue(object : Callback<ChargePointResponse>{
+                    override fun onResponse(
+                        call: Call<ChargePointResponse>,
+                        response: Response<ChargePointResponse>
+                    ) {
+                        response.body()?.let{
+                            if(response.code() == 200) inappInterface?.successBill()
+                        }
+                        if(response.body() == null)  inappInterface?.failBill()
                     }
-                    if(response.body() == null)  inappInterface?.failBill()
 
-                }
+                    override fun onFailure(call: Call<ChargePointResponse>, t: Throwable) {
+                        inappInterface?.failBill()
+                    }
+                })
+        }
 
-                override fun onFailure(call: Call<ChargePointResponse>, t: Throwable) {
-                    inappInterface?.failBill()
-                }
-            })
     }
 
 
