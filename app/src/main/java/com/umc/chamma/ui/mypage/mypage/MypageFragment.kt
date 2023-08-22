@@ -90,7 +90,8 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         binding.tvNimMypage.visibility = View.VISIBLE
         binding.tvPointMypage.text = data.point.toString()
         binding.tvNameMyypage.text = data.nickname
-        binding.ivProfile.setImageURI(data.userProfile.toUri())
+
+        if(!data.userProfile.isNullOrBlank()) binding.ivProfile.setImageURI(data.userProfile.toUri())
     }
 
     override fun onGetUserInfoFailure(message: String) {

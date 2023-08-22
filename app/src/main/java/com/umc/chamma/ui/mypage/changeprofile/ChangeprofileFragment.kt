@@ -157,7 +157,9 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
         binding.etName.setText(data.name)
         binding.etNick.setText(data.nickname)
         oldNick = data.nickname
-        binding.btnProfileUser.setImageURI(data.userProfile.toUri())
+        if(!data.userProfile.isNullOrBlank()){
+            binding.btnProfileUser.setImageURI(data.userProfile.toUri())
+        }
 
         if(data.gender == "female") binding.btnFemale.setBackgroundResource(R.drawable.shape_user_et_focus)
         else binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)

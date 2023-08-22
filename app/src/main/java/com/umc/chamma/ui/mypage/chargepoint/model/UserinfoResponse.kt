@@ -12,6 +12,6 @@ data class UserinfoData(
     @SerializedName("nickname")val nickname : String,
     @SerializedName("point")val point : Int,
     @SerializedName("gender")val gender : String,
-    @SerializedName("userProfile")val userProfile : String,
+    @SerializedName("userProfile")val userProfile : String?="",
     @SerializedName("restroomUsing")val restroomUsing : Boolean
 )
