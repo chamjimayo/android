@@ -118,6 +118,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.minZoom = 8.0
         locationBtnListener()
         toiletBtnListener()
         HomeService(this).getNearToilet(toiletState
@@ -190,6 +191,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
             if(locationState){
                 naverMap.locationTrackingMode = LocationTrackingMode.None
                 locationState = false
+                naverMap.minZoom = 8.0
                 binding.btnLocation.setImageResource(R.drawable.home_location_btn)
             }else{
                 val locationManager = App.context().getSystemService(LOCATION_SERVICE) as LocationManager
