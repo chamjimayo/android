@@ -32,12 +32,14 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
     ,RestroomInfoActivityInterface{
     private var pageItemList = ArrayList<String>()
     private lateinit var RestroomVPAdapter: RestroomVPAdapter
-    private var price by Delegates.notNull<Int>()
+    private var price :Int=0
     private var id:Int=0
+    private var point:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         id= intent.getIntExtra("ID",0)
+        point=intent.getIntExtra("Point",0)
         Log.d("연결결과 ",id.toString())
 
         //풀스크린-MainActivity
@@ -96,9 +98,12 @@ class RestroomInfoActivity : BaseActivityVB<ActivityRestroomInfoBinding>(Activit
             binding.useBtn.setTextColor(ContextCompat.getColor(NaverIdLoginSDK.applicationContext, R.color.chamma_signup_textgray))
         }
         else {
+            binding.useBtn.text=data.price.toString()+" 포인트에 이용하기"
             binding.useBtn.setOnClickListener {
+                Log.d("포인트 ",price.toString())
+
                 startActivity(
-                    Intent(this, QRActivity::class.java).putExtra("ID", id).putExtra("Price", price)
+                    Intent(this, QRActivity::class.java).putExtra("ID", id).putExtra("Price", data.price).putExtra("Point",point)
                 )
             }
         }

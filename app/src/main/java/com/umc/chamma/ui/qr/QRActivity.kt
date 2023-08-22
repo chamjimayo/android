@@ -37,7 +37,7 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
     val qrActivityInterface=this
     private lateinit var capture : CustomCaptureManager
-    private var id by Delegates.notNull<Int>()
+    private var id :Int=0
     private var price :Int=0
     private var point:Int=0
 
@@ -47,12 +47,12 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         // capture = CaptureManager(this,binding.decoratedBarcodeView)
         //capture.initializeFromIntent(intent,savedInstanceState)
         // capture.decode()
-        initializeQrScanner(savedInstanceState)
         id= intent.getIntExtra("ID",0)
         price=intent.getIntExtra("Price",0)
-        Log.d("qr연결결과 ",id.toString())
+        point=intent.getIntExtra("Point",0)
+        initializeQrScanner(savedInstanceState)
 
-        QrService(this).getUserInfo()
+        //QrService(this).getUserInfo()
 
     }
     private fun initializeQrScanner(savedInstanceState: Bundle?) {
@@ -73,8 +73,11 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                     dialog.show()
 
                     this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
+                    Log.d("포인트 ",point.toString()+" "+price.toString()+" "+id.toString())
 
                     if(price<=point) {
+                        dialogBinding.tissueTv.text=price.toString()+"p"
+                        dialogBinding.contentTv.text=price.toString()+"포인트가 차감됩니다\n  결제를 하실건가요?"
                         dialogBinding.btnPostEditBackCancel.setOnClickListener {
                             //showCustomToast("참을래요 완료")
                             dialog.dismiss()
@@ -84,6 +87,7 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                         }
                         dialogBinding.btnPostEditBackOk.setOnClickListener {
                             QrService(qrActivityInterface).tryToUseRestroom(id)
+
                             QrService(qrActivityInterface).tryToDeductPoint(price)
 
                             //showCustomToast("이용할래요 완료")
@@ -94,8 +98,8 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
                         }
                     }
                     else{
-                        dialogBinding.tissueTv.text=price.toString()+"p보유"
-                        dialogBinding.contentTv.text="앗,잠시만요!\n 포인트가 부족해요."
+                        dialogBinding.tissueTv.text=point.toString()+"p 보유"
+                        dialogBinding.contentTv.text="    앗,잠시만요!\n포인트가 부족해요."
                         dialogBinding.btnPostEditBackCancel.text="닫기"
                         dialogBinding.btnPostEditBackOk.text="충전하기"
 
@@ -209,6 +213,8 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         point=data.point
+        Log.d("포인트 ","api 성공")
+
     }
 
     override fun onGetUserInfoFailure(message: String) {
