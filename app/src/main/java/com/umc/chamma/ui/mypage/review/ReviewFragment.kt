@@ -12,6 +12,7 @@ import com.umc.chamma.databinding.FragmentReviewBinding
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.model.ListReview
 import com.umc.chamma.ui.mypage.review.model.MypageReviewData
+import com.umc.chamma.ui.mypage.review.model.MypageReviewResponse
 import com.umc.chamma.ui.mypage.review.network.MypageReviewInterface
 import com.umc.chamma.ui.mypage.review.network.MypageReviewService
 
@@ -58,13 +59,38 @@ class ReviewFragment : Fragment(R.layout.fragment_review), MypageReviewInterface
 
     override fun onGetUserReviewInfoSuccess(data: ArrayList<MypageReviewData>){
 
-        var arraySize = data.size
+        var reviewId = 1
+        var userId = 1
+        var nickName = "nickName"
+        var userProfile = "https://example.com/profile.jpg"
+        var restroomId = 1
+        var reviewContext = "깔끔해요"
+        var rating = 4
+        var dateTime = "2023.07.29"
+
+        fun getMypageReviewNickName(){
+            var size = data.size
+
+            for (i in 0..size){
+                reviewAdapter.submitList(mutableListOf<ListReview>().apply {
+
+                    add(ListReview(data[i].nickname, 1000, data[1].userprofile, data[i].reviewContent, data[i].rating))
+                })
+                }
+            }
+
+        if (data.size != 0){
+            val name = data[0].nickname
+            Log.d("MypageReviewAPI", name)
+        }
+
+        Log.d("MypageReviewAPI", data.size.toString()) // 데이터가 들어 있는게 맞나용?
 
 //        Log.d("MypageReviewAPI", data[0].reviewContent)
 
-
-
     }
+
+
     override fun onGetUserReviewInfoFail(message: String) {
         TODO("Not yet implemented")
     }
