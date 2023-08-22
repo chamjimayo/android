@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
@@ -83,13 +84,14 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         }
     }
 
-
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         binding.tvNameMyypage.visibility = View.VISIBLE
         binding.tvPointMypage.visibility = View.VISIBLE
         binding.tvNimMypage.visibility = View.VISIBLE
         binding.tvPointMypage.text = data.point.toString()
         binding.tvNameMyypage.text = data.nickname
+
+        if(!data.userProfile.isNullOrBlank()) binding.ivProfile.setImageURI(data.userProfile.toUri())
     }
 
     override fun onGetUserInfoFailure(message: String) {

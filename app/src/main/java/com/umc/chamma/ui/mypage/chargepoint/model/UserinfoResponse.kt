@@ -10,5 +10,8 @@ data class UserinfoResponse(
 data class UserinfoData(
     @SerializedName("name")val name : String,
     @SerializedName("nickname")val nickname : String,
-    @SerializedName("point")val point : Int
+    @SerializedName("point")val point : Int,
+    @SerializedName("gender")val gender : String,
+    @SerializedName("userProfile")val userProfile : String?="",
+    @SerializedName("restroomUsing")val restroomUsing : Boolean
 )

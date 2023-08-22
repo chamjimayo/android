@@ -33,6 +33,7 @@ import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
 import com.umc.chamma.ui.qr.QRActivity
+import com.umc.chamma.ui.using.UsingActivity
 import com.umc.chamma.util.BottomSheet
 import kotlin.math.*
 
@@ -316,6 +317,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         binding.btnPoint.text = data.point.toString() + "P"
+        if(data.restroomUsing){
+            val intent = Intent(requireContext(), UsingActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 
     override fun onGetUserInfoFailure(message: String) {

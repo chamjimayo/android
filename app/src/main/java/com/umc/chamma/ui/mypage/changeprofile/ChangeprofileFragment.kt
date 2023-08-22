@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import retrofit2.Call
@@ -20,6 +21,7 @@ import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentChangeProfileBinding
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.mypage.changeprofile.model.ChangeprofilePostData
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
@@ -28,11 +30,12 @@ import com.umc.chamma.ui.signup.network.NickcheckAPI
 
 
 class ChangeprofileFragment : BaseFragmentVB<FragmentChangeProfileBinding>(FragmentChangeProfileBinding::bind, R.layout.fragment_change_profile),
-GetUserinfoInterface {
+GetUserinfoInterface, ChangeprofileFragmentInterface {
 
 
     private var oldNick = ""
     private var newNick = ""
+    private var newImg = ""
     private var isAvailableNick = false
     private var isProfileChange = false
 
@@ -45,6 +48,7 @@ GetUserinfoInterface {
             if(result.resultCode == Activity.RESULT_OK){
                 val uri = result.data?.data
                 binding.btnProfileUser.setImageURI(uri)
+                newImg = uri.toString()
                 isProfileChange = true
                 changeBtnAvailable()
             }
@@ -84,6 +88,14 @@ GetUserinfoInterface {
 
         binding.btnBackUpdate.setOnClickListener { findNavController().navigateUp() }
         binding.btnProfileUser.setOnClickListener{ openGallery() }
+        binding.btnSend2.setOnClickListener {
+            if((oldNick != newNick) && isAvailableNick){
+                ChangeprofileService(this).changeUserNick(ChangeprofilePostData(newNick))
+            }
+            if(isProfileChange){
+                ChangeprofileService(this).changeUserImg(ChangeprofilePostData(newImg))
+            }
+        }
     }
 
     private fun textChangeListener(){
@@ -145,11 +157,34 @@ GetUserinfoInterface {
         binding.etName.setText(data.name)
         binding.etNick.setText(data.nickname)
         oldNick = data.nickname
-        //TODO gender 적용,  사진 적용
-        binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)
+        if(!data.userProfile.isNullOrBlank()){
+            binding.btnProfileUser.setImageURI(data.userProfile.toUri())
+        }
+
+        if(data.gender == "female") binding.btnFemale.setBackgroundResource(R.drawable.shape_user_et_focus)
+        else binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)
+
     }
 
     override fun onGetUserInfoFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onChangeImgSuccess(message: String) {
+        showCustomToast("변경 성공")
+        findNavController().navigateUp()
+    }
+
+    override fun onChangeImgFailure(message: String) {
+        showCustomToast(message)
+    }
+
+    override fun onChangeNickSuccess(message: String) {
+        showCustomToast("변경 성공")
+        findNavController().navigateUp()
+    }
+
+    override fun onChangeNickFailure(message: String) {
         showCustomToast(message)
     }
 
