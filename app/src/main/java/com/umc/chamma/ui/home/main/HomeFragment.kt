@@ -117,7 +117,10 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
+
+        if(searchData != null) naverMap.locationTrackingMode = LocationTrackingMode.None
+        else naverMap.locationTrackingMode = LocationTrackingMode.Follow
+
         naverMap.minZoom = 8.0
         locationBtnListener()
         toiletBtnListener()
@@ -143,7 +146,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
                 // 300m 이상 스와이프 했을때만
                 if(getDistance(lastPosition.first,
                         lastPosition.second,
-                        naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 300){
+                        naverMap.cameraPosition.target.latitude,naverMap.cameraPosition.target.longitude) > 500){
                     removeMarker()
 
                     HomeService(this).getNearToilet(toiletState
