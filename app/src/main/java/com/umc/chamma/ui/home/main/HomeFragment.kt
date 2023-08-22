@@ -57,7 +57,8 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
     private var locationState = false
     private var toiletState = "entire"
     val markerList = arrayListOf<Marker>()
-
+//api 비동기 처리 피하고자 여기서 intent로 point를 qr 액티비티로 보냄
+    var point:Int=0
     private var swiping = false
 
     override fun onAttach(context: Context) {
@@ -279,10 +280,11 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
             marker.icon = if(type == markerType.FREE) OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
             else if(type == markerType.PAID) OverlayImage.fromResource(R.drawable.home_marker_clicked_paytoilet)
             else OverlayImage.fromResource(R.drawable.home_marker_clicked_freetoilet)
-
-            val bottomsheet = BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()))}) {id->
+            //인텐트로 넘기는 값 point 값 추가함
+            val bottomsheet = BottomSheet.homeToiletInfo(requireContext(),data, {startActivity(Intent(App.context(),QRActivity::class.java).putExtra("ID",data.restroomId?.toInt()).putExtra("Price",data.price).putExtra("Point",point))}) {id->
                 val intent = Intent(App.context(), RestroomInfoActivity::class.java)
                     .putExtra("ID",id)
+                    .putExtra("Point",point)
                 startActivity(intent)
             }
 
@@ -317,6 +319,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
     }
 
     override fun onGetUserInfoSuccess(data: UserinfoData) {
+        point=data.point
         binding.btnPoint.text = data.point.toString() + "P"
     }
 
