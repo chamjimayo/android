@@ -2,6 +2,7 @@ package com.umc.chamma.ui.mypage.review
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -10,10 +11,12 @@ import com.umc.chamma.R
 import com.umc.chamma.databinding.FragmentReviewBinding
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.model.ListReview
+import com.umc.chamma.ui.mypage.review.model.MypageReviewData
+import com.umc.chamma.ui.mypage.review.network.MypageReviewInterface
+import com.umc.chamma.ui.mypage.review.network.MypageReviewService
 
 
-
-class ReviewFragment : Fragment(R.layout.fragment_review) {
+class ReviewFragment : Fragment(R.layout.fragment_review), MypageReviewInterface {
 
     private lateinit var binding: FragmentReviewBinding
     private val reviewAdapter = ReviewAdapter()
@@ -46,4 +49,25 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         if (context is MainActivity) mainActivity = context
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        MypageReviewService(this).getUserReviewInfo()
+    }
+
+    override fun onGetUserReviewInfoSuccess(data: ArrayList<MypageReviewData>){
+
+        var arraySize = data.size
+
+//        Log.d("MypageReviewAPI", data[0].reviewContent)
+
+
+
+    }
+    override fun onGetUserReviewInfoFail(message: String) {
+        TODO("Not yet implemented")
+    }
+
+
 }
