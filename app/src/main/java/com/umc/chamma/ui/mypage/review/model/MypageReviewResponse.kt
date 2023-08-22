@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.umc.chamma.config.BaseResponse
 
 data class MypageReviewResponse(
-    val data: MypageReviewData
+    @SerializedName("data") val data: ArrayList<MypageReviewData>
 ):BaseResponse()
 
 data class MypageReviewData(
@@ -32,3 +32,4 @@ data class MypageReviewData(
 
     @SerializedName("dateTime")
     val dateTime: String = "23.07.29")
+
