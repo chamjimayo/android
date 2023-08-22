@@ -28,7 +28,7 @@ class ReviewDataAdapter(private val dataList: List<ReviewData>?) :
 
             Glide.with(context)
                 .load(data.userProfile)
-                .error(R.drawable.review_profile)
+                .error(R.drawable.profile_select_btn)
                 .into(viewBinding.circleIv)
 
 
