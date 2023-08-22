@@ -13,21 +13,26 @@ import java.util.*
 
 class ReviewAdapter(
     private val datas : ArrayList<MypageReviewData>,
+    private val onClickDeleteListener: (reviewId : Int) -> Unit,
+    private val onClickPatchListener : (reviewId : Int) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item : MypageReviewData){
 
-            // TODO 화장실사진 / 날짜형식 m월 n일 / 화장실 이름
             Glide.with(App.context())
-                .load(item.userprofile)
-                .error(R.drawable.profile_select_btn)
+                .load(item.restroomPhotoUrl)
+                .error(R.drawable.restroom_ex)
                 .into(binding.ivRestRoomItemReview)
 
             binding.tvReviewItemReview.text= item.reviewContent
             binding.ratingBar2.rating = item.rating
             binding.tvDate.text = item.dateTime
+            binding.tvTitleItemReview.text = item.restroomName
+
+            binding.btnDeleteItemReview.setOnClickListener { onClickDeleteListener(item.reviewId) }
+            binding.btnModifyItemReview.setOnClickListener { onClickPatchListener(item.reviewId) }
 
         }
 

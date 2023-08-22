@@ -16,6 +16,7 @@ import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.model.ListReview
 import com.umc.chamma.ui.mypage.review.model.MypageReviewData
 import com.umc.chamma.ui.mypage.review.model.MypageReviewResponse
+import com.umc.chamma.ui.mypage.review.model.PatchreviewPostData
 import com.umc.chamma.ui.mypage.review.network.MypageReviewInterface
 import com.umc.chamma.ui.mypage.review.network.MypageReviewService
 import com.umc.chamma.ui.toiletlist.adapter.ToiletListAdapter
@@ -31,10 +32,18 @@ class ReviewFragment : BaseFragmentVB<FragmentReviewBinding>(FragmentReviewBindi
         MypageReviewService(this).getUserReviewInfo()
     }
 
+    private fun onClickDelete(reviewId : Int){
+        MypageReviewService(this).deleteUserReview(reviewId)
+    }
+
+    private fun onClickChange(reviewId : Int){
+
+    }
+
 
     override fun onGetUserReviewInfoSuccess(data: ArrayList<MypageReviewData>){
 
-        val adapter = ReviewAdapter(data)
+        val adapter = ReviewAdapter(data, ::onClickDelete, ::onClickChange)
         binding.rvReview.adapter = adapter
         binding.rvReview.layoutManager = LinearLayoutManager(context)
     }
@@ -44,5 +53,12 @@ class ReviewFragment : BaseFragmentVB<FragmentReviewBinding>(FragmentReviewBindi
         showCustomToast(message)
     }
 
+    override fun onDeleteReviewSuccess() {
+        MypageReviewService(this).getUserReviewInfo()
+    }
+
+    override fun onDeleteReviewFailure(message: String) {
+        showCustomToast(message)
+    }
 
 }

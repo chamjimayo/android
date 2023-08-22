@@ -8,5 +8,10 @@ interface MypageReviewInterface {
 
     fun onGetUserReviewInfoFail(message : String)
 
+    fun onDeleteReviewSuccess()
+    fun onDeleteReviewFailure(message : String)
+
+
+
 
 }
