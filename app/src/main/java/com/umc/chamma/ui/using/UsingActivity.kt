@@ -13,10 +13,6 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferences.edit()
-            .putBoolean(IS_USING,true)
-            .apply()
-
 
         binding.btnEnd.setOnClickListener {
             EnduseService(this).postEnduse()
@@ -31,9 +27,6 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     override fun onBackPressed() {}
 
     override fun onPostenduseSuccess(data: EndUseResponseData) {
-        sharedPreferences.edit()
-            .putBoolean(IS_USING,false)
-            .apply()
 
         val intent = Intent(this, MainActivity::class.java)
             .putExtra("ID",data.restroomId)
