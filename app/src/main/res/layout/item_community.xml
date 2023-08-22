@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con_LL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/communitylist_img"
+                android:layout_width="0dp"
+                android:layout_height="146dp"
+                android:scaleType="fitXY"
+
+                app:layout_constraintEnd_toStartOf="@id/communitylist_img2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/community_1_1" />
+
+            <ImageView
+                android:id="@+id/communitylist_img2"
+                android:layout_width="0dp"
+                android:layout_height="146dp"
+                android:scaleType="fitXY"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/communitylist_img"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/community_1_2" />
+
+
+            <TextView
+                android:id="@+id/contentTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="11dp"
+                android:text="화장실에서 샤워할 때, 나의 노래 타입은?"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/communitylist_img" />
+
+            <TextView
+                android:id="@+id/personNumTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+
+                android:drawableStart="@drawable/community_person"
+                android:drawablePadding="6dp"
+                android:text="5,324"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contentTv"
+
+                />
+
+            <TextView
+                android:id="@+id/commentNumTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+
+                android:drawableStart="@drawable/community_comment"
+                android:drawablePadding="6dp"
+                android:text="5,324"
+                app:layout_constraintStart_toEndOf="@id/personNumTv"
+                app:layout_constraintTop_toBottomOf="@id/contentTv"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
