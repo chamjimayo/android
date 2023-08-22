@@ -1,10 +1,12 @@
 package com.umc.chamma.ui.qr
 
-import android.util.Log
 import com.umc.chamma.config.App
-import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivityInterface
-import com.umc.chamma.ui.home.restroomInfo.RestroomInfoRetrofitInterface
-import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoResponse
+import com.umc.chamma.ui.qr.model.DeductPointRequest
+import com.umc.chamma.ui.qr.model.DeductPointResponse
+import com.umc.chamma.ui.qr.model.UseRestroomRequest
+import com.umc.chamma.ui.qr.model.UseRestroomResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +17,7 @@ class QrService(val view : QrActivityInterface) {
     fun tryToUseRestroom(restroomId:Int){
 
 
-        QrRetrofitInterface.tryToUseRestroom(restroomId=UseRestroomRequest(restroomId))
+        QrRetrofitInterface.tryToUseRestroom(restroomId= UseRestroomRequest(restroomId))
             .enqueue(object : Callback<UseRestroomResponse>{
             override fun onResponse(
                 call: Call<UseRestroomResponse>,
@@ -37,7 +39,7 @@ class QrService(val view : QrActivityInterface) {
     }
 
     fun tryToDeductPoint(point:Int){
-        QrRetrofitInterface.tryToDeductPoint(point=DeductPointRequest(point))
+        QrRetrofitInterface.tryToDeductPoint(point= DeductPointRequest(point))
             .enqueue(object :Callback<DeductPointResponse>{
                 override fun onResponse(
                     call: Call<DeductPointResponse>,
@@ -54,6 +56,27 @@ class QrService(val view : QrActivityInterface) {
             })
     }
 
+    fun getUserInfo(){
+
+        val userInfoRetro = App.getRetro().create(ChargePointRetrofitInterface::class.java)
+        userInfoRetro.getUserInfo()
+            .enqueue(object : Callback<UserinfoResponse>{
+                override fun onResponse(
+                    call: Call<UserinfoResponse>,
+                    response: Response<UserinfoResponse>
+                ) {
+                    response.body()?.let{
+                        if(response.code() == 200) view.onGetUserInfoSuccess(response.body()!!.data)
+                        else view.onGetUserInfoFailure("유저정보 불러오기 실패")
+                    }
+                    if(response.body() == null) view.onGetUserInfoFailure("유저정보 불러오기 실패")
+                }
+
+                override fun onFailure(call: Call<UserinfoResponse>, t: Throwable) {
+                    view.onGetUserInfoFailure(t.message.toString())
+                }
+            })
+    }
 }
 
 

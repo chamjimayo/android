@@ -21,7 +21,7 @@ class ReviewDataAdapter(private val dataList: List<ReviewData>?) :
 
             viewBinding.yearmonthdayTv.text = data.dateTime
 
-
+            viewBinding.userNameIv.text = data.nickname
             viewBinding.contentTv.text = data.reviewContent
 
             viewBinding.ratingBar.rating = data.rating.toFloat()

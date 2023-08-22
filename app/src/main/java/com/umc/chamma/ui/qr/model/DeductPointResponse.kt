@@ -1,9 +1,8 @@
-package com.umc.chamma.ui.qr
+package com.umc.chamma.ui.qr.model
 
 
 import com.google.gson.annotations.SerializedName
 import com.umc.chamma.config.BaseResponse
-import com.umc.chamma.ui.home.restroomInfo.model.ReviewData
 
 data class DeductPointResponse(
     @SerializedName("data")

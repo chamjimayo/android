@@ -1,4 +1,4 @@
-package com.umc.chamma.ui.qr
+package com.umc.chamma.ui.qr.model
 
 import com.google.gson.annotations.SerializedName
 

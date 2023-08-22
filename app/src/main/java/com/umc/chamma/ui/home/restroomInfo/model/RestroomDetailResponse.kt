@@ -26,8 +26,10 @@ data class RDResult(
     @SerializedName("equipments")val equipements: ArrayList<equipementsList>,
     @SerializedName("reviews")val reviews:ArrayList<reviewList>,
     @SerializedName("restroomManager")val restroomManager:ArrayList<restroomManager>,
-    @SerializedName("averageRating")val averageRating:Float
-    )
+    @SerializedName("averageRating")val averageRating:Float,
+    @SerializedName("price")val price:Int
+
+)
 
 data class equipementsList(
     @SerializedName("equipmentName")val equimentName:String?,

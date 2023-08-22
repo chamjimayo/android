@@ -2,6 +2,8 @@ package com.umc.chamma.ui.home.restroomInfo
 
 import com.umc.chamma.config.App
 import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+import com.umc.chamma.ui.mypage.chargepoint.ChargePointRetrofitInterface
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,5 +31,4 @@ class RestroomInfoService(val view : RestroomInfoActivityInterface) {
             }
         })
     }
-
 }

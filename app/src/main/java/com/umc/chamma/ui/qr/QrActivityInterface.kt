@@ -1,6 +1,8 @@
 package com.umc.chamma.ui.qr
 
-import com.umc.chamma.ui.home.restroomInfo.model.RestroomDetailResponse
+import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
+import com.umc.chamma.ui.qr.model.DeductPointResponse
+import com.umc.chamma.ui.qr.model.UseRestroomResponse
 
 
 interface QrActivityInterface {
@@ -12,5 +14,10 @@ interface QrActivityInterface {
     fun onTryToDeductPointSuccess(response: DeductPointResponse)
 
     fun onTryToDeductPointFailure(message:String)
+
+
+    fun onGetUserInfoSuccess(data : UserinfoData)
+
+    fun onGetUserInfoFailure(message : String)
 
 }
