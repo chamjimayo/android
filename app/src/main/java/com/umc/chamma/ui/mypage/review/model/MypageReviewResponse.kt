@@ -10,26 +10,27 @@ data class MypageReviewResponse(
 data class MypageReviewData(
 
     @SerializedName("reviewId")
-    val reviewId : Int = 1,
+    val reviewId : Int,
 
     @SerializedName("userId")
-    val userId : Int = 1,
+    val userId : Int,
 
     @SerializedName("nickname")
-    val nickname : String = "nickname",
+    val nickname : String,
 
     @SerializedName("userProfile")
-    val userprofile : String = "https://example.com/profile.jpg",
+    val userprofile : String,
 
     @SerializedName("restoomId")
-    val restroomId : Int = 1,
+    val restroomId : Int,
 
     @SerializedName("reviewContent")
-    val reviewContent : String = "깔끔해요",
+    val reviewContent : String,
 
     @SerializedName("rating")
-    val rating : Int = 4,
+    val rating : Float,
 
     @SerializedName("dateTime")
-    val dateTime: String = "23.07.29")
+    val dateTime: String
+)
 
