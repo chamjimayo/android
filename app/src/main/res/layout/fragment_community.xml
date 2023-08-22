@@ -5,12 +5,43 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="community"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginVertical="17dp"
+        android:layout_marginStart="16dp"
+        android:text="커뮤니티"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@id/grayView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/grayView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="17dp"
+        android:background="#DEE2E6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/titleTv" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBootomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grayView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp" />
+
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
