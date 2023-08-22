@@ -68,16 +68,13 @@ class ReviewFragment : Fragment(R.layout.fragment_review), MypageReviewInterface
         var rating = 4
         var dateTime = "2023.07.29"
 
-        fun getMypageReviewNickName(){
-            var size = data.size
+        for (i in 0 until data.size){
+            reviewAdapter.submitList(mutableListOf<ListReview>().apply {
 
-            for (i in 0..size){
-                reviewAdapter.submitList(mutableListOf<ListReview>().apply {
+                add(ListReview(data[i].nickname, 1000, data[1].userprofile, data[i].reviewContent, data[i].rating))
+            })
+        }
 
-                    add(ListReview(data[i].nickname, 1000, data[1].userprofile, data[i].reviewContent, data[i].rating))
-                })
-                }
-            }
 
         if (data.size != 0){
             val name = data[0].nickname

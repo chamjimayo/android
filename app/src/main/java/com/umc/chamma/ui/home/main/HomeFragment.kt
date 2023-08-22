@@ -117,7 +117,7 @@ class HomeFragment(private val searchData : SearchResultData?=null) : BaseFragme
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.uiSettings.isCompassEnabled = false
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
         naverMap.minZoom = 8.0
         locationBtnListener()
         toiletBtnListener()
