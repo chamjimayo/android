@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import retrofit2.Call
@@ -84,6 +85,9 @@ GetUserinfoInterface {
 
         binding.btnBackUpdate.setOnClickListener { findNavController().navigateUp() }
         binding.btnProfileUser.setOnClickListener{ openGallery() }
+        binding.btnSend2.setOnClickListener {
+
+        }
     }
 
     private fun textChangeListener(){
@@ -145,8 +149,11 @@ GetUserinfoInterface {
         binding.etName.setText(data.name)
         binding.etNick.setText(data.nickname)
         oldNick = data.nickname
-        //TODO gender 적용,  사진 적용
-        binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)
+        binding.btnProfileUser.setImageURI(data.userProfile.toUri())
+
+        if(data.gender == "female") binding.btnFemale.setBackgroundResource(R.drawable.shape_user_et_focus)
+        else binding.btnMale.setBackgroundResource(R.drawable.shape_user_et_focus)
+
     }
 
     override fun onGetUserInfoFailure(message: String) {

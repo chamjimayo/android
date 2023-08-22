@@ -5,5 +5,6 @@ data class SignupPostData(
     val authId : String,
     val name : String,
     val nickname : String,
-    val gender : String
+    val gender : String,
+    val userProfile : String
 )

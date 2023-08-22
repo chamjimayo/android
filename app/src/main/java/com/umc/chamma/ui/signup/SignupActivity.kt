@@ -37,6 +37,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
     private var name = ""
     private var authId = ""
     private var authType = ""
+    private var imgUri = ""
 
     private lateinit var galleryLauncher : ActivityResultLauncher<Intent>
 
@@ -51,6 +52,7 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
             if(result.resultCode == Activity.RESULT_OK){
                 val uri = result.data?.data
                 binding.btnProfile.setImageURI(uri)
+                imgUri = uri.toString()
             }
         }
 
@@ -197,9 +199,9 @@ class SignupActivity : BaseActivityVB<ActivitySignupBinding>(ActivitySignupBindi
     }
 
     private fun sendSignup(){
-        val data = SignupPostData(authType,authId,name,nick,gender)
+        val data = SignupPostData(authType,authId,name,nick,gender,imgUri)
         Log.d(TAG,"$data")
-        com.umc.chamma.config.App.getRetro().create(SignupAPI::class.java)
+        App.getRetro().create(SignupAPI::class.java)
             .signup(data).enqueue(object : Callback<SignupResponse> {
                 override fun onResponse(
                     call: Call<SignupResponse>,
