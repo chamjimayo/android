@@ -50,6 +50,8 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         RestroomNotification(this).removeNotification()
     }
 
+
+
     private fun setBottomNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.frame) as NavHostFragment
         navController = navHostFragment.navController

@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -22,7 +23,7 @@ import okhttp3.internal.notify
 class RestroomNotification(val context: Context?) {
     val orderId = 1L
     private val orderChannelId = "411"
-    //val orderName = context.getString(R.string.order_name)
+    private lateinit var useCloseAction:NotificationCompat.Action
 
     fun createNotification() {
         //val orderTitle = intent?.getStringExtra(context!!.getString(R.string.order_title))!!
@@ -35,8 +36,11 @@ class RestroomNotification(val context: Context?) {
             Intent(context, MainActivity::class.java),
             FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
+        useCloseAction=NotificationCompat.Action.Builder(R.drawable.banner_btn_icon,"이용종료하기",pendingIntent).build()
+
         val builder =
             createNotificationBuilder(context, orderChannelId, orderContent, pendingIntent)
+        //val orderName = context.getString(R.string.order_name)
 
         if (context == null) return
         createNotificationChannel(context, "orderName", orderChannelId, orderContent)
@@ -75,10 +79,11 @@ class RestroomNotification(val context: Context?) {
     ) =
         NotificationCompat.Builder(context!!, orderChannelId)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.mipmap.chamma_logo_round)
             .setContentText(orderContent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .addAction(useCloseAction)
             .setAutoCancel(false)
 
     private fun createNotificationChannel(
@@ -102,3 +107,4 @@ class RestroomNotification(val context: Context?) {
         }
     }
 }
+
