@@ -2,55 +2,50 @@ package com.umc.chamma.ui.mypage.usage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.umc.chamma.R
+import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemUsageBinding
-import com.umc.chamma.ui.mypage.model.ArticleModel
+import com.umc.chamma.ui.mypage.usage.model.Content
+
+import com.umc.chamma.ui.mypage.usage.model.MypageUsageData
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ArticleAdapter: ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diffUtil) {
+class ArticleAdapter(
+    private val datas : ArrayList<Content>,
+) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
-    inner class ViewHolder (private val binding: ItemUsageBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding : ItemUsageBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(articleModel: ArticleModel) {
-            val format = SimpleDateFormat("MM월dd일")
-            val date = Date(articleModel.createdAt)
+        fun bind(item : Content){
 
-            binding.tvNameUsageLayout.text = articleModel.title
-            binding.tvDateUsageLayout.text = format.format(date).toString()
-            if(articleModel.imageUrl.isNotEmpty()){
-                Glide.with(binding.ivImageUsageLyout)
-                    .load(articleModel.imageUrl)
-                    .into(binding.ivImageUsageLyout)
-            }
+            // TODO 화장실사진 / 날짜형식 m월 n일 / 화장실 이름
+            Glide.with(App.context())
+                .load(item.restroomImageUrl)
+                .error(R.drawable.profile_select_btn)
+                .into(binding.ivImageUsageLyout)
 
-
+            binding.textView12.text= item.poin.toString()
+//            binding.ratingBar2.rating = item.rating
+            binding.tvDateUsageLayout.text = item.operatingHour
 
         }
+
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemUsageBinding.inflate(LayoutInflater.from(parent.context),parent, false))
+        val viewBinding = ItemUsageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(datas[position])
     }
 
-    companion object{
-        val diffUtil = object : DiffUtil.ItemCallback<ArticleModel>(){
-            override fun areItemsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
-                return oldItem.createdAt == newItem.createdAt
-            }
-
-            override fun areContentsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
-                return oldItem == newItem
-            }
-        }
+    override fun getItemCount(): Int {
+        return datas.size
     }
-
 }
