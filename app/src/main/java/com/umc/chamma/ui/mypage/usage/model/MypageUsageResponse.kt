@@ -101,9 +101,8 @@ data class Content (
     val operatingHour : String,
 
     @SerializedName("point")
-    val poin : Int,
+    val point : Int,
 
     @SerializedName("restroomImageUrl")
-    val restroomImageUrl : String
-
-        )
+    val restroomImageUrl : ArrayList<String>
+    )

@@ -23,11 +23,11 @@ class ArticleAdapter(
 
             // TODO 화장실사진 / 날짜형식 m월 n일 / 화장실 이름
             Glide.with(App.context())
-                .load(item.restroomImageUrl)
+                .load(item.restroomImageUrl[0])
                 .error(R.drawable.profile_select_btn)
                 .into(binding.ivImageUsageLyout)
 
-            binding.textView12.text= item.poin.toString()
+            binding.textView12.text= item.point.toString()
 //            binding.ratingBar2.rating = item.rating
             binding.tvDateUsageLayout.text = item.operatingHour
 
