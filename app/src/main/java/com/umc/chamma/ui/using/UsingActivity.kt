@@ -23,6 +23,8 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
             val intent = Intent(this,LobbyActivity::class.java)
             startActivity(intent)
         }
+        RestroomNotification(this).createNotification()
+
     }
 
     override fun onBackPressed() {}
@@ -40,13 +42,12 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     }
 
     override fun onPause() {
-        RestroomNotification(this).createNotification()
+        //RestroomNotification(this).createNotification()
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        RestroomNotification(this).removeNotification()
     }
 
 

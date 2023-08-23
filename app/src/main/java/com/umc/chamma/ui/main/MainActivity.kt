@@ -18,7 +18,6 @@ import com.umc.chamma.util.RestroomNotification
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +38,14 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
             }
         }
     }
-
+/*
     override fun onPause() {
         RestroomNotification(this).createNotification()
         super.onPause()
     }
+
+
+ */
 
     override fun onResume() {
         super.onResume()

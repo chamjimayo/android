@@ -68,7 +68,9 @@ class RestroomNotification(val context: Context?) {
         val notificationManager: NotificationManager? =
             context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        notificationManager?.cancel(orderChannelId.toInt())
+        //notificationManager?.cancel(orderChannelId.toInt())
+        notificationManager?.cancelAll()
+
     }
 
     private fun createNotificationBuilder(
@@ -82,7 +84,7 @@ class RestroomNotification(val context: Context?) {
             .setSmallIcon(R.mipmap.chamma_logo_round)
             .setContentText(orderContent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
+            //.setContentIntent(pendingIntent)
             .addAction(useCloseAction)
             .setAutoCancel(false)
 
