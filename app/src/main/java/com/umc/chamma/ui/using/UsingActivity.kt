@@ -8,6 +8,7 @@ import com.umc.chamma.databinding.ActivityUsingBinding
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.using.model.EndUseResponseData
 import com.umc.chamma.util.Constants.IS_USING
+import com.umc.chamma.util.RestroomNotification
 
 class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding::inflate),EnduseInterface{
 
@@ -22,6 +23,8 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
             val intent = Intent(this,LobbyActivity::class.java)
             startActivity(intent)
         }
+        RestroomNotification(this).createNotification()
+
     }
 
     override fun onBackPressed() {}
@@ -37,5 +40,15 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
     override fun onPostenduseFailure(message: String) {
         showCustomToast(message)
     }
+
+    override fun onPause() {
+        //RestroomNotification(this).createNotification()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
 
 }
