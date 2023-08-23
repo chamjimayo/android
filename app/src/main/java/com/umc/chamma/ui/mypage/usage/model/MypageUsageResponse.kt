@@ -1,8 +1,12 @@
 package com.umc.chamma.ui.mypage.usage.model
 
 import com.google.gson.annotations.SerializedName
+import com.umc.chamma.config.BaseResponse
 
-data class MypageUsageResponse()
+data class MypageUsageResponse(
+    @SerializedName("data")
+    val data : MypageUsageData
+) : BaseResponse()
 
 
 data class MypageUsageData(
