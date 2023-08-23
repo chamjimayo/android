@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
+import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -25,6 +26,21 @@ class RestroomNotification(val context: Context?) {
     private val orderChannelId = "411"
     private lateinit var useCloseAction:NotificationCompat.Action
 
+    private fun createCustomContentView(): RemoteViews {
+        return RemoteViews(context?.packageName, R.layout.item_notification)/*.apply {
+            setOnClickPendingIntent(
+                R.id.closeBtn,
+                PendingIntent.getActivity(
+                    context,
+                    1000,
+                    Intent(context, MainActivity::class.java),
+                    FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+                )
+            )
+        }
+                    */
+
+    }
     fun createNotification() {
         //val orderTitle = intent?.getStringExtra(context!!.getString(R.string.order_title))!!
 
@@ -80,12 +96,17 @@ class RestroomNotification(val context: Context?) {
         pendingIntent: PendingIntent?
     ) =
         NotificationCompat.Builder(context!!, orderChannelId)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            //.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.mipmap.chamma_logo_round)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setCustomBigContentView(createCustomContentView())
+            .setCustomContentView(createCustomContentView())
+
             .setContentText(orderContent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             //.setContentIntent(pendingIntent)
             .addAction(useCloseAction)
+            .setShowWhen(false)
             .setAutoCancel(false)
 
     private fun createNotificationChannel(

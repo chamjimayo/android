@@ -41,10 +41,10 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
         showCustomToast(message)
     }
 
-    override fun onPause() {
-        //RestroomNotification(this).createNotification()
-        super.onPause()
-    }
+   // override fun onPause() {
+   //     RestroomNotification(this).createNotification()
+   //     super.onPause()
+   // }
 
     override fun onResume() {
         super.onResume()
