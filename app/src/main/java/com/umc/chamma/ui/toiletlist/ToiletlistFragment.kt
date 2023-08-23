@@ -67,7 +67,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
                     HomeService(this).getNearToilet("entire", location!!.longitude, location.latitude,distanceArr[distance],sortArr[sortType])
 
                     //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-//                    HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
+//                    HomeService(this).getNearToilet("entire", 126.88797499999998, 37.52020799999999,distanceArr[distance],sortArr[sortType])
                 }
             }else{
                 dismissLoading()
@@ -87,7 +87,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
                     .apply()
 
                 //TODO 인천에 화장실 데이터 없어서 하드코딩 테스트
-//                HomeService(this).getNearToilet("entire", 126.9731649095934, 37.560444374518106,distanceArr[distance],sortArr[sortType])
+//                HomeService(this).getNearToilet("entire", 126.88797499999998, 37.52020799999999,distanceArr[distance],sortArr[sortType])
                 setLocation()
             }.show()
         }
