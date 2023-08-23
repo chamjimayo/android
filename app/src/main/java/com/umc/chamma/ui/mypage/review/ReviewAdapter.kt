@@ -2,51 +2,53 @@ package com.umc.chamma.ui.mypage.review
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.umc.chamma.R
+import com.umc.chamma.config.App
+import com.umc.chamma.databinding.ItemReviewBinding
 import com.umc.chamma.databinding.ItemReviewMypageBinding
-import com.umc.chamma.ui.mypage.model.ListReview
-import java.text.SimpleDateFormat
+import com.umc.chamma.ui.mypage.review.model.MypageReviewData
 import java.util.*
 
-class ReviewAdapter: ListAdapter<ListReview, ReviewAdapter.ViewHolder>(diffUtil) {
+class ReviewAdapter(
+    private val datas : ArrayList<MypageReviewData>,
+    private val onClickDeleteListener: (reviewId : Int) -> Unit,
+    private val onClickPatchListener : (reviewId : Int) -> Unit
+) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
-    inner class ViewHolder (private val binding: ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding : ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(listReview: ListReview) {
-            val format = SimpleDateFormat("MM월dd일")
-            val date = Date(listReview.date)
+        fun bind(item : MypageReviewData){
 
-            binding.tvTitleItemReview.text = listReview.title
-            binding.tvDateItemReview.text = format.format(date).toString()
-            if(listReview.URl.isNotEmpty()){
-                Glide.with(binding.ivRestRoomItemReview)
-                    .load(listReview.URl)
-                    .into(binding.ivRestRoomItemReview)
-            }
+            Glide.with(App.context())
+                .load(item.restroomPhotoUrl)
+                .error(R.drawable.restroom_ex)
+                .into(binding.ivRestRoomItemReview)
+
+            binding.tvReviewItemReview.text= item.reviewContent
+            binding.ratingBar2.rating = item.rating
+            binding.tvDate.text = item.dateTime
+            binding.tvTitleItemReview.text = item.restroomName
+
+            binding.btnDeleteItemReview.setOnClickListener { onClickDeleteListener(item.reviewId) }
+            binding.btnModifyItemReview.setOnClickListener { onClickPatchListener(item.reviewId) }
 
         }
+
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemReviewMypageBinding.inflate(LayoutInflater.from(parent.context),parent, false))
+        val viewBinding = ItemReviewMypageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(datas[position])
     }
 
-    companion object{
-        val diffUtil = object : DiffUtil.ItemCallback<ListReview>(){
-            override fun areItemsTheSame(oldItem: ListReview, newItem: ListReview): Boolean {
-                return oldItem.date == newItem.date
-            }
-
-            override fun areContentsTheSame(oldItem: ListReview, newItem: ListReview): Boolean {
-                return oldItem == newItem
-            }
-        }
+    override fun getItemCount(): Int {
+        return datas.size
     }
 }
