@@ -9,6 +9,8 @@ import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.NidOAuthLogin
+import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.umc.chamma.config.App
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseFragmentVB
@@ -49,8 +51,8 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
     fun logOut(){
         showOnlyTitleTwoButtonDialog(requireContext(),"로그아웃 하시나요?","취소","확인",
             {dismissOnlyTitleTwoButtonDialog()},{
-                if (social == "KAKAO") kakaoLogout()
-                else if (social == "NAVER") naverLogout()
+                if (social == "KAKAO") kakaoUnlink()
+                else if (social == "NAVER") naverUnlink()
             })
     }
 
@@ -96,6 +98,51 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
     override fun onGetUserInfoFailure(message: String) {
         showCustomToast(message)
+    }
+
+
+
+
+    // 네이버 연결끊기
+    private fun naverUnlink(){
+        NidOAuthLogin().callDeleteTokenApi(requireContext(), object : OAuthLoginCallback {
+            override fun onSuccess() {
+                sharedPreferences.edit().clear().apply()
+                val intent = Intent(App.context(), LoginActivity::class.java)
+                intent.apply{
+                    this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    (activity as MainActivity).finishAffinity()
+                    startActivity(intent)
+                }
+            }
+            override fun onFailure(httpStatus: Int, message: String) {
+                Log.d("naver", "errorCode: ${NaverIdLoginSDK.getLastErrorCode().code}")
+                Log.d("naver", "errorDesc: ${NaverIdLoginSDK.getLastErrorDescription()}")
+            }
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+        })
+    }
+
+    // 카카오 연결 끊기
+    private fun kakaoUnlink(){
+
+        UserApiClient.instance.unlink { error ->
+            if (error != null) {
+                Log.e(TAG, "연결 끊기 실패", error)
+            }
+            else {
+                Log.d(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                sharedPreferences.edit().clear().apply()
+                val intent = Intent(App.context(), LoginActivity::class.java)
+                intent.apply{
+                    this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    (activity as MainActivity).finishAffinity()
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
 }
