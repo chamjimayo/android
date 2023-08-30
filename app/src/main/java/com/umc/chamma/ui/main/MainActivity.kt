@@ -38,15 +38,6 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
             }
         }
     }
-/*
-    override fun onPause() {
-        RestroomNotification(this).createNotification()
-        super.onPause()
-    }
-
-
-
- */
 
 
     override fun onResume() {
