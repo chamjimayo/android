@@ -11,37 +11,22 @@ class ChangeprofileService(val view : ChangeprofileFragmentInterface) {
 
 
 
-    fun changeUserImg(data : ChangeprofilePostData){
+    fun changeProfile(data : ChangeprofilePostData){
         val changeUserImgRetro = App.getRetro().create(ChangeprofileRetrofitInterface::class.java)
-        changeUserImgRetro.changeUserImg(data).enqueue(object : Callback<BaseResponse>{
+        changeUserImgRetro.patchProfile(data).enqueue(object : Callback<BaseResponse>{
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
                 if(response.body() != null){
-                    if(response.code() == 200) view.onChangeImgSuccess("성공")
-                    else view.onChangeImgFailure("API 통신 실패")
-                }else view.onChangeImgFailure("API 통신 실패")
+                    if(response.code() == 200) view.onChangeProfileSuccess("성공")
+                    else view.onChangeProfileFailure("API 통신 실패")
+                }else view.onChangeProfileFailure("API 통신 실패")
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                view.onChangeImgFailure(t.message.toString())
+                view.onChangeProfileFailure(t.message.toString())
             }
         })
     }
 
 
-    fun changeUserNick(data : ChangeprofilePostData){
-        val changeUserNickRetro = App.getRetro().create(ChangeprofileRetrofitInterface::class.java)
-        changeUserNickRetro.changeUserNick(data).enqueue(object : Callback<BaseResponse>{
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
-                if(response.body() != null){
-                    if(response.code() == 200) view.onChangeNickSuccess("성공")
-                    else view.onChangeNickFailure("API 통신 실패")
-                }else view.onChangeNickFailure("API 통신 실패")
-            }
-
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                view.onChangeNickFailure(t.message.toString())
-            }
-        })
-    }
 
 }

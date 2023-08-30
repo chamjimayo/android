@@ -33,11 +33,11 @@ class ChangeprofileFragment : BaseFragmentVB<FragmentChangeProfileBinding>(Fragm
 GetUserinfoInterface, ChangeprofileFragmentInterface {
 
 
-    private var oldNick = ""
-    private var newNick = ""
-    private var newImg = ""
+    private var nickName = ""
+    private var profileUrl = ""
     private var isAvailableNick = false
     private var isProfileChange = false
+    private var isNickChange = false
 
     private lateinit var galleryLauncher : ActivityResultLauncher<Intent>
 
@@ -48,7 +48,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
             if(result.resultCode == Activity.RESULT_OK){
                 val uri = result.data?.data
                 binding.btnProfileUser.setImageURI(uri)
-                newImg = uri.toString()
+                profileUrl = uri.toString()
                 isProfileChange = true
                 changeBtnAvailable()
             }
@@ -89,12 +89,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
         binding.btnBackUpdate.setOnClickListener { findNavController().navigateUp() }
         binding.btnProfileUser.setOnClickListener{ openGallery() }
         binding.btnSend2.setOnClickListener {
-            if((oldNick != newNick) && isAvailableNick){
-                ChangeprofileService(this).changeUserNick(ChangeprofilePostData(newNick))
-            }
-            if(isProfileChange){
-                ChangeprofileService(this).changeUserImg(ChangeprofilePostData(newImg))
-            }
+            if(isNickChange || isProfileChange) ChangeprofileService(this).changeProfile(ChangeprofilePostData(nickName,profileUrl))
         }
     }
 
@@ -102,7 +97,8 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
 
         binding.etNick.addTextChangedListener(object :  TextWatcher{
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                newNick = binding.etNick.text.toString()
+                nickName = binding.etNick.text.toString()
+                isNickChange = true
                 changeBtnAvailable()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -111,7 +107,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
     }
 
     private fun changeBtnAvailable(){
-        if(((oldNick != newNick) && isAvailableNick) || isProfileChange){
+        if(isNickChange || isProfileChange){
             binding.btnSend2.isEnabled = true
             binding.btnSend2.setBackgroundResource(R.drawable.shape_signup_duplicheck)
             binding.btnSend2.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
@@ -124,7 +120,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
 
     private fun nickCheck(){
         App.getRetro().create(NickcheckAPI::class.java)
-            .checkNick(newNick).enqueue(object : Callback<NickcheckResponse>{
+            .checkNick(nickName).enqueue(object : Callback<NickcheckResponse>{
                 override fun onResponse(
                     call: Call<NickcheckResponse>,
                     response: Response<NickcheckResponse>
@@ -156,7 +152,8 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         binding.etName.setText(data.name)
         binding.etNick.setText(data.nickname)
-        oldNick = data.nickname
+        nickName = data.nickname
+        profileUrl = data.userProfile?:""
         if(!data.userProfile.isNullOrBlank()){
             binding.btnProfileUser.setImageURI(data.userProfile.toUri())
         }
@@ -170,22 +167,15 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
         showCustomToast(message)
     }
 
-    override fun onChangeImgSuccess(message: String) {
+
+    override fun onChangeProfileSuccess(message: String) {
         showCustomToast("변경 성공")
         findNavController().navigateUp()
     }
 
-    override fun onChangeImgFailure(message: String) {
-        showCustomToast(message)
-    }
-
-    override fun onChangeNickSuccess(message: String) {
-        showCustomToast("변경 성공")
+    override fun onChangeProfileFailure(message: String) {
+        showCustomToast("변경 실패")
         findNavController().navigateUp()
-    }
-
-    override fun onChangeNickFailure(message: String) {
-        showCustomToast(message)
     }
 
 
