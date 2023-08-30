@@ -4,17 +4,12 @@ import com.umc.chamma.config.BaseResponse
 import com.umc.chamma.ui.mypage.changeprofile.model.ChangeprofilePostData
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.PATCH
 
 interface ChangeprofileRetrofitInterface {
 
-    @POST("/api/users/me/nickname")
-    fun changeUserNick(
+    @PATCH("api/users/me/Info")
+    fun patchProfile(
         @Body params : ChangeprofilePostData
-    ): Call<BaseResponse>
-
-    @POST("/api/users/me/profile")
-    fun changeUserImg(
-        @Body params : ChangeprofilePostData
-    ): Call<BaseResponse>
+    ) : Call<BaseResponse>
 }

@@ -3,20 +3,24 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/selector_home"
+        android:menuCategory="secondary"
         android:title="홈" />
 
     <item
         android:id="@+id/toiletlistFragment"
         android:icon="@drawable/selector_toilet"
+        android:menuCategory="secondary"
         android:title="화장실리스트" />
 
     <item
         android:id="@+id/communityFragment"
         android:icon="@drawable/selector_community"
+        android:menuCategory="secondary"
         android:title="커뮤니티" />
 
     <item
         android:id="@+id/mypageFragment"
         android:icon="@drawable/selector_mypage"
+        android:menuCategory="secondary"
         android:title="마이페이지" />
 </menu>

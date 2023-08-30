@@ -3,10 +3,8 @@ package com.umc.chamma.ui.mypage.changeprofile
 interface ChangeprofileFragmentInterface {
 
 
-    fun onChangeNickSuccess(message : String)
-    fun onChangeNickFailure(message : String)
+    fun onChangeProfileSuccess(message : String)
+    fun onChangeProfileFailure(message : String)
 
-    fun onChangeImgSuccess(message : String)
-    fun onChangeImgFailure(message : String)
 
 }
