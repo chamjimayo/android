@@ -33,7 +33,9 @@ class ChangeprofileFragment : BaseFragmentVB<FragmentChangeProfileBinding>(Fragm
 GetUserinfoInterface, ChangeprofileFragmentInterface {
 
 
+    private var oldNick = ""
     private var nickName = ""
+    private var oldProfile = ""
     private var profileUrl = ""
     private var isAvailableNick = false
     private var isProfileChange = false
@@ -49,7 +51,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
                 val uri = result.data?.data
                 binding.btnProfileUser.setImageURI(uri)
                 profileUrl = uri.toString()
-                isProfileChange = true
+                isProfileChange = oldProfile != profileUrl
                 changeBtnAvailable()
             }
         }
@@ -89,7 +91,12 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
         binding.btnBackUpdate.setOnClickListener { findNavController().navigateUp() }
         binding.btnProfileUser.setOnClickListener{ openGallery() }
         binding.btnSend2.setOnClickListener {
-            if(isNickChange || isProfileChange) ChangeprofileService(this).changeProfile(ChangeprofilePostData(nickName,profileUrl))
+            if(isNickChange || isProfileChange) {
+                val postData = ChangeprofilePostData()
+                if(isNickChange && isAvailableNick) postData.nickname = nickName
+                if(isProfileChange) postData.profileUrl = profileUrl
+                ChangeprofileService(this).changeProfile(postData)
+            }
         }
     }
 
@@ -98,7 +105,7 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
         binding.etNick.addTextChangedListener(object :  TextWatcher{
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 nickName = binding.etNick.text.toString()
-                isNickChange = true
+                isNickChange = oldNick != nickName
                 changeBtnAvailable()
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -152,7 +159,9 @@ GetUserinfoInterface, ChangeprofileFragmentInterface {
     override fun onGetUserInfoSuccess(data: UserinfoData) {
         binding.etName.setText(data.name)
         binding.etNick.setText(data.nickname)
+        oldNick = data.nickname
         nickName = data.nickname
+        oldProfile = data.userProfile?:""
         profileUrl = data.userProfile?:""
         if(!data.userProfile.isNullOrBlank()){
             binding.btnProfileUser.setImageURI(data.userProfile.toUri())
