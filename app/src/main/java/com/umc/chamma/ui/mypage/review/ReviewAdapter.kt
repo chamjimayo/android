@@ -9,6 +9,7 @@ import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemReviewBinding
 import com.umc.chamma.databinding.ItemReviewMypageBinding
 import com.umc.chamma.ui.mypage.review.model.MypageReviewData
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewAdapter(
@@ -21,7 +22,8 @@ class ReviewAdapter(
 
         fun bind(item : MypageReviewData){
 
-            Glide.with(App.context())
+
+           Glide.with(App.context())
                 .load(item.restroomPhotoUrl)
                 .error(R.drawable.restroom_ex)
                 .into(binding.ivRestRoomItemReview)

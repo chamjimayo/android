@@ -61,4 +61,8 @@ class ReviewFragment : BaseFragmentVB<FragmentReviewBinding>(FragmentReviewBindi
         showCustomToast(message)
     }
 
+    fun moveReviewPage(){
+
+    }
+
 }
