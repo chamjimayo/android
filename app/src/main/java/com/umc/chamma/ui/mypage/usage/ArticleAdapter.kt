@@ -1,9 +1,11 @@
 package com.umc.chamma.ui.mypage.usage
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,11 +13,15 @@ import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import com.umc.chamma.R
 import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemUsageBinding
+import com.umc.chamma.ui.mypage.review.model.MypageReviewData
+import com.umc.chamma.ui.mypage.review.network.MypageReviewService
 import com.umc.chamma.ui.mypage.usage.model.Content
 
 import com.umc.chamma.ui.mypage.usage.model.MypageUsageData
+import com.umc.chamma.ui.qr.QrPointResultActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ArticleAdapter(
     private val datas : ArrayList<Content>,
@@ -70,7 +76,10 @@ class ArticleAdapter(
 
                     binding.tvDateDate.text = intervalTime
 
-                    binding.btnMakeReview.setOnClickListener {  }
+                    binding.btnMakeReview.setOnClickListener {
+                        val intent = Intent(ViewHolder(binding).itemView?.context, QrPointResultActivity::class.java)
+                        ContextCompat.startActivity(ViewHolder(binding).itemView.context, intent, null)
+                    }
                 }else{
                     binding.btnMakeReview.isEnabled = false
 
@@ -87,8 +96,17 @@ class ArticleAdapter(
 
             //리뷰를 작성했는지 안했는지 검사
             fun checkReview() {
-                //리뷰를 작성하지 않았을 경우
-                if (true){
+                val reviewIdDatas : ArrayList<MypageReviewData>
+                var checkReviewId : Boolean = true
+
+//                for (i in 0 until  reviewIdDatas.size){
+//                   if (datas[adapterPosition].id == reviewIdDatas[i].reviewId){
+//                       checkReviewId = false
+//                   }
+//                }
+
+                //리뷰를 작성하지 않았을 경우(false -> 이미 리뷰 작성함, true -> 아직 리뷰 작성 안함)
+                if (checkReviewId){
                     checkDate()
                 }else{
                     binding.btnMakeReview.isEnabled = false
@@ -115,6 +133,8 @@ class ArticleAdapter(
             binding.textView12.text= item.point.toString()
 //            binding.ratingBar2.rating = item.rating
             binding.tvDateUsageLayout.text = item.operatingHour
+
+            checkReview()
 
 
 

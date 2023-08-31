@@ -60,9 +60,4 @@ class ReviewFragment : BaseFragmentVB<FragmentReviewBinding>(FragmentReviewBindi
     override fun onDeleteReviewFailure(message: String) {
         showCustomToast(message)
     }
-
-    fun moveReviewPage(){
-
-    }
-
 }
