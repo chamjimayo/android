@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.umc.chamma.BuildConfig
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.ui.login.LoginActivity
 import com.umc.chamma.ui.login.model.LoginResponseData
@@ -13,7 +14,6 @@ import com.umc.chamma.ui.splash.RefreshTokenService
 import com.umc.chamma.ui.splash.model.RefreshJwtPostData
 import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.X_ACCESS_TOKEN
-import com.umc.chamma.util.Constants.xapikey
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -50,7 +50,7 @@ class AccessTokenInterceptor(private val context: Context) : Interceptor, Refres
         if(jwt != null){
             builder.addHeader("Bearer-Token", jwt)
         }
-        builder.addHeader("x-api-key", xapikey)
+        builder.addHeader("x-api-key", BuildConfig.X_API_KEY)
         return chain.proceed(builder.build())
     }
 

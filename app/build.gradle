@@ -8,14 +8,31 @@ android {
     namespace 'com.umc.chamma'
     compileSdk 33
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    signingConfigs {
+        release {
+            storeFile file('Chamma.jks')
+            storePassword "chamma1234"
+            keyAlias "Chamma"
+            keyPassword "chamma1234"
+        }
+    }
+
     defaultConfig {
         applicationId "com.umc.chamma"
         minSdk 25
         targetSdk 33
-        versionCode 7
-        versionName "0.4.0"
+        versionCode 8
+        versionName "0.5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "NAVER_CLIENT_ID", properties['naverClientId']
+        buildConfigField "String", "NAVER_CLIENT_SECRET", properties['naverClientSecret']
+        buildConfigField "String", "NAVER_CLIENT_NAME", properties['naverClientName']
+        buildConfigField "String", "KAKAO_API_KEY", properties['kakaoAppKey']
+        buildConfigField "String", "X_API_KEY", properties['xapikey']
     }
 
     buildFeatures{
@@ -27,6 +44,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -47,7 +65,6 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    implementation 'com.android.support:cardview-v7:28.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
