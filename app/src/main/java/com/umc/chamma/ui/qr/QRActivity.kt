@@ -54,6 +54,10 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
         price=intent.getIntExtra("Price",0)
         initializeQrScanner(savedInstanceState)
 
+        binding.passBtn.setOnClickListener {
+            fakeinitializeQrScanner(savedInstanceState)
+        }
+
     }
     private fun initializeQrScanner(savedInstanceState: Bundle?) {
         with(binding) {
@@ -144,7 +148,58 @@ class QRActivity : BaseActivityVB<ActivityQrBinding>(ActivityQrBinding::inflate)
             }
         }
     }
-    override fun onResume() {
+
+    private fun fakeinitializeQrScanner(savedInstanceState: Bundle?) {
+        capture.onPause()
+        capture.onDestroy()
+
+        val dialogBinding = DialogQrResult2Binding.inflate(LayoutInflater.from(this@QRActivity))
+        val build = AlertDialog.Builder(this@QRActivity).setView(dialogBinding.root)
+        val dialog = build.create()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.BOTTOM);
+        dialog.show()
+
+        this@QRActivity.dialogResize(dialog, 0.7f, 0.6f)
+
+        if(price<=point) {
+            dialogBinding.tissueTv.text=price.toString()+"p"
+            dialogBinding.contentTv.text=price.toString()+"포인트가 차감됩니다\n  결제를 하실건가요?"
+            dialogBinding.btnPostEditBackCancel.setOnClickListener {
+                //showCustomToast("참을래요 완료")
+                dialog.dismiss()
+                val intent = Intent(App.context(), MainActivity::class.java)
+                startActivity(intent)
+                //finish()
+            }
+            dialogBinding.btnPostEditBackOk.setOnClickListener {
+                QrService(qrActivityInterface).tryToUseRestroom(id)
+
+                //showCustomToast("이용할래요 완료")
+                dialog.dismiss()
+                finish()
+                val intent = Intent(App.context(), QrPointResultActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        else{
+            dialogBinding.tissueTv.text=point.toString()+"p 보유"
+            dialogBinding.contentTv.text="    앗,잠시만요!\n포인트가 부족해요."
+            dialogBinding.btnPostEditBackCancel.text="닫기"
+            dialogBinding.btnPostEditBackOk.text="충전하기"
+
+            dialogBinding.btnPostEditBackCancel.setOnClickListener {
+                dialog.dismiss()
+                finish()
+            }
+            dialogBinding.btnPostEditBackOk.setOnClickListener {
+                val intent = Intent(App.context(), ChargePointActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+        override fun onResume() {
         super.onResume()
         capture.onResume()
     }

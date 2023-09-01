@@ -20,14 +20,21 @@ import androidx.core.content.getSystemService
 import com.umc.chamma.R
 import com.umc.chamma.ui.main.MainActivity
 import okhttp3.internal.notify
+import android.app.Service
+import android.os.IBinder
+import androidx.core.app.ServiceCompat.stopForeground
+import com.umc.chamma.config.App
+import com.umc.chamma.ui.main.MainActivity.Companion.ACTION_STOP
+import com.umc.chamma.ui.using.UsingActivity
 
-class RestroomNotification(val context: Context?) {
+//(val context: Context?)
+class RestroomNotification : Service() {
     val orderId = 1L
     private val orderChannelId = "411"
-    private lateinit var useCloseAction:NotificationCompat.Action
+    private lateinit var useCloseAction: NotificationCompat.Action
 
     private fun createCustomContentView(): RemoteViews {
-        return RemoteViews(context?.packageName, R.layout.item_notification)/*.apply {
+        return RemoteViews(App.context()?.packageName, R.layout.item_notification)/*.apply {
             setOnClickPendingIntent(
                 R.id.closeBtn,
                 PendingIntent.getActivity(
@@ -41,29 +48,40 @@ class RestroomNotification(val context: Context?) {
                     */
 
     }
+
     fun createNotification() {
         //val orderTitle = intent?.getStringExtra(context!!.getString(R.string.order_title))!!
 
         val orderContent = "화장실을 이용 중이에요!"
 
         val pendingIntent = PendingIntent.getActivity(
-            context,
+            App.context(),
             0,
-            Intent(context, MainActivity::class.java),
+            Intent(App.context(), MainActivity::class.java),
+            FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            //0
+        )
+
+        val pendingIntent2 = PendingIntent.getActivity(
+            App.context(),
+            0,
+            Intent(App.context(), UsingActivity::class.java),
             FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
-        useCloseAction=NotificationCompat.Action.Builder(R.drawable.banner_btn_icon,"이용종료하기",pendingIntent).build()
+        useCloseAction =
+            NotificationCompat.Action.Builder(R.drawable.banner_btn_icon, "이용종료하기", pendingIntent)
+                .build()
 
         val builder =
-            createNotificationBuilder(context, orderChannelId, orderContent, pendingIntent)
+            createNotificationBuilder(App.context(), orderChannelId, orderContent, pendingIntent2)
         //val orderName = context.getString(R.string.order_name)
 
-        if (context == null) return
-        createNotificationChannel(context, "orderName", orderChannelId, orderContent)
+        if (App.context() == null) return
+        createNotificationChannel(App.context(), "orderName", orderChannelId, orderContent)
 
-        with(NotificationManagerCompat.from(context)) {
+        /*with(NotificationManagerCompat.from(App.context())) {
             if (ActivityCompat.checkSelfPermission(
-                    context,
+                    App.context(),
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
@@ -76,15 +94,16 @@ class RestroomNotification(val context: Context?) {
                 // for ActivityCompat#requestPermissions for more details.
                 return
             }
-            notify(orderChannelId.toInt(), builder.build())
-        }
+            }
+         */
+        startForeground(orderChannelId.toInt(), builder.build())
     }
 
+//stopForground stopSelf로 대체
     fun removeNotification() {
         val notificationManager: NotificationManager? =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            App.context()?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        //notificationManager?.cancel(orderChannelId.toInt())
         notificationManager?.cancelAll()
 
     }
@@ -96,7 +115,6 @@ class RestroomNotification(val context: Context?) {
         pendingIntent: PendingIntent?
     ) =
         NotificationCompat.Builder(context!!, orderChannelId)
-            //.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.mipmap.chamma_logo_round)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomBigContentView(createCustomContentView())
@@ -104,6 +122,8 @@ class RestroomNotification(val context: Context?) {
 
             .setContentText(orderContent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setOngoing(true)
             //.setContentIntent(pendingIntent)
             .addAction(useCloseAction)
             .setShowWhen(false)
@@ -128,6 +148,22 @@ class RestroomNotification(val context: Context?) {
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.action != null && intent.action!!.equals(
+                ACTION_STOP, ignoreCase = true)) {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            stopSelf()
+        }
+
+        createNotification()
+
+        return START_STICKY//super.onStartCommand(intent, flags, startId)
     }
 }
 

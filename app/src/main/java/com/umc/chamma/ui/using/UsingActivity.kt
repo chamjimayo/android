@@ -1,11 +1,13 @@
 package com.umc.chamma.ui.using
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityUsingBinding
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.main.MainActivity.Companion.ACTION_STOP
 import com.umc.chamma.ui.using.model.EndUseResponseData
 import com.umc.chamma.util.Constants.IS_USING
 import com.umc.chamma.util.RestroomNotification
@@ -23,8 +25,8 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
             val intent = Intent(this,LobbyActivity::class.java)
             startActivity(intent)
         }
-        RestroomNotification(this).createNotification()
-
+        //RestroomNotification(this).createNotification()
+        //
     }
 
     override fun onBackPressed() {}
@@ -41,5 +43,13 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
         showCustomToast(message)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val serviceIntent = Intent(this, RestroomNotification::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        }
+        else
+            startService(serviceIntent);
+    }
 }

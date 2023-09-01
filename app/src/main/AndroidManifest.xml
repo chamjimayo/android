@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
 
     <application
         android:name=".config.App"
@@ -109,6 +111,9 @@
                     android:scheme="kakao45577b70f3fba41db9f01f34abb9a9c2" />
             </intent-filter>
         </activity>
+
+        <service android:name=".util.RestroomNotification" />
+
     </application>
 
 </manifest>
