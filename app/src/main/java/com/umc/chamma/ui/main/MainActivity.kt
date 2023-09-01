@@ -43,12 +43,9 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
 
     override fun onResume() {
         super.onResume()
-        val serviceIntent = Intent(this, RestroomNotification::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent)
-        }
-        else
-            startService(serviceIntent);
+        val intentStop = Intent(this, RestroomNotification::class.java)
+        intentStop.action = ACTION_STOP
+        startService(intentStop)
         //RestroomNotification(this).removeNotification()
     }
 

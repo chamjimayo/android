@@ -69,11 +69,11 @@ class RestroomNotification : Service() {
             FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
         useCloseAction =
-            NotificationCompat.Action.Builder(R.drawable.banner_btn_icon, "이용종료하기", pendingIntent2)
+            NotificationCompat.Action.Builder(R.drawable.banner_btn_icon, "이용종료하기", pendingIntent)
                 .build()
 
         val builder =
-            createNotificationBuilder(App.context(), orderChannelId, orderContent, pendingIntent)
+            createNotificationBuilder(App.context(), orderChannelId, orderContent, pendingIntent2)
         //val orderName = context.getString(R.string.order_name)
 
         if (App.context() == null) return
@@ -99,12 +99,11 @@ class RestroomNotification : Service() {
         startForeground(orderChannelId.toInt(), builder.build())
     }
 
-
+//stopForground stopSelf로 대체
     fun removeNotification() {
         val notificationManager: NotificationManager? =
             App.context()?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        //notificationManager?.cancel(orderChannelId.toInt())
         notificationManager?.cancelAll()
 
     }
@@ -116,7 +115,6 @@ class RestroomNotification : Service() {
         pendingIntent: PendingIntent?
     ) =
         NotificationCompat.Builder(context!!, orderChannelId)
-            //.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.mipmap.chamma_logo_round)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomBigContentView(createCustomContentView())
@@ -159,7 +157,7 @@ class RestroomNotification : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action != null && intent.action!!.equals(
                 ACTION_STOP, ignoreCase = true)) {
-            stopForeground(true)
+            stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
         }
 

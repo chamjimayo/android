@@ -1,6 +1,7 @@
 package com.umc.chamma.ui.using
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseActivityVB
@@ -44,8 +45,11 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
 
     override fun onResume() {
         super.onResume()
-        val intentStop = Intent(this, RestroomNotification::class.java)
-        intentStop.action = ACTION_STOP
-        startService(intentStop)
+        val serviceIntent = Intent(this, RestroomNotification::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        }
+        else
+            startService(serviceIntent);
     }
 }
