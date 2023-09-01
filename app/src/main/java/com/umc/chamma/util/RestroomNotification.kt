@@ -59,6 +59,7 @@ class RestroomNotification : Service() {
             0,
             Intent(App.context(), MainActivity::class.java),
             FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            //0
         )
 
         val pendingIntent2 = PendingIntent.getActivity(
@@ -123,6 +124,8 @@ class RestroomNotification : Service() {
 
             .setContentText(orderContent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setOngoing(true)
             //.setContentIntent(pendingIntent)
             .addAction(useCloseAction)
             .setShowWhen(false)
@@ -150,7 +153,7 @@ class RestroomNotification : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        TODO("Not yet implemented")
+        return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
