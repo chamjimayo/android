@@ -6,13 +6,10 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.umc.chamma.util.Constants
 import com.umc.chamma.util.Constants.TAG
-import com.umc.chamma.util.Constants.kakaoAppKey
-import com.umc.chamma.util.Constants.naverClientId
-import com.umc.chamma.util.Constants.naverClientName
-import com.umc.chamma.util.Constants.naverClientSecret
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import com.navercorp.nid.NaverIdLoginSDK
+import com.umc.chamma.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -72,11 +69,11 @@ class App : Application() {
     }
 
     private fun startSocialLogin() {
-        KakaoSdk.init(this, kakaoAppKey)
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
         NaverIdLoginSDK.initialize(this,
-            naverClientId,
-            naverClientSecret,
-            naverClientName
+            BuildConfig.NAVER_CLIENT_ID,
+            BuildConfig.NAVER_CLIENT_SECRET,
+            BuildConfig.NAVER_CLIENT_NAME
         )
     }
 

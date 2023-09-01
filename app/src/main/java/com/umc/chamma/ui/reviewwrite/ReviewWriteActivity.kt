@@ -18,7 +18,7 @@ class ReviewWriteActivity : BaseActivityVB<ActivityReviewwriteBinding>(ActivityR
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.review_frame, ReviewFirstFragment(restroomId))
-            .commit()
+            .commitAllowingStateLoss()
 
     }
 
