@@ -2,6 +2,7 @@ package com.umc.chamma.ui.main
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.umc.chamma.BuildConfig
 import com.umc.chamma.R
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityMainBinding
@@ -17,7 +19,6 @@ import com.umc.chamma.util.InappUtil
 import com.umc.chamma.util.RestroomNotification
 
 class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::inflate) {
-
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,13 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
 
     override fun onResume() {
         super.onResume()
-        RestroomNotification(this).removeNotification()
+        val serviceIntent = Intent(this, RestroomNotification::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        }
+        else
+            startService(serviceIntent);
+        //RestroomNotification(this).removeNotification()
     }
 
 
@@ -70,4 +77,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>(ActivityMainBinding::in
         }
     }
 
+    companion object{
+        const val  ACTION_STOP = "${BuildConfig.APPLICATION_ID}.stop"
+    }
 }

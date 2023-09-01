@@ -6,6 +6,7 @@ import com.umc.chamma.config.App.Companion.sharedPreferences
 import com.umc.chamma.config.BaseActivityVB
 import com.umc.chamma.databinding.ActivityUsingBinding
 import com.umc.chamma.ui.main.MainActivity
+import com.umc.chamma.ui.main.MainActivity.Companion.ACTION_STOP
 import com.umc.chamma.ui.using.model.EndUseResponseData
 import com.umc.chamma.util.Constants.IS_USING
 import com.umc.chamma.util.RestroomNotification
@@ -23,8 +24,8 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
             val intent = Intent(this,LobbyActivity::class.java)
             startActivity(intent)
         }
-        RestroomNotification(this).createNotification()
-
+        //RestroomNotification(this).createNotification()
+        //
     }
 
     override fun onBackPressed() {}
@@ -41,5 +42,10 @@ class UsingActivity : BaseActivityVB<ActivityUsingBinding>(ActivityUsingBinding:
         showCustomToast(message)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val intentStop = Intent(this, RestroomNotification::class.java)
+        intentStop.action = ACTION_STOP
+        startService(intentStop)
+    }
 }
