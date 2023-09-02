@@ -2,6 +2,7 @@ package com.umc.chamma.ui.mypage.mypage
 
 import com.umc.chamma.R
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +22,7 @@ import com.umc.chamma.ui.mypage.chargepoint.ChargePointActivity
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoInterface
 import com.umc.chamma.ui.mypage.chargepoint.GetUserinfoService
 import com.umc.chamma.ui.mypage.chargepoint.model.UserinfoData
+import com.umc.chamma.util.Constants.DOC_URL
 import com.umc.chamma.util.Constants.TAG
 import com.umc.chamma.util.Constants.X_LOGIN_TYPE
 
@@ -39,6 +41,10 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
         binding.btnUpdateUserData.setOnClickListener { findNavController().navigate(R.id.action_mypageFragment_to_userinfoFragment) }
         binding.btnReview.setOnClickListener { findNavController().navigate((R.id.action_mypageFragment_to_reviewFragment)) }
         binding.btnLogoutMypage.setOnClickListener { logOut() }
+        binding.btnToWebview.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(DOC_URL))
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
@@ -105,10 +111,10 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
     // 네이버 연결끊기
     private fun naverUnlink(){
+        val intent = Intent(App.context(), LoginActivity::class.java)
         NidOAuthLogin().callDeleteTokenApi(requireContext(), object : OAuthLoginCallback {
             override fun onSuccess() {
                 sharedPreferences.edit().clear().apply()
-                val intent = Intent(App.context(), LoginActivity::class.java)
                 intent.apply{
                     this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     (activity as MainActivity).finishAffinity()
@@ -116,8 +122,13 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
                 }
             }
             override fun onFailure(httpStatus: Int, message: String) {
-                Log.d("naver", "errorCode: ${NaverIdLoginSDK.getLastErrorCode().code}")
+                showCustomToast(NaverIdLoginSDK.getLastErrorDescription().toString())
                 Log.d("naver", "errorDesc: ${NaverIdLoginSDK.getLastErrorDescription()}")
+                intent.apply{
+                    this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    (activity as MainActivity).finishAffinity()
+                    startActivity(intent)
+                }
             }
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
@@ -130,18 +141,20 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
 
         UserApiClient.instance.unlink { error ->
             if (error != null) {
+                showCustomToast(error.toString())
                 Log.e(TAG, "연결 끊기 실패", error)
             }
             else {
                 Log.d(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
                 sharedPreferences.edit().clear().apply()
-                val intent = Intent(App.context(), LoginActivity::class.java)
-                intent.apply{
-                    this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    (activity as MainActivity).finishAffinity()
-                    startActivity(intent)
-                }
             }
+            val intent = Intent(App.context(), LoginActivity::class.java)
+            intent.apply{
+                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                (activity as MainActivity).finishAffinity()
+                startActivity(intent)
+            }
+
         }
     }
 
