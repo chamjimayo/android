@@ -133,8 +133,9 @@ class ArticleAdapter(
             binding.textView12.text= item.point.toString()
 //            binding.ratingBar2.rating = item.rating
             binding.tvDateUsageLayout.text = item.operatingHour
+            binding.btnMakeReview.visibility = View.GONE
 
-            checkReview()
+//            checkReview()
 
 
 
