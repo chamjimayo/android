@@ -31,7 +31,7 @@ class ReviewFirstFragment(val restroomId : Int) : BaseFragmentVB<FragmentReviewF
         binding.btnNext.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.review_frame, ReviewDetailFragment(restroomId, binding.ratingBar.rating))
-                .commit()
+                .commitAllowingStateLoss()
         }
     }
 
