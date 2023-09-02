@@ -31,7 +31,10 @@ abstract class BaseActivityVB<B : ViewBinding>(private val inflate: (LayoutInfla
 
 
     fun showLoading(){
-        loadingDialog.show(supportFragmentManager,"")
+        supportFragmentManager
+            .beginTransaction()
+            .add(loadingDialog, loadingDialog.tag)
+            .commitAllowingStateLoss()
     }
 
     fun dismissLoading(){
