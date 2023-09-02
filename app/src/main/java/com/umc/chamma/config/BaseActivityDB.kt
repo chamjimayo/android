@@ -32,7 +32,10 @@ abstract class BaseActivityDB<B : ViewDataBinding>(
 
 
     fun showLoading(){
-        loadingDialog.show(supportFragmentManager,"")
+        supportFragmentManager
+            .beginTransaction()
+            .add(loadingDialog, loadingDialog.tag)
+            .commitAllowingStateLoss()
     }
 
     fun dismissLoading(){

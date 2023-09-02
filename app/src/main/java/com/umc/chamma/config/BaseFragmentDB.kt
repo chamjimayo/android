@@ -38,7 +38,10 @@ abstract class BaseFragmentDB<B : ViewDataBinding>(
 
 
     fun showLoading(){
-        loadingDialog.show(parentFragmentManager,"")
+        parentFragmentManager
+            .beginTransaction()
+            .add(loadingDialog, loadingDialog.tag)
+            .commitAllowingStateLoss()
     }
 
     fun dismissLoading(){
