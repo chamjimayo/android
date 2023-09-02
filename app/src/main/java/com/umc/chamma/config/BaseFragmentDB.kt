@@ -24,7 +24,7 @@ abstract class BaseFragmentDB<B : ViewDataBinding>(
     private lateinit var titleTwoButtonDialog : TitleTwoButtonDialog
     private lateinit var titleImageTwoButtonDialog : TitleImageTwoButtonDialog
     private lateinit var onlyTitleTwoButtonDialog: OnlyTitleTwoButtonDialog
-    private var loadingDialog = LoadingDialog()
+    private lateinit var loadingDialog : LoadingDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +37,15 @@ abstract class BaseFragmentDB<B : ViewDataBinding>(
     }
 
 
-    fun showLoading(){
-        parentFragmentManager
-            .beginTransaction()
-            .add(loadingDialog, loadingDialog.tag)
-            .commitAllowingStateLoss()
+    fun showLoading(context : Context){
+        loadingDialog = LoadingDialog(context)
+        loadingDialog.show()
     }
 
     fun dismissLoading(){
-        loadingDialog.dismiss()
+        if(loadingDialog.isShowing){
+            loadingDialog.dismiss()
+        }
     }
 
     fun showCustomToast(message: String) {

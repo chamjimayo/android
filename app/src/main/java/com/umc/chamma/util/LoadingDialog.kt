@@ -1,41 +1,34 @@
 package com.umc.chamma.util
 
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.umc.chamma.databinding.DialogLoadingBinding
 
-class LoadingDialog : DialogFragment() {
+class LoadingDialog(context : Context) : Dialog(context) {
 
-    private var _binding : DialogLoadingBinding? = null
-    private val binding get() = _binding!!
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = DialogLoadingBinding.inflate(inflater,container,false)
-        return binding.root
+    private lateinit var binding: DialogLoadingBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        binding = DialogLoadingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setCanceledOnTouchOutside(false)
+        setCancelable(false)
+        window!!.setBackgroundDrawable(ColorDrawable())
+        window!!.setDimAmount(0.2f)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.setCancelable(false)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    override fun show() {
+        if(!this.isShowing) super.show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    /* 아래와 같이 활용. parentFragmentManager OR supportFragmentManager 삽입 */
-//    private val dialog = LoadingDialog()
-//    dialog.show(parentFragmentManager,"asdf")
-//    dialog.dismiss()
 
 }
