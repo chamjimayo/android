@@ -143,6 +143,7 @@ class MypageFragment : BaseFragmentVB<FragmentMypageBinding>(FragmentMypageBindi
             if (error != null) {
                 showCustomToast(error.toString())
                 Log.e(TAG, "연결 끊기 실패", error)
+                sharedPreferences.edit().clear().apply()
             }
             else {
                 Log.d(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
