@@ -4,6 +4,7 @@ object Constants {
 
     const val TAG = "debugging"
     const val BASE_URL = "https://dev.chamjimayo.site"
+    const val DOC_URL = "https://dev.chamjimayo.site/document/personal_info_handle_policy.html"
     const val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
     const val X_REFRESH_TOKEN = "X_REFRESH_TOKEN"
     const val X_ACCESS_EXPIRE = "X_ACCESS_EXPIRE"
