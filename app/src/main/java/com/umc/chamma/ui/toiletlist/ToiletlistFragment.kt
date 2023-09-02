@@ -50,7 +50,7 @@ class ToiletlistFragment : BaseFragmentVB<FragmentToiletListBinding>(FragmentToi
    }
 
     private fun setLocation(){
-        showLoading()
+        showLoading(requireContext())
         val locationManager = App.context().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){

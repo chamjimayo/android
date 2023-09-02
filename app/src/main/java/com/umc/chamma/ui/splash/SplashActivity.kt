@@ -32,7 +32,6 @@ import java.time.format.DateTimeFormatter
 
 class SplashActivity : BaseActivityVB<ActivitySplashBinding>(ActivitySplashBinding::inflate), RefreshTokenInterface {
 
-    private val dialog = LoadingDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +41,13 @@ class SplashActivity : BaseActivityVB<ActivitySplashBinding>(ActivitySplashBindi
         Handler(Looper.getMainLooper()).postDelayed({
 
             // 스플래시 끝난뒤 LoadingDialog 띄우기
-            dialog.show(supportFragmentManager,"dialog")
+            showLoading(this)
 
             if (!isNetworkConnected(this)) {
-                dialog.dismiss()
+                dismissLoading()
                 showAlert()
             } else {
-                dialog.dismiss()
+                dismissLoading()
                 autoLogin()
                 finish()
             }
@@ -81,7 +80,7 @@ class SplashActivity : BaseActivityVB<ActivitySplashBinding>(ActivitySplashBindi
         }
         else startActivity(Intent(this, LoginActivity::class.java))
         //추가
-        dialog.dismiss()
+        dismissLoading()
         finish()
     }
 

@@ -65,13 +65,13 @@ class LoginActivity : com.umc.chamma.config.BaseActivityVB<ActivityLoginBinding>
 
         binding.btnKakaoLogin.setOnClickListener {
             social = "KAKAO"
-            showLoading()
+            showLoading(this)
             kakaoLogin()
         }
 
         binding.btnNaverLogin.setOnClickListener {
             social = "NAVER"
-            showLoading()
+            showLoading(this)
             naverLogin()
         }
     }
