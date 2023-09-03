@@ -25,6 +25,7 @@ import kotlin.collections.ArrayList
 
 class ArticleAdapter(
     private val datas : ArrayList<Content>,
+    private val onItemClickListener: (id : Int) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemUsageBinding) : RecyclerView.ViewHolder(binding.root){
@@ -33,66 +34,66 @@ class ArticleAdapter(
             //이용 후 경과 시간 검사
 
             //현재 시간 구하기
-            fun getTime() : String {
-                var now = System.currentTimeMillis()
-                var date = Date(now)
-
-                var dateFragment = SimpleDateFormat("MM월 dd일")
-                var getTime = dateFragment.format(date)
-
-                return getTime
-            }
-
-            //두 날짜 사이의 간격 계산해 텍스트로 변환
-            fun intervalBetweenDateText(beforeDate: String) : String{
-                val nowFormat = SimpleDateFormat("MM월 dd일").parse(getTime())
-                val beforeFormat = SimpleDateFormat("MM월 dd일").parse(beforeDate)
-
-                val diffMilliseconds = nowFormat.time - beforeFormat.time
-//                val diffSeconds = diffMilliseconds / 1000
-//                val diffMinutes = diffMilliseconds / (60 * 1000)
-//                val diffHours = diffMilliseconds / (60 * 60 * 1000)
-                val diffDays = diffMilliseconds / (24 * 60 * 60 * 1000)
-
-                val diffDaysString = diffDays.toString()
-
-                return diffDaysString
-            }
-
-            val intervalTime = intervalBetweenDateText(item.operatingHour)
-
-            //이용기간이 3일이 넘었으면 비활성화
-            fun checkDate(){
-                if (intervalTime.toInt() <= 3 ){
-                    binding.btnMakeReview.isEnabled = true
-
-                    binding.btnMakeReview.setBackgroundResource(R.drawable.shape_signup_et_focus)
-                    binding.tvDateUsageLayout.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.chamma_main))
-
-                    binding.tvDateDate.visibility = View.VISIBLE
-                    binding.tvDateLeft.visibility = View.VISIBLE
-                    binding.tvDateRight.visibility = View.VISIBLE
-                    binding.tvDateMain.visibility = View.VISIBLE
-
-                    binding.tvDateDate.text = intervalTime
-
-                    binding.btnMakeReview.setOnClickListener {
-                        val intent = Intent(ViewHolder(binding).itemView?.context, QrPointResultActivity::class.java)
-                        ContextCompat.startActivity(ViewHolder(binding).itemView.context, intent, null)
-                    }
-                }else{
-                    binding.btnMakeReview.isEnabled = false
-
-                    binding.btnMakeReview.setBackgroundResource(R.drawable.shape_signup_et)
-                    binding.tvDateUsageLayout.text = "리뷰작성 기간 만료"
-                    binding.tvDateUsageLayout.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.chamma_signup_textgray))
-
-                    binding.tvDateDate.visibility = View.GONE
-                    binding.tvDateLeft.visibility = View.GONE
-                    binding.tvDateRight.visibility = View.GONE
-                    binding.tvDateMain.visibility = View.GONE
-                }
-            }
+//            fun getTime() : String {
+//                var now = System.currentTimeMillis()
+//                var date = Date(now)
+//
+//                var dateFragment = SimpleDateFormat("MM월 dd일")
+//                var getTime = dateFragment.format(date)
+//
+//                return getTime
+//            }
+//
+//            //두 날짜 사이의 간격 계산해 텍스트로 변환
+//            fun intervalBetweenDateText(beforeDate: String) : String{
+//                val nowFormat = SimpleDateFormat("MM월 dd일").parse(getTime())
+//                val beforeFormat = SimpleDateFormat("MM월 dd일").parse(beforeDate)
+//
+//                val diffMilliseconds = nowFormat.time - beforeFormat.time
+////                val diffSeconds = diffMilliseconds / 1000
+////                val diffMinutes = diffMilliseconds / (60 * 1000)
+////                val diffHours = diffMilliseconds / (60 * 60 * 1000)
+//                val diffDays = diffMilliseconds / (24 * 60 * 60 * 1000)
+//
+//                val diffDaysString = diffDays.toString()
+//
+//                return diffDaysString
+//            }
+//
+//            val intervalTime = intervalBetweenDateText(item.operatingHour)
+//
+//            //이용기간이 3일이 넘었으면 비활성화
+//            fun checkDate(){
+//                if (intervalTime.toInt() <= 3 ){
+//                    binding.btnMakeReview.isEnabled = true
+//
+//                    binding.btnMakeReview.setBackgroundResource(R.drawable.shape_signup_et_focus)
+//                    binding.tvDateUsageLayout.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.chamma_main))
+//
+//                    binding.tvDateDate.visibility = View.VISIBLE
+//                    binding.tvDateLeft.visibility = View.VISIBLE
+//                    binding.tvDateRight.visibility = View.VISIBLE
+//                    binding.tvDateMain.visibility = View.VISIBLE
+//
+//                    binding.tvDateDate.text = intervalTime
+//
+//                    binding.btnMakeReview.setOnClickListener {
+//                        val intent = Intent(ViewHolder(binding).itemView?.context, QrPointResultActivity::class.java)
+//                        ContextCompat.startActivity(ViewHolder(binding).itemView.context, intent, null)
+//                    }
+//                }else{
+//                    binding.btnMakeReview.isEnabled = false
+//
+//                    binding.btnMakeReview.setBackgroundResource(R.drawable.shape_signup_et)
+//                    binding.tvDateUsageLayout.text = "리뷰작성 기간 만료"
+//                    binding.tvDateUsageLayout.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.chamma_signup_textgray))
+//
+//                    binding.tvDateDate.visibility = View.GONE
+//                    binding.tvDateLeft.visibility = View.GONE
+//                    binding.tvDateRight.visibility = View.GONE
+//                    binding.tvDateMain.visibility = View.GONE
+//                }
+//            }
 
             //리뷰를 작성했는지 안했는지 검사
             fun checkReview() {
@@ -107,7 +108,7 @@ class ArticleAdapter(
 
                 //리뷰를 작성하지 않았을 경우(false -> 이미 리뷰 작성함, true -> 아직 리뷰 작성 안함)
                 if (checkReviewId){
-                    checkDate()
+
                 }else{
                     binding.btnMakeReview.isEnabled = false
 
@@ -134,6 +135,14 @@ class ArticleAdapter(
 //            binding.ratingBar2.rating = item.rating
             binding.tvDateUsageLayout.text = item.operatingHour
             binding.btnMakeReview.visibility = View.GONE
+
+            binding.root.setOnClickListener {
+                onItemClickListener(item.id!!)
+            }
+
+            binding.imageView6.setOnClickListener {
+                onItemClickListener(item.id!!)
+            }
 
 //            checkReview()
 
