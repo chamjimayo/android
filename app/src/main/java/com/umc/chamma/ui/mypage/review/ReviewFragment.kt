@@ -1,6 +1,7 @@
 package com.umc.chamma.ui.mypage.review
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import com.umc.chamma.config.App
 import com.umc.chamma.config.BaseFragmentVB
 import com.umc.chamma.databinding.FragmentReviewBinding
 import com.umc.chamma.databinding.FragmentReviewDetailBinding
+import com.umc.chamma.ui.home.restroomInfo.RestroomInfoActivity
 import com.umc.chamma.ui.main.MainActivity
 import com.umc.chamma.ui.mypage.model.ListReview
 import com.umc.chamma.ui.mypage.review.model.MypageReviewData
@@ -39,17 +41,25 @@ class ReviewFragment : BaseFragmentVB<FragmentReviewBinding>(FragmentReviewBindi
     private fun onClickChange(reviewId : Int){
 
     }
+    private fun clickItem(toiletId : Int){
+        val intent = Intent(App.context(), RestroomInfoActivity::class.java)
+            .putExtra("ID",toiletId)
+        startActivity(intent)
+    }
 
 
     override fun onGetUserReviewInfoSuccess(data: ArrayList<MypageReviewData>){
 
-        val adapter = ReviewAdapter(data, ::onClickDelete, ::onClickChange)
+
+        val adapter = ReviewAdapter(data, ::onClickDelete, ::onClickChange, ::clickItem)
         binding.rvReview.adapter = adapter
         binding.rvReview.layoutManager = LinearLayoutManager(context)
     }
 
 
     override fun onGetUserReviewInfoFail(message: String) {
+
+
         showCustomToast(message)
     }
 

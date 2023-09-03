@@ -132,6 +132,7 @@ class ArticleAdapter(
                 .into(binding.ivImageUsageLyout)
 
             binding.textView12.text= item.point.toString()
+            binding.tvNameUsageLayout.text = item.restroomName
 //            binding.ratingBar2.rating = item.rating
             binding.tvDateUsageLayout.text = item.operatingHour
             binding.btnMakeReview.visibility = View.GONE

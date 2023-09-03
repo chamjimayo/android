@@ -15,7 +15,8 @@ import java.util.*
 class ReviewAdapter(
     private val datas : ArrayList<MypageReviewData>,
     private val onClickDeleteListener: (reviewId : Int) -> Unit,
-    private val onClickPatchListener : (reviewId : Int) -> Unit
+    private val onClickPatchListener : (reviewId : Int) -> Unit,
+    private val onItemClickListener: (id : Int) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root){
@@ -35,7 +36,9 @@ class ReviewAdapter(
 
             binding.btnDeleteItemReview.setOnClickListener { onClickDeleteListener(item.reviewId) }
             binding.btnModifyItemReview.setOnClickListener { onClickPatchListener(item.reviewId) }
-
+            binding.root.setOnClickListener {
+                onItemClickListener(item.restroomId!!)
+            }
         }
 
     }
