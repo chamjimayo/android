@@ -9,19 +9,22 @@ import com.umc.chamma.config.App
 import com.umc.chamma.databinding.ItemReviewBinding
 import com.umc.chamma.databinding.ItemReviewMypageBinding
 import com.umc.chamma.ui.mypage.review.model.MypageReviewData
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewAdapter(
     private val datas : ArrayList<MypageReviewData>,
     private val onClickDeleteListener: (reviewId : Int) -> Unit,
-    private val onClickPatchListener : (reviewId : Int) -> Unit
+    private val onClickPatchListener : (reviewId : Int) -> Unit,
+    private val onItemClickListener: (id : Int) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding : ItemReviewMypageBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item : MypageReviewData){
 
-            Glide.with(App.context())
+
+           Glide.with(App.context())
                 .load(item.restroomPhotoUrl)
                 .error(R.drawable.restroom_ex)
                 .into(binding.ivRestRoomItemReview)
@@ -33,7 +36,9 @@ class ReviewAdapter(
 
             binding.btnDeleteItemReview.setOnClickListener { onClickDeleteListener(item.reviewId) }
             binding.btnModifyItemReview.setOnClickListener { onClickPatchListener(item.reviewId) }
-
+            binding.root.setOnClickListener {
+                onItemClickListener(item.restroomId!!)
+            }
         }
 
     }
