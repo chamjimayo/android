@@ -189,7 +189,6 @@ object InappUtil : PurchasesUpdatedListener {
                     }
                 })
         }
-
     }
 
 
