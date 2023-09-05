@@ -24,8 +24,8 @@ android {
         applicationId "com.umc.chamma"
         minSdk 25
         targetSdk 33
-        versionCode 12
-        versionName "0.5.4"
+        versionCode 13
+        versionName "0.5.4(1)"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "NAVER_CLIENT_ID", properties['naverClientId']
